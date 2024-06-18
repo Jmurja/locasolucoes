@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Items de Locação') }}
+            {{ __('Reservas') }}
         </h2>
     </x-slot>
 
@@ -14,33 +14,19 @@
                     Nome
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Descrição
+                    Responsável
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Proprietário
+                    Hora de Início
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Preço por hora
+                    Hora do Fim
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    Preço por dia
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Preço por mês
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Status
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Observações
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Ações
-                </th>
+
             </tr>
             </thead>
             <tbody>
-            @foreach($rentalItems as $rentalItem)
+            @forelse($reserves as $reserve)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ $rentalItem->name }}
@@ -86,15 +72,16 @@
                         </a>
                     </td>
                 </tr>
-            @endforeach
+           @empty
+            <div class="text-center">Nenhuma Reserva Cadastrada</div>
+            @endforelse
             </tbody>
         </table>
         <div class="my-4">
-            {{$rentalItems->links()}}
+            {{$reserves->links()}}
         </div>
-
+        <a href="{{route('reserves.create', $reserves)}}" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Fazer uma Reserva</a>
     </div>
-    <a href="{{route('rental-items.create', $rentalItems)}}" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Cadastrar Novo Usuário</a>
 
 
 </x-app-layout>

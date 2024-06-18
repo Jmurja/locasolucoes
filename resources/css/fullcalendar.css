@@ -1,0 +1,10 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+#calendar {
+    background-color: #ffffff; /* Fundo branco */
+    width: 70%;
+    height: 100%;
+}
