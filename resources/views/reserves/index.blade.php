@@ -29,28 +29,28 @@
             @forelse($reserves as $reserve)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ $rentalItem->name }}
+                        {{ $reserve->name }}
                     </th>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->description }}
+                        {{ $reserve->description }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->user?->name ?? 'N/A' }}
+                        {{ $reserve->user?->name ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->price_per_hour }}
+                        {{ $reserve->price_per_hour }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->price_per_day }}
+                        {{ $reserve->price_per_day }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->price_per_month }}
+                        {{ $reserve->price_per_month }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->status }}
+                        {{ $reserve->status }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->rental_item_notes }}
+                        {{ $reserve->rental_item_notes }}
                     </td>
                     <td class="flex items-center px-6 py-4 space-x-2">
                         <a href="{{route('rental-items.show', $rentalItem->id ) }}" class="cursor-pointer">
@@ -72,15 +72,17 @@
                         </a>
                     </td>
                 </tr>
-           @empty
-            <div class="text-center">Nenhuma Reserva Cadastrada</div>
+            @empty
+                <div class="text-center">Nenhuma Reserva Cadastrada</div>
             @endforelse
             </tbody>
         </table>
         <div class="my-4">
             {{$reserves->links()}}
         </div>
-        <a href="{{route('reserves.create', $reserves)}}" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Fazer uma Reserva</a>
+        <a href="{{route('reserves.create', $reserves)}}"
+           class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Fazer
+            uma Reserva</a>
     </div>
 
 

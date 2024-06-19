@@ -14,9 +14,6 @@
                     Nome
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Descrição
-                </th>
-                <th scope="col" class="px-6 py-3">
                     Proprietário
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -32,9 +29,6 @@
                     Status
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Observações
-                </th>
-                <th scope="col" class="px-6 py-3">
                     Ações
                 </th>
             </tr>
@@ -46,25 +40,19 @@
                         {{ $rentalItem->name }}
                     </th>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->description }}
-                    </td>
-                    <td class="px-6 py-4">
                         {{ $rentalItem->user?->name ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->price_per_hour }}
+                        {{ $rentalItem->price_per_hour ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->price_per_day }}
+                        {{ $rentalItem->price_per_day ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->price_per_month }}
+                        {{ $rentalItem->price_per_month ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">
                         {{ $rentalItem->status }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ $rentalItem->rental_item_notes }}
                     </td>
                     <td class="flex items-center px-6 py-4 space-x-2">
                         <a href="{{route('rental-items.show', $rentalItem->id ) }}" class="cursor-pointer">
@@ -91,10 +79,10 @@
         </table>
         <div class="my-4">
             {{$rentalItems->links()}}
+            <a href="{{route('rental-items.create', $rentalItems)}}"
+               class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Cadastrar
+                Novo Usuário</a>
         </div>
-
-    </div>
-    <a href="{{route('rental-items.create', $rentalItems)}}" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Cadastrar Novo Usuário</a>
 
 
 </x-app-layout>

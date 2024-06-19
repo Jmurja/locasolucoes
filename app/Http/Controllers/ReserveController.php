@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RentalItem;
 use App\Models\Reserve;
 use Illuminate\Http\Request;
 
@@ -17,17 +18,16 @@ class ReserveController extends Controller
     public function store(Request $request)
     {
         Reserve::query()->create([
-            'user_id'       => $request->user_id,
-            'name'          => $request->name,
-            'cpf_cnpj'      => $request->cpf_cnpj,
-            'phone'         => $request->phone,
-            'email'         => $request->email,
-            'start_date'    => $request->start_date,
-            'end_date'      => $request->end_date,
-            'total_price'   => $request->total_price,
-            'total_hours'   => $request->total_hours,
-            'status'        => $request->status,
-            'reserve_notes' => $request->reserve_notes,
+            'user_id'     => $request->user_id,
+            'name'        => $request->name,
+            'cpf_cnpj'    => $request->cpf_cnpj,
+            'phone'       => $request->phone,
+            'mail'        => $request->email,
+            'start_date'  => $request->start_date,
+            'end_date'    => $request->end_date,
+            'interprise'  => $request->interprise,
+            'responsible' => $request->responsible,
+
         ]);
 
         return back();
@@ -35,6 +35,15 @@ class ReserveController extends Controller
 
     public function create(Request $request)
     {
-        return view('reserves.create');
+        $RentalItems = RentalItem::all();
+
+        return view('reserves.create', compact('RentalItems'));
+    }
+
+    public function json()
+    {
+        $reserves = Reserve::query()->orderBy('created_at', 'desc')->get();
+
+        return response()->json($reserves);
     }
 }

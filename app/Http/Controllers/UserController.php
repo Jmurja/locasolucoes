@@ -16,12 +16,15 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        User::query()->create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'phone'    => $request->phone,
-            'role'     => $request->role,
-            'password' => bcrypt($request->password),
+        $user = User::query()->create([
+            'name'       => $request->name,
+            'email'      => $request->email,
+            'phone'      => $request->phone,
+            'mobile'     => $request->mobile,
+            'role'       => $request->role,
+            'cpf_cnpj'   => $request->cpf_cnpj,
+            'user_notes' => $request->user_notes,
+            'password'   => bcrypt($request->password),
         ]);
 
         return back();

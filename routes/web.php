@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function() {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('rental-items', RentalItemController::class);
     Route::resource('users', UserController::class);
+    Route::get('reserves/json', [ReserveController::class, 'json']);
     Route::resource('reserves', ReserveController::class);
 });
 

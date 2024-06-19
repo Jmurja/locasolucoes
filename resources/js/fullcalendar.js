@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         selectable: true,
         selectMirror: true,
         editable:true,
-        events: 'listar_evento.php',
+        events: 'reserves/json',
         initialView: 'dayGridMonth'
     });
     calendar.render();

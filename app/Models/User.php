@@ -22,10 +22,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'phone',
-        'cpf_cnpj',
         'email',
+        'phone',
+        'mobile',
+        'password',
         'role',
+        'cpf_cnpj',
+        'user_notes',
     ];
 
     /**
@@ -54,5 +57,10 @@ class User extends Authenticatable
     public function rentalItems(): HasMany
     {
         return $this->hasMany(RentalItem::class);
+    }
+
+    public function reserves(): HasMany
+    {
+        return $this->hasMany(Reserve::class);
     }
 }
