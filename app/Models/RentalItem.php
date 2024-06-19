@@ -27,4 +27,9 @@ class RentalItem extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function reserves(): BelongsTo
+    {
+        return $this->belongsTo(Reserve::class);
+    }
 }

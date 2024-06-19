@@ -13,23 +13,17 @@
                 <th scope="col" class="px-6 py-3">
                     ID
                 </th>
+
                 <th scope="col" class="px-6 py-3">
                     Nome
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    Email
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Telefone
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    CPF/CNPJ
-                </th>
+
                 <th scope="col" class="px-6 py-3">
                     Criado em
                 </th>
+
                 <th scope="col" class="px-6 py-3">
-                    Atualizado em
+                    Ações
                 </th>
             </tr>
             </thead>
@@ -42,21 +36,11 @@
                     <td class="px-6 py-4">
                         {{ $user-> name }}
                     </td>
-                    <td class="px-6 py-4">
-                        {{ $user-> email }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ $user-> phone }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ $user->cpf_cnpj }}
-                    </td>
+
                     <td class="px-6 py-4">
                         {{ $user->created_at }}
                     </td>
-                    <td class="px-6 py-4">
-                        {{ $user->updated_at }}
-                    </td>
+
 
                     <td class="flex items-center px-6 py-4 space-x-2">
                         <a href="{{route('users.show', $user->id ) }}" class="cursor-pointer">
@@ -84,10 +68,11 @@
         <div class="my-4">
             {{$users->links()}}
         </div>
-        <a href="{{route('users.create', $user->id)}}" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Cadastrar Novo Usuário</a>
+        <a href="{{route('users.create', $user->id)}}"
+           class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Cadastrar
+            Novo Usuário</a>
 
     </div>
-
 
 
 </x-app-layout>

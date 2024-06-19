@@ -56,6 +56,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('users.create');
+        $users = User::query()->orderBy('created_at', 'desc')->paginate(20);
+
+        return view('users.create', compact('users'));
     }
 }

@@ -5,16 +5,16 @@
         </h2>
     </x-slot>
 
-
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-8">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3">
-                    Nome
-                </th>
+
                 <th scope="col" class="px-6 py-3">
                     Responsável
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Espaço
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Hora de Início
@@ -22,42 +22,36 @@
                 <th scope="col" class="px-6 py-3">
                     Hora do Fim
                 </th>
-
+                <th scope="col" class="px-6 py-3">
+                    Ações
+                </th>
             </tr>
             </thead>
             <tbody>
             @forelse($reserves as $reserve)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{ $reserve->name }}
-                    </th>
                     <td class="px-6 py-4">
-                        {{ $reserve->description }}
+                        {{ $reserve->user->name ?? 'N/A'}}
                     </td>
+
                     <td class="px-6 py-4">
-                        {{ $reserve->user?->name ?? 'N/A' }}
+                        {{ $reserve->rentalitem->name ?? 'N/A'}}
                     </td>
+
                     <td class="px-6 py-4">
-                        {{ $reserve->price_per_hour }}
+                        {{ $reserve->start_date}}
                     </td>
+
                     <td class="px-6 py-4">
-                        {{ $reserve->price_per_day }}
+                        {{ $reserve->end_date}}
                     </td>
-                    <td class="px-6 py-4">
-                        {{ $reserve->price_per_month }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ $reserve->status }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ $reserve->rental_item_notes }}
-                    </td>
+
                     <td class="flex items-center px-6 py-4 space-x-2">
-                        <a href="{{route('rental-items.show', $rentalItem->id ) }}" class="cursor-pointer">
+                        <a href="{{route('rental-items.show', $reserve->id ) }}" class="cursor-pointer">
                             <x-icons.eye/>
                         </a>
 
-                        <form action="{{route('rental-items.destroy', $rentalItem->id )}}" method="post"
+                        <form action="{{route('rental-items.destroy', $reserve->id )}}" method="post"
                               class="flex items-center">
                             @csrf
                             @method('DELETE')
@@ -66,7 +60,7 @@
                             </button>
                         </form>
 
-                        <a href="{{route('rental-items.edit', $rentalItem->id)}}"
+                        <a href="{{route('rental-items.edit', $reserve->id)}}"
                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                             <x-icons.edit/>
                         </a>
