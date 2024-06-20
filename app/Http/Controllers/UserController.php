@@ -25,6 +25,10 @@ class UserController extends Controller
             'cpf_cnpj'   => $request->cpf_cnpj,
             'user_notes' => $request->user_notes,
             'password'   => bcrypt($request->password),
+            'cep'        => $request->cep,
+            'rua'        => $request->rua,
+            'bairro'     => $request->bairro,
+            'cidade'     => $request->cidade,
         ]);
 
         return back();

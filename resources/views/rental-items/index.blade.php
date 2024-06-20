@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Items de Locação') }}
+            {{ __('Itens de Locação') }}
         </h2>
     </x-slot>
 
@@ -43,13 +43,13 @@
                         {{ $rentalItem->user?->name ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->price_per_hour ?? 'N/A' }}
+                        {{'R$ ' . $rentalItem->price_per_hour ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->price_per_day ?? 'N/A' }}
+                        {{'R$ ' . $rentalItem->price_per_day ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->price_per_month ?? 'N/A' }}
+                        {{'R$ ' . $rentalItem->price_per_month ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">
                         {{ $rentalItem->status }}

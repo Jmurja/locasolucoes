@@ -29,6 +29,10 @@ class User extends Authenticatable
         'role',
         'cpf_cnpj',
         'user_notes',
+        'cep',
+        'cidade',
+        'rua',
+        'bairro',
     ];
 
     /**

@@ -57,4 +57,29 @@ class ReserveController extends Controller
 
         return response()->json($events);
     }
+
+    public function show(Reserve $reserve)
+    {
+        return view('reserves.show', compact('reserve'));
+    }
+
+    public function destroy(Reserve $reserve)
+    {
+        $reserve->delete();
+
+        return redirect()->route('reserves.index');
+    }
+
+    public function edit(Reserve $reserve)
+    {
+        return view('reserves.edit', compact('reserve'));
+    }
+
+    public function update(Request $request, RentalItem $rentalItem)
+    {
+        $rentalItemUpdated = $request->all();
+        $rentalItem->update($rentalItemUpdated);
+
+        return redirect()->route('rental-items.index');
+    }
 }

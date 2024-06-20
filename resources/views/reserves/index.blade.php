@@ -47,11 +47,11 @@
                     </td>
 
                     <td class="flex items-center px-6 py-4 space-x-2">
-                        <a href="{{route('rental-items.show', $reserve->id ) }}" class="cursor-pointer">
+                        <a href="{{route('reserves.show', $reserve->id ) }}" class="cursor-pointer">
                             <x-icons.eye/>
                         </a>
 
-                        <form action="{{route('rental-items.destroy', $reserve->id )}}" method="post"
+                        <form action="{{route('reserves.destroy', $reserve->id )}}" method="post"
                               class="flex items-center">
                             @csrf
                             @method('DELETE')
@@ -60,7 +60,7 @@
                             </button>
                         </form>
 
-                        <a href="{{route('rental-items.edit', $reserve->id)}}"
+                        <a href="{{route('reserves.edit', $reserve->id)}}"
                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                             <x-icons.edit/>
                         </a>
