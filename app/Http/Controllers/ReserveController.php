@@ -58,9 +58,9 @@ class ReserveController extends Controller
         return response()->json($events);
     }
 
-    public function show(Reserve $reserve)
+    public function show(Reserve $reserf)
     {
-        return view('reserves.show', compact('reserve'));
+        return view('reserves.show', compact('reserf'));
     }
 
     public function destroy(Reserve $reserve)
@@ -70,16 +70,18 @@ class ReserveController extends Controller
         return redirect()->route('reserves.index');
     }
 
-    public function edit(Reserve $reserve)
+    public function edit(Reserve $reserf)
     {
-        return view('reserves.edit', compact('reserve'));
+        $users = User::all();
+
+        return view('reserves.edit', compact('reserf', 'users'));
     }
 
-    public function update(Request $request, RentalItem $rentalItem)
+    public function update(Request $request, Reserve $reserf)
     {
-        $rentalItemUpdated = $request->all();
-        $rentalItem->update($rentalItemUpdated);
+        $reserveUpdated = $request->all();
+        $reserf->update($reserveUpdated);
 
-        return redirect()->route('rental-items.index');
+        return redirect()->route('reserves.index');
     }
 }

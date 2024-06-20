@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         selectable: true,
         selectMirror: true,
         editable: true,
+        themeSystem: 'slate',
         eventDrop: function (info) {
             alert(info.event.title + " was dropped on " + info.event.start.toISOString());
 

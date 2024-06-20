@@ -17,6 +17,7 @@ return new class () extends Migration {
             $table->datetime('start_date');
             $table->datetime('end_date');
             $table->longText('reserve_notes')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });
