@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentalItemController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ReserveController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,7 @@ Route::middleware('auth')->group(function() {
     Route::resource('users', UserController::class);
     Route::get('reserves/json', [ReserveController::class, 'json']);
     Route::resource('reserves', ReserveController::class);
-    Route::resource('reports', ReserveController::class);
+    Route::resource('reports', ReportsController::class);
 });
 
 require __DIR__ . '/auth.php';
