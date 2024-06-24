@@ -1,13 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        contentHeight: 400,
+        contentHeight: 500,
         locale: 'pt-br',
         slotWidth: '10px',
         selectable: true,
         selectMirror: true,
         editable: true,
         themeSystem: 'slate',
+
         eventDrop: function (info) {
             alert(info.event.title + " was dropped on " + info.event.start.toISOString());
 

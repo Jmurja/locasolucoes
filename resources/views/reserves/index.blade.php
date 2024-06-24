@@ -67,7 +67,7 @@
                     </td>
                 </tr>
             @empty
-                <div class="text-center">Nenhuma Reserva Cadastrada</div>
+                <div class="text-center text-white">Nenhuma Reserva Cadastrada</div>
             @endforelse
             </tbody>
         </table>

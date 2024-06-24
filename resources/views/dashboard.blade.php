@@ -11,8 +11,7 @@
         </h1>
     </div>
 
-    <div class="flex justify-center text-white">
-        <div id='calendar'></div>
+    <div id='calendar'>
     </div>
     <link href='{{ asset("css/fullcalendar.css") }}' rel='stylesheet'/>
 </x-app-layout>
