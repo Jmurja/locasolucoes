@@ -5,9 +5,7 @@
         </h2>
     </x-slot>
 
-
     <script>
-
         function limpa_formulário_cep() {
             //Limpa valores do formulário de cep.
             document.getElementById('rua').value = ("");

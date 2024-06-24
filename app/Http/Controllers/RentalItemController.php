@@ -10,9 +10,10 @@ class RentalItemController extends Controller
 {
     public function index()
     {
-        $rentalItems = RentalItem::query()->orderBy('created_at', 'desc')->paginate(20);
+        $rentalItems   = RentalItem::query()->orderBy('created_at', 'desc')->paginate(20);
+        $landLordUsers = User::query()->where('role', 'landlord')->get();
 
-        return view('rental-items.index', compact('rentalItems'));
+        return view('rental-items.index', compact('rentalItems', 'landLordUsers'));
     }
 
     public function create()
