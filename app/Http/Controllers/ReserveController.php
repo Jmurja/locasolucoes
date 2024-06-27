@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 
 class ReserveController extends Controller
 {
-    public function index()
+    public function index(Request $request, Reserve $reserf)
     {
-        $reserves = Reserve::query()->orderBy('created_at', 'desc')->paginate(20);
+        $users       = User::query()->orderBy('created_at', 'desc')->paginate(20);
+        $RentalItems = RentalItem::all();
+        $reserves    = Reserve::query()->orderBy('created_at', 'desc')->paginate(20);
 
-        return view('reserves.index', compact('reserves'));
+        return view('reserves.index', compact('reserves', 'RentalItems', 'users', 'reserf'));
     }
 
     public function store(Request $request)
@@ -58,9 +60,11 @@ class ReserveController extends Controller
         return response()->json($events);
     }
 
-    public function show(Reserve $reserf)
+    public function show($id)
     {
-        return view('reserves.show', compact('reserf'));
+        $reserve = Reserve::find($id);
+
+        return response()->json($reserve);
     }
 
     public function destroy(Reserve $reserve)
@@ -72,9 +76,10 @@ class ReserveController extends Controller
 
     public function edit(Reserve $reserf)
     {
-        $users = User::all();
+        $users   = User::all();
+        $reserve = $reserf;
 
-        return view('reserves.edit', compact('reserf', 'users'));
+        return view('reserves.edit', compact('reserve', 'users'));
     }
 
     public function update(Request $request, Reserve $reserf)

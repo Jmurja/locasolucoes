@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="max-w-md mx-auto sm:px-6 lg:p-8 mt-8 bg-slate-800">
-        <form action="{{ route('reserves.update', $reserf->id) }}" method="post" class="max-w-md mx-auto">
+        <form action="{{ route('reserves.update', $reserve->id) }}" method="post" class="max-w-md mx-auto">
             @csrf
             @method('patch')
 
@@ -15,7 +15,7 @@
                 <label for="user_id" class="sr-only">Underline select</label>
                 <select id="user_id" name="user_id"
                         class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                    <option value="{{$reserf->user->id}}" selected> {{$reserf->user->name}}</option>
+                    <option value="{{$reserve->user->id}}" selected> {{$reserve->user->name}}</option>
                     @foreach($users as $user)
                         <option value="{{$user->id}}">{{$user->name}}</option>
                     @endforeach
@@ -23,7 +23,7 @@
             </div>
 
             <div class="relative z-0 w-full mb-5 group">
-                <input type="text" name="name" id="name" value="{{$reserf->start_date}}"
+                <input type="text" name="name" id="name" value="{{$reserve->start_date}}"
                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                        placeholder=" "/>
                 <label for="name"
@@ -33,7 +33,7 @@
             </div>
 
             <div class="relative z-0 w-full mb-5 group">
-                <input type="text" name="price_per_hour" id="price_per_hour" value="{{$reserf->end_date}}"
+                <input type="text" name="price_per_hour" id="price_per_hour" value="{{$reserve->end_date}}"
                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                        placeholder=" "/>
                 <label for="price_per_hour"
@@ -42,7 +42,7 @@
                 </label>
             </div>
             <div class="relative z-0 w-full mb-5 group">
-                <input type="text" name="price_per_day" id="price_per_day" value="{{$reserf->reserve_notes}}"
+                <input type="text" name="price_per_day" id="price_per_day" value="{{$reserve->reserve_notes}}"
                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                        placeholder=" "/>
                 <label for="price_per_day"

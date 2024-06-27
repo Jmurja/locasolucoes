@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const editUserModal = document.getElementById('editUserModal');
+    const editUserModal = document.getElementById('editUser');
 
-    document.querySelectorAll('button[data-modal-target="editUserModal"]').forEach(button => {
+    document.querySelectorAll('button[data-modal-target="editUser"]').forEach(button => {
         button.addEventListener('click', () => {
-            const userId = button.getAttribute('data-id');
+            const userId = button.getAttribute('data-user_id');
             const name = button.getAttribute('data-name');
             const email = button.getAttribute('data-email');
             const phone = button.getAttribute('data-phone');

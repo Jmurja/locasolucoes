@@ -11,6 +11,8 @@ Route::get('/', function() {
     return view('welcome');
 });
 
+Route::get('/pdf', [ReportsController::class, 'generatePdf'])->name('pdf.reports');
+
 Route::get('/dashboard', function() {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -23,6 +25,7 @@ Route::middleware('auth')->group(function() {
     Route::resource('users', UserController::class);
     Route::get('reserves/json', [ReserveController::class, 'json']);
     Route::resource('reserves', ReserveController::class);
+    Route::get('/reserves/{id}', [ReserveController::class, 'show']);
     Route::resource('reports', ReportsController::class);
 });
 

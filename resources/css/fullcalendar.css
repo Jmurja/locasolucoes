@@ -1,11 +1,11 @@
 /* FullCalendar Container */
 .fc {
     font-family: 'Arial, sans-serif';
-    background-color: #272b30;
+    background-color: #1e293b; /* slate-800 */
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    width: 60%; /* 100% - 20% de cada lado */
+    width: 60%;
     margin: 0 auto;
 }
 
@@ -14,7 +14,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Full height of the viewport */
+    min-height: 100vh;
 }
 
 /* Header Toolbar */
@@ -25,7 +25,7 @@
 }
 
 .fc-toolbar .fc-button {
-    background-color: #007bff;
+    background-color: #3b82f6; /* Blue */
     border: none;
     color: #fff;
     padding: 10px 15px;
@@ -34,7 +34,7 @@
 }
 
 .fc-toolbar .fc-button:hover {
-    background-color: #0056b3;
+    background-color: #2563eb; /* Darker blue */
 }
 
 .fc-toolbar h2 {
@@ -44,25 +44,30 @@
 
 /* Day Headers */
 .fc-day-header {
-    background-color: #383d41;
+    background-color: #334155; /* Slightly lighter than slate-800 */
     color: #fff;
     padding: 10px 0;
-    border: 1px solid #4e555b;
+    border: 1px solid #475569;
+}
+
+/* Day Headers Text Color */
+.fc-col-header-cell-cushion {
+    color: #ffffff; /* White */
 }
 
 /* Day Cells */
 .fc-daygrid-day {
-    border: 1px solid #4e555b;
-    background-color: #343a40;
+    border: 1px solid #475569;
+    background-color: #1e293b; /* slate-800 */
 }
 
 .fc-daygrid-day-number {
-    color: #007bff;
+    color: #3b82f6; /* Blue */
     font-weight: bold;
 }
 
 .fc-day-today {
-    background-color: #495057;
+    background-color: #2d3748; /* slate-700 */
 }
 
 .fc-daygrid-day-events {
@@ -71,7 +76,7 @@
 
 /* Event Styling */
 .fc-event {
-    background-color: #007bff;
+    background-color: #3b82f6; /* Blue */
     border: none;
     color: #fff;
     padding: 5px;
@@ -81,7 +86,7 @@
 
 .fc-event:hover {
     transform: scale(1.05);
-    background-color: #0056b3;
+    background-color: #2563eb; /* Darker blue */
 }
 
 .fc-event .fc-event-title {
@@ -100,18 +105,18 @@
 }
 
 .fc-popover .fc-popover-header {
-    background-color: #383d41;
+    background-color: #334155; /* Slightly lighter than slate-800 */
     color: #fff;
     padding: 10px;
 }
 
 .fc-popover .fc-popover-body {
-    background-color: #343a40;
+    background-color: #1e293b; /* slate-800 */
     padding: 10px;
 }
 
 .fc-popover .fc-event {
-    background-color: #007bff;
+    background-color: #3b82f6; /* Blue */
     border: none;
     color: #fff;
     padding: 5px;
