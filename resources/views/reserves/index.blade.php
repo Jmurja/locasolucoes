@@ -9,7 +9,6 @@
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-
                 <th scope="col" class="px-6 py-3">
                     Responsável
                 </th>
@@ -33,52 +32,39 @@
                     <td class="px-6 py-4">
                         {{ $reserve->user->name ?? 'N/A'}}
                     </td>
-
                     <td class="px-6 py-4">
                         {{ $reserve->rentalitem->name ?? 'N/A'}}
                     </td>
-
                     <td class="px-6 py-4">
                         {{ $reserve->start_date}}
                     </td>
-
                     <td class="px-6 py-4">
                         {{ $reserve->end_date}}
                     </td>
-
                     <td class="flex items-center px-6 py-4 space-x-2">
-                        <a href="{{route('reserves.show', $reserve->id ) }}" class="cursor-pointer">
+                        <a href="{{ route('reserves.show', $reserve->id) }}" class="cursor-pointer">
                             <x-icons.eye/>
                         </a>
-
-
-                        <button data-modal-target="destroy-item" data-modal-toggle="destroy-item"
-                                class="block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
-                                type="button">
+                        <button data-reserve-id="{{ $reserve->id }}"
+                                class="delete-button block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
+                                data-modal-target="delete-modal" data-modal-toggle="delete-modal" type="button">
                             <x-icons.trash/>
                         </button>
-
-
-                        @foreach($reserves as $reserve)
-                            <button data-modal-target="jetete" data-modal-toggle="editUser"
-                                    data-reserve-id="{{ $reserve->id }}"
-                                    class="edit-button font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                    type="button">
-                                <x-icons.edit/>
-                            </button>
-                        @endforeach
+                        <button data-reserve-id="{{ $reserve->id }}"
+                                class="edit-button font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                type="button">
+                            <x-icons.edit/>
+                        </button>
                     </td>
-                </tr
-
+                </tr>
             @empty
                 <div class="text-center text-white">Nenhuma Reserva Cadastrada</div>
             @endforelse
-
             </tbody>
         </table>
 
         <div class="my-4">
-            {{$reserves->links()}}
+            {{ $reserves->links() }}
         </div>
     </div>
 
@@ -88,8 +74,9 @@
         Cadastrar Reserva
     </button>
 
-    @include('reserves/modal/create-modal')
-    @include('reserves/modal/update-modal')
-    @include('reserves/modal/delete-modal')
+    @include('reserves.modal.create-modal')
+    @include('reserves.modal.update-modal')
+    @include('reserves.modal.delete-modal')
+    @include('reserves.modal.view-modal')
     @vite('resources/js/reserves.js')
 </x-app-layout>

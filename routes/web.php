@@ -25,7 +25,6 @@ Route::middleware('auth')->group(function() {
     Route::resource('users', UserController::class);
     Route::get('reserves/json', [ReserveController::class, 'json']);
     Route::resource('reserves', ReserveController::class);
-    Route::get('/reserves/{id}', [ReserveController::class, 'show']);
     Route::resource('reports', ReportsController::class);
 });
 
