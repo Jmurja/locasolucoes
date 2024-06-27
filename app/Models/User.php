@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -12,6 +13,7 @@ class User extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +23,16 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'mobile',
         'password',
+        'role',
+        'cpf_cnpj',
+        'user_notes',
+        'cep',
+        'cidade',
+        'rua',
+        'bairro',
     ];
 
     /**
@@ -50,5 +61,10 @@ class User extends Authenticatable
     public function rentalItems(): HasMany
     {
         return $this->hasMany(RentalItem::class);
+    }
+
+    public function reserves(): HasMany
+    {
+        return $this->hasMany(Reserve::class);
     }
 }

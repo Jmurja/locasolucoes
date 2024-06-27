@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Item de locação :: ') . $rentalItem->name }}
+            {{ __('Item de Locação : ') . $rentalItem->name }}
         </h2>
     </x-slot>
 
@@ -18,15 +18,15 @@
             </div>
             <div class="flex flex-col pt-3">
                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Preço por hora</dt>
-                <dd class="text-lg font-semibold">{{$rentalItem->price_per_hour}}</dd>
+                <dd class="text-lg font-semibold">{{'R$ ' .$rentalItem->price_per_hour}}</dd>
             </div>
             <div class="flex flex-col pt-3">
                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Preço por dia</dt>
-                <dd class="text-lg font-semibold">{{$rentalItem->price_per_day}}</dd>
+                <dd class="text-lg font-semibold">{{'R$ ' .$rentalItem->price_per_day}}</dd>
             </div>
             <div class="flex flex-col pt-3">
                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Preço por mês</dt>
-                <dd class="text-lg font-semibold">{{$rentalItem->price_per_month}}</dd>
+                <dd class="text-lg font-semibold">{{'R$ ' .$rentalItem->price_per_month}}</dd>
             </div>
             <div class="flex flex-col pt-3">
                 <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Status</dt>

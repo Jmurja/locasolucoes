@@ -21,8 +21,13 @@ return new class () extends Migration {
             $table->longText('user_notes')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('cep', 2048)->nullable();
+            $table->string('rua', 2048)->nullable();
+            $table->string('bairro', 2048)->nullable();
+            $table->string('cidade', 2048)->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function(Blueprint $table) {
