@@ -41,3 +41,5 @@
         </div>
     </div>
 </div>
+
+@vite('resources/js/delete-user.js')

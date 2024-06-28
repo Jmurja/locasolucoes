@@ -40,11 +40,11 @@ document.addEventListener('DOMContentLoaded', function () {
             editUserModal.classList.remove('hidden');
         });
     });
-    
+
     const modal = document.getElementById('delete-modal');
     const deleteForm = document.getElementById('delete-form');
     const buttons = document.querySelectorAll('[data-modal-toggle="delete-modal"]');
-    
+
     buttons.forEach(button => {
         button.addEventListener('click', function () {
             const userId = this.getAttribute('data-reserve-id');

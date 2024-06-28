@@ -35,26 +35,25 @@
                     <td class="px-6 py-4">
                         {{ $user->created_at }}
                     </td>
-
-                    <!---- View Modal -->
                     <td class="flex items-center px-6 py-4 space-x-2">
-                        <a href="{{ route('users.show', $user->id) }}" class="cursor-pointer">
-                            <x-icons.eye/>
-                        </a>
 
+                        <!-- View Modal -->
+                        <button data-modal-target="view-modal" data-modal-toggle="view-modal"
+                                class="cursor-pointer">
+                            <x-icons.eye/>
+                        </button>
                         <!-- Delete Modal -->
-                        <button data-modal-target="delete-modal" data-modal-toggle="delete-modal"
-                                data-user-id="{{ $user->id }}"
-                                class="block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
-                                type="button">
+                        <button data-reserve-id="{{ $user->id }}"
+                                class="delete-button block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
+                                data-modal-target="delete-modal" data-modal-toggle="delete-modal" type="button">
                             <x-icons.trash/>
                         </button>
 
-                        <!-- Edit Link -->
-                        <a href="{{ route('users.edit', $user->id) }}"
-                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                        <!-- Edit Modal -->
+                        <button data-modal-target="edit-modal" data-modal-toggle="edit-modal"
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline" type="button">
                             <x-icons.edit/>
-                        </a>
+                        </button>
                     </td>
                 </tr>
             @endforeach
@@ -92,5 +91,6 @@
                 });
             });
         </script>
+    </div>
 
 </x-app-layout>

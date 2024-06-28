@@ -1,9 +1,9 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const editButtons = document.querySelectorAll('.edit-button');
-        const modal = document.getElementById('jetete');
+        const modal = document.getElementById('edit-modal');
         const backdrop = document.getElementById('modalBackdrop');
-        const closeModalButtons = document.querySelectorAll('.close-modal');
+        const closeModalButtons = document.querySelectorAll('#close-modal');
 
         editButtons.forEach(button => {
             button.addEventListener('click', function () {
@@ -51,7 +51,7 @@
 <div id="modalBackdrop" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden"></div>
 
 <!-- Main modal -->
-<div id="jetete" tabindex="-1" aria-hidden="true"
+<div id="edit-modal" tabindex="-1" aria-hidden="true"
      class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full h-full">
     <div class="relative p-4 w-full max-w-md h-auto mx-auto my-auto">
         <!-- Modal content -->
@@ -61,7 +61,7 @@
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                     Editar Reserva
                 </h3>
-                <button type="button"
+                <button type="button" id="close-modal"
                         class="close-modal text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                          fill="none" viewBox="0 0 14 14">
@@ -73,6 +73,7 @@
                 </button>
             </div>
             <!-- Modal body -->
+
             <div class="max-w-md mx-auto sm:px-6 lg:p-8 mt-8 bg-slate-800">
                 <form id="editForm" action="{{ route('reserves.update', 'reserve-id-placeholder') }}" method="post"
                       class="max-w-md mx-auto">
@@ -90,7 +91,7 @@
                     </div>
 
                     <div class="relative z-0 w-full mb-5 group">
-                        <input type="text" name="start_date" id="update_start_date"
+                        <input type="datetime-local" name="start_date" id="update_start_date"
                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                placeholder=" "/>
                         <label for="update_start_date"
@@ -100,7 +101,7 @@
                     </div>
 
                     <div class="relative z-0 w-full mb-5 group">
-                        <input type="text" name="end_date" id="update_end_date"
+                        <input type="datetime-local" name="end_date" id="update_end_date"
                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                placeholder=" "/>
                         <label for="update_end_date"
