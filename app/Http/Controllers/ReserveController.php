@@ -67,8 +67,10 @@ class ReserveController extends Controller
         return response()->json($reserve);
     }
 
-    public function destroy(Reserve $reserve)
+    public function destroy(Reserve $reserf)
     {
+        $reserve = $reserf;
+
         $reserve->delete();
 
         return redirect()->route('reserves.index');
