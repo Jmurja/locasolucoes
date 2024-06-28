@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const editUserModal = document.getElementById('editUser');
-
+    const editUserForm = document.getElementById('editUserForm');
     document.querySelectorAll('button[data-modal-target="editUser"]').forEach(button => {
         button.addEventListener('click', () => {
             const userId = button.getAttribute('data-user_id');
@@ -40,17 +40,21 @@ document.addEventListener('DOMContentLoaded', function () {
             editUserModal.classList.remove('hidden');
         });
     });
-
     document.addEventListener('DOMContentLoaded', function () {
         const modal = document.getElementById('delete-modal');
         const deleteForm = document.getElementById('delete-form');
         const buttons = document.querySelectorAll('[data-modal-toggle="delete-modal"]');
 
+        deleteForm.method = 'DELETE';
+
         buttons.forEach(button => {
             button.addEventListener('click', function () {
-                const userId = this.getAttribute('data-user-id');
-                deleteForm.setAttribute('action', `/users/${userId}`);
+                const userId = this.getAttribute('data-reserve-id');
+                console.log(userId)
+                deleteForm.setAttribute('action', `/reserves/${userId}`);
             });
         });
     });
+
+
 });

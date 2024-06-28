@@ -41,15 +41,19 @@
                     <td class="px-6 py-4">
                         {{ $reserve->end_date}}
                     </td>
+                    <!-- Show Modal -->
                     <td class="flex items-center px-6 py-4 space-x-2">
                         <a href="{{ route('reserves.show', $reserve->id) }}" class="cursor-pointer">
                             <x-icons.eye/>
                         </a>
+                        <!-- Delete Modal -->
                         <button data-reserve-id="{{ $reserve->id }}"
                                 class="delete-button block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
                                 data-modal-target="delete-modal" data-modal-toggle="delete-modal" type="button">
                             <x-icons.trash/>
                         </button>
+
+                        <!-- Edit Modal -->
                         <button data-reserve-id="{{ $reserve->id }}"
                                 class="edit-button font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                 type="button">
@@ -69,7 +73,7 @@
     </div>
 
     <button data-modal-target="create-modal" data-modal-toggle="create-modal"
-            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="ml-8 block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             type="button">
         Cadastrar Reserva
     </button>

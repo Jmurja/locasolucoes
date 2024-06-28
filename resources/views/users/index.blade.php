@@ -42,7 +42,6 @@
                             <x-icons.eye/>
                         </a>
 
-
                         <!-- Delete Modal -->
                         <button data-modal-target="delete-modal" data-modal-toggle="delete-modal"
                                 data-user-id="{{ $user->id }}"
@@ -61,6 +60,10 @@
             @endforeach
             </tbody>
         </table>
+
+        <div class="my-4">
+            {{$users->links()}}
+        </div>
 
         <!-- Modal Create -->
         <button data-modal-target="create-user" data-modal-toggle="create-user"
