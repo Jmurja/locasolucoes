@@ -183,3 +183,109 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const viewButtons = document.querySelectorAll('.view-user-button');
+    const viewModal = document.getElementById('view-modal');
+
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const userId = this.getAttribute('data-user-id');
+            const userName = this.getAttribute('data-user-name');
+            const userEmail = this.getAttribute('data-user-email');
+            const userPhone = this.getAttribute('data-user-phone');
+            const userCpfCnpj = this.getAttribute('data-user-cpf_cnpj');
+            const userCep = this.getAttribute('data-user-cep');
+            const userRua = this.getAttribute('data-user-rua');
+            const userBairro = this.getAttribute('data-user-bairro');
+            const userCidade = this.getAttribute('data-user-cidade');
+            const userRole = this.getAttribute('data-user-role');
+            const userCreatedAt = this.getAttribute('data-user-created_at');
+            const userUpdatedAt = this.getAttribute('data-user-updated_at');
+
+            // Preenche os campos do modal com os dados do usuário
+            viewModal.querySelector('.modal-user-name').textContent = userName;
+            viewModal.querySelector('.modal-user-email').textContent = userEmail;
+            viewModal.querySelector('.modal-user-phone').textContent = userPhone;
+            viewModal.querySelector('.modal-user-cpf_cnpj').textContent = userCpfCnpj;
+            viewModal.querySelector('.modal-user-cep').textContent = userCep;
+            viewModal.querySelector('.modal-user-rua').textContent = userRua;
+            viewModal.querySelector('.modal-user-bairro').textContent = userBairro;
+            viewModal.querySelector('.modal-user-cidade').textContent = userCidade;
+            viewModal.querySelector('.modal-user-role').textContent = userRole;
+            viewModal.querySelector('.modal-user-created_at').textContent = userCreatedAt;
+            viewModal.querySelector('.modal-user-updated_at').textContent = userUpdatedAt;
+
+            // Abre o modal
+            const modal = new bootstrap.Modal(viewModal);
+            modal.show();
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Para o modal de visualização
+    const viewButtons = document.querySelectorAll('.view-user-button');
+    const viewModal = document.getElementById('view-modal');
+
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const userId = this.getAttribute('data-user-id');
+            const userName = this.getAttribute('data-user-name');
+            const userEmail = this.getAttribute('data-user-email');
+            const userPhone = this.getAttribute('data-user-phone');
+            const userCpfCnpj = this.getAttribute('data-user-cpf_cnpj');
+            const userCep = this.getAttribute('data-user-cep');
+            const userRua = this.getAttribute('data-user-rua');
+            const userBairro = this.getAttribute('data-user-bairro');
+            const userCidade = this.getAttribute('data-user-cidade');
+            const userRole = this.getAttribute('data-user-role');
+            const userCreatedAt = this.getAttribute('data-user-created_at');
+            const userUpdatedAt = this.getAttribute('data-user-updated_at');
+
+            // Preenche os campos do modal com os dados do usuário
+            viewModal.querySelector('.modal-user-name').textContent = userName;
+            viewModal.querySelector('.modal-user-email').textContent = userEmail;
+            viewModal.querySelector('.modal-user-phone').textContent = userPhone;
+            viewModal.querySelector('.modal-user-cpf_cnpj').textContent = userCpfCnpj;
+            viewModal.querySelector('.modal-user-cep').textContent = userCep;
+            viewModal.querySelector('.modal-user-rua').textContent = userRua;
+            viewModal.querySelector('.modal-user-bairro').textContent = userBairro;
+            viewModal.querySelector('.modal-user-cidade').textContent = userCidade;
+            viewModal.querySelector('.modal-user-role').textContent = userRole;
+            viewModal.querySelector('.modal-user-created_at').textContent = userCreatedAt;
+            viewModal.querySelector('.modal-user-updated_at').textContent = userUpdatedAt;
+
+            // Abre o modal
+            const modal = new bootstrap.Modal(viewModal);
+            modal.show();
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const editButtons = document.querySelectorAll('[data-modal-toggle="edit-modal"]');
+    const editModal = document.getElementById('edit-modal');
+    const editForm = document.getElementById('edit-user-form');
+
+    editButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const userId = this.getAttribute('data-user-id');
+            const userName = this.getAttribute('data-user-name');
+            const userEmail = this.getAttribute('data-user-email');
+            const userPhone = this.getAttribute('data-user-phone');
+            const userCpfCnpj = this.getAttribute('data-user-cpf_cnpj');
+            const userRole = this.getAttribute('data-user-role');
+
+            // Preenche os campos do modal com os dados do usuário
+            editModal.querySelector('input[name="name"]').value = userName;
+            editModal.querySelector('input[name="phone"]').value = userPhone;
+            editModal.querySelector('input[name="cpf_cnpj"]').value = userCpfCnpj;
+            editModal.querySelector('input[name="email"]').value = userEmail;
+            editModal.querySelector('select[name="role"]').value = userRole;
+
+            // Atualiza a action do formulário de edição
+            editForm.action = `/users/${userId}`;
+        });
+    });
+});

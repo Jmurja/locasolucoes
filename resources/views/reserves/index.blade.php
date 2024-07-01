@@ -42,11 +42,14 @@
                         {{ $reserve->end_date}}
                     </td>
                     <td class="flex items-center px-6 py-4 space-x-2">
+
                         <!-- View Modal -->
-                        <button data-modal-target="view-modal" data-modal-toggle="view-modal"
-                                class="cursor-pointer">
+                        <button data-reserve-id="{{ $reserve->id }}"
+                                data-modal-target="view-modal" data-modal-toggle="view-modal"
+                                class="cursor-pointer view-reserve-button">
                             <x-icons.eye/>
                         </button>
+
                         <!-- Delete Modal -->
                         <button data-reserve-id="{{ $reserve->id }}"
                                 class="delete-button block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
@@ -56,8 +59,10 @@
 
 
                         <!-- Edit Modal -->
-                        <button data-modal-target="edit-modal" data-modal-toggle="edit-modal"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline" type="button">
+                        <button data-reserve-id="{{ $reserve->id }}"
+                                data-modal-target="edit-modal" data-modal-toggle="edit-modal"
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline edit-reserve-button"
+                                type="button">
                             <x-icons.edit/>
                         </button>
                     </td>

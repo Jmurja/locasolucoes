@@ -28,31 +28,31 @@
                 <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
                     <div class="flex flex-col pb-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Nome</dt>
-                        <dd class="text-lg font-semibold">{{$rentalItem->name }}</dd>
+                        <dd class="text-lg font-semibold" data-field="name"></dd>
                     </div>
                     <div class="flex flex-col py-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Descrição</dt>
-                        <dd class="text-lg font-semibold">{{ $rentalItem->description }}</dd>
+                        <dd class="text-lg font-semibold" data-field="description"></dd>
                     </div>
                     <div class="flex flex-col pt-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Preço por hora</dt>
-                        <dd class="text-lg font-semibold">{{'R$ ' .$rentalItem->price_per_hour}}</dd>
+                        <dd class="text-lg font-semibold" data-field="price_per_hour"></dd>
                     </div>
                     <div class="flex flex-col pt-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Preço por dia</dt>
-                        <dd class="text-lg font-semibold">{{'R$ ' .$rentalItem->price_per_day}}</dd>
+                        <dd class="text-lg font-semibold" data-field="price_per_day"></dd>
                     </div>
                     <div class="flex flex-col pt-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Preço por mês</dt>
-                        <dd class="text-lg font-semibold">{{'R$ ' .$rentalItem->price_per_month}}</dd>
+                        <dd class="text-lg font-semibold" data-field="price_per_month"></dd>
                     </div>
                     <div class="flex flex-col pt-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Status</dt>
-                        <dd class="text-lg font-semibold">{{$rentalItem->status}}</dd>
+                        <dd class="text-lg font-semibold" data-field="status"></dd>
                     </div>
                     <div class="flex flex-col pt-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Observações</dt>
-                        <dd class="text-lg font-semibold">{{$rentalItem->rental_item_notes}}</dd>
+                        <dd class="text-lg font-semibold" data-field="rental_item_notes"></dd>
                     </div>
                 </dl>
             </div>

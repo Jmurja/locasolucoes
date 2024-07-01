@@ -22,32 +22,31 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <div
-                class=" p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
                     <div class="flex flex-col pb-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Nome</dt>
-                        <dd class="text-lg font-semibold">{{$reserve->user->name }}</dd>
+                        <dd class="text-lg font-semibold modal-reserve-name">name</dd>
                     </div>
                     <div class="flex flex-col pb-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Telefone</dt>
-                        <dd class="text-lg font-semibold">{{$reserve->user->phone }}</dd>
+                        <dd class="text-lg font-semibold modal-reserve-phone">phone</dd>
                     </div>
                     <div class="flex flex-col pb-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Início</dt>
-                        <dd class="text-lg font-semibold">{{$reserve->start_date }}</dd>
+                        <dd class="text-lg font-semibold modal-reserve-start">start_date</dd>
                     </div>
                     <div class="flex flex-col py-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Fim</dt>
-                        <dd class="text-lg font-semibold">{{ $reserve->end_date }}</dd>
+                        <dd class="text-lg font-semibold modal-reserve-end">end_date</dd>
                     </div>
                     <div class="flex flex-col pt-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Descrição</dt>
-                        <dd class="text-lg font-semibold">{{$reserve->reserve_notes}}</dd>
+                        <dd class="text-lg font-semibold modal-reserve-notes">reserve_notes</dd>
                     </div>
                     <div class="flex flex-col pt-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Criado em:</dt>
-                        <dd class="text-lg font-semibold">{{$reserve->created_at}}</dd>
+                        <dd class="text-lg font-semibold modal-reserve-created">created_at</dd>
                     </div>
                 </dl>
             </div>

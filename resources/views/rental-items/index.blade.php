@@ -57,29 +57,32 @@
                     </td>
 
                     <td class="flex items-center px-6 py-4 space-x-2">
-
                         <!-- View Modal -->
                         <button data-modal-target="view-modal" data-modal-toggle="view-modal"
-                                class="cursor-pointer">
+                                class="cursor-pointer view-item-btn" data-id="{{ $rentalItem->id }}">
                             <x-icons.eye/>
                         </button>
                         <!-- Delete Modal -->
+                        <!-- Delete Modal -->
                         <button data-modal-target="delete-modal" data-modal-toggle="delete-modal"
-                                class="block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
-                                type="button">
+                                class="delete-item-btn block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
+                                data-id="{{ $rentalItem->id }}" type="button">
                             <x-icons.trash/>
                         </button>
 
+
                         <!-- Edit Modal -->
                         <button data-modal-target="edit-modal" data-modal-toggle="edit-modal"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline" type="button">
+                                class="edit-item-btn font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                data-id="{{ $rentalItem->id }}" type="button">
                             <x-icons.edit/>
                         </button>
+
                     </td>
                 </tr>
-
             @endforeach
             </tbody>
+
         </table>
 
         <div class="my-4">

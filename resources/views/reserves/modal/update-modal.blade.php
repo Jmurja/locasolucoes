@@ -1,55 +1,3 @@
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const editButtons = document.querySelectorAll('.edit-button');
-        const modal = document.getElementById('edit-modal');
-        const backdrop = document.getElementById('modalBackdrop');
-        const closeModalButtons = document.querySelectorAll('#close-modal');
-
-        editButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const reserveId = this.getAttribute('data-reserve-id');
-
-                // Use fetch API to get the reserve data
-                fetch(`/reserves/${reserveId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Populate modal fields with data
-                        document.getElementById('update_user_id').value = data.user_id;
-                        document.getElementById('update_start_date').value = data.start_date;
-                        document.getElementById('update_end_date').value = data.end_date;
-                        document.getElementById('update_reserve_notes').value = data.reserve_notes;
-
-                        // Update the form action to include the correct reserve ID
-                        document.getElementById('editForm').action = `/reserves/${reserveId}`;
-
-                        // Open the modal and show backdrop
-                        modal.classList.remove('hidden');
-                        backdrop.classList.remove('hidden');
-                    })
-                    .catch(error => console.error('Error:', error));
-            });
-        });
-
-        // Close modal logic
-        closeModalButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                modal.classList.add('hidden');
-                backdrop.classList.add('hidden');
-            });
-        });
-
-        // Close modal when clicking outside the modal content
-        backdrop.addEventListener('click', function () {
-            modal.classList.add('hidden');
-            backdrop.classList.add('hidden');
-        });
-    });
-</script>
-
-
-<!-- Modal backdrop -->
-<div id="modalBackdrop" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden"></div>
-
 <!-- Main modal -->
 <div id="edit-modal" tabindex="-1" aria-hidden="true"
      class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full h-full">
@@ -73,7 +21,6 @@
                 </button>
             </div>
             <!-- Modal body -->
-
             <div class="max-w-md mx-auto sm:px-6 lg:p-8 mt-8 bg-slate-800">
                 <form id="editForm" action="{{ route('reserves.update', 'reserve-id-placeholder') }}" method="post"
                       class="max-w-md mx-auto">
@@ -81,7 +28,7 @@
                     @method('patch')
 
                     <div class="relative z-0 w-full mb-5 group">
-                        <label for="user_id" class="sr-only">Underline select</label>
+                        <label for="update_user_id" class="sr-only">Underline select</label>
                         <select id="update_user_id" name="user_id"
                                 class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                             @foreach($users as $user)

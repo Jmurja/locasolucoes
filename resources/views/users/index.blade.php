@@ -38,10 +38,25 @@
                     <td class="flex items-center px-6 py-4 space-x-2">
 
                         <!-- View Modal -->
-                        <button data-modal-target="view-modal" data-modal-toggle="view-modal"
-                                class="cursor-pointer">
+                        <button data-user-id="{{ $user->id }}"
+                                data-user-name="{{ $user->name }}"
+                                data-user-email="{{ $user->email }}"
+                                data-user-phone="{{ $user->phone }}"
+                                data-user-cpf_cnpj="{{ $user->cpf_cnpj }}"
+                                data-user-cep="{{ $user->cep }}"
+                                data-user-rua="{{ $user->rua }}"
+                                data-user-bairro="{{ $user->bairro }}"
+                                data-user-cidade="{{ $user->cidade }}"
+                                data-user-role="{{ $user->role }}"
+                                data-user-created_at="{{ $user->created_at }}"
+                                data-user-updated_at="{{ $user->updated_at }}"
+                                data-modal-target="view-modal"
+                                data-modal-toggle="view-modal"
+                                class="cursor-pointer view-user-button">
                             <x-icons.eye/>
                         </button>
+
+
                         <!-- Delete Modal -->
                         <button data-reserve-id="{{ $user->id }}"
                                 class="delete-button block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
@@ -50,7 +65,13 @@
                         </button>
 
                         <!-- Edit Modal -->
-                        <button data-modal-target="edit-modal" data-modal-toggle="edit-modal"
+                        <button data-user-id="{{ $user->id }}"
+                                data-user-name="{{ $user->name }}"
+                                data-user-email="{{ $user->email }}"
+                                data-user-phone="{{ $user->phone }}"
+                                data-user-cpf_cnpj="{{ $user->cpf_cnpj }}"
+                                data-user-role="{{ $user->role }}"
+                                data-modal-target="edit-modal" data-modal-toggle="edit-modal"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline" type="button">
                             <x-icons.edit/>
                         </button>
@@ -70,7 +91,7 @@
                 type="button">Criar Novo Usuário
         </button>
 
-        @vite('resources/js/validate.js')
+        @vite('resources/js/user.js')
         @include('users/modal/create-user')
         @include('users/modal/delete-modal')
         @include('users/modal/update-modal')

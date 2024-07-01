@@ -25,18 +25,6 @@
                 <form action="{{route('rental-items.update', $rentalItem->id)}}" method="post" class="max-w-md mx-auto">
                     @csrf
                     @method('patch')
-
-                    <div class="relative z-0 w-full mb-5 group">
-                        <label for="user_id" class="sr-only">Underline select</label>
-                        <select id="user_id" name="user_id"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                            <option value="{{$rentalItem->user->id}}" selected> {{$rentalItem->user->name}}</option>
-                            @foreach($landLordUsers as $landLordUser)
-                                <option value="{{$landLordUser->id}}">{{$landLordUser->name}}</option>
-                            @endforeach
-
-                        </select>
-                    </div>
                     <div class="relative z-0 w-full mb-5 group">
                         <input type="text" name="name" id="name" value="{{$rentalItem->name}}"
                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"

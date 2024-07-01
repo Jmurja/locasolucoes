@@ -62,7 +62,7 @@ class ReserveController extends Controller
 
     public function show($id)
     {
-        $reserve = Reserve::find($id);
+        $reserve = Reserve::with(['user', 'rentalitem'])->find($id);
 
         return response()->json($reserve);
     }
