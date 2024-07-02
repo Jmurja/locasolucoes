@@ -11,7 +11,7 @@ export default defineConfig({
                 'resources/js/validate.js',
                 'resources/js/rental-items.js',
                 'resources/js/fullcalendar.js',
-                'resources/js/fullcalendar.css',
+                'resources/css/fullcalendar.css',
             ],
             refresh: true,
         }),

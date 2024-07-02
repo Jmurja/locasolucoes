@@ -12,6 +12,17 @@
     </div>
 
     <div id='calendar'>
+
     </div>
-    <link href='{{ asset("css/fullcalendar.css") }}' rel='stylesheet'/>
+
+    @vite('resources/js/fullcalendar.js')
+    @vite('resources/js/solicitar-reserva.js')
+    @include('dashboard.modal.solicitar-reserva-modal')
+    @include('dashboard.modal.termo-service-modal')
+
+    <!-- Modal Service -->
+    <button id="modalToggleButton" data-modal-target="solicitar-reserva" data-modal-toggle="solicitar-reserva"
+            class="hidden">s
+    </button>
+
 </x-app-layout>

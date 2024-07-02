@@ -1,29 +1,53 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
+    var modalToggleButton = document.getElementById('modalToggleButton');
+    var eventForm = document.getElementById('eventForm');
+    var eventTitleInput = document.getElementById('eventTitle');
+    var eventStartInput = document.getElementById('eventStart');
+    var currentEventDate = null;
+
     var calendar = new FullCalendar.Calendar(calendarEl, {
         contentHeight: 500,
         locale: 'pt-br',
-        slotWidth: '10px',
         selectable: true,
         selectMirror: true,
         editable: true,
         themeSystem: 'slate',
-
-        eventDrop: function (info) {
-            alert(info.event.title + " was dropped on " + info.event.start.toISOString());
-
-            if (!confirm("Are you sure about this change?")) {
-                info.revert();
-            }
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'mes',
         },
+        views: {
+            mes: {
+                type: 'dayGridMonth',
+                buttonText: 'Mês'
+            },
+        },
+
+        dateClick: function (info) {
+            currentEventDate = info.dateStr;
+            eventStartInput.value = currentEventDate + 'T00:00';
+            modalToggleButton.click();
+        },
+
         events: '/reserves/json',
-        initialView: 'dayGridMonth'
-
+        initialView: 'mes'
     });
-    calendar.render();
-});
 
-var event = calendar.getEventById('eventId');
-if (event) {
-    event.setProp('title', 'Updated Event Title');
-}
+    calendar.render();
+
+    eventForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (eventTitleInput.value) {
+            calendar.addEvent({
+                title: eventTitleInput.value,
+                start: currentEventDate,
+                allDay: true
+            });
+            eventTitleInput.value = '';
+            eventStartInput.value = '';
+            document.querySelector('[data-modal-toggle="crud-modal"]').click();
+        }
+    });
+});
