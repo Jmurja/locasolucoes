@@ -13,15 +13,10 @@ document.addEventListener('DOMContentLoaded', function () {
         selectMirror: true,
         editable: true,
         themeSystem: 'slate',
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'mes',
-        },
         views: {
             mes: {
                 type: 'dayGridMonth',
-                buttonText: 'Mês'
+                buttonText: 'Mês',
             },
         },
 

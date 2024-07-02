@@ -64,8 +64,8 @@ function limpa_formulário_cnpj() {
 window.callback_cnpj = function (conteudo) {
     if (!("erro" in conteudo)) {
         // Atualiza os campos com os valores.
-        document.getElementById('eventResponsible').value = (conteudo.nome);
-        document.getElementById('eventCompany').value = (conteudo.fantasia || conteudo.nome);
+        document.getElementById('eventResponsible').value = (conteudo.qsa[0].nome);
+        document.getElementById('eventCompany').value = (conteudo.nome);
         document.getElementById('eventCep').value = (conteudo.cep.replace(/\D/g, ''));
         pesquisacep(conteudo.cep.replace(/\D/g, '')); // Chama a função para buscar o endereço completo
     } else {
