@@ -7,11 +7,14 @@ use App\Models\Reserve;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReportsController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('view-users');
+
         $users       = User::all();
         $rentalItems = RentalItem::all();
         $reserves    = [];

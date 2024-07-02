@@ -57,7 +57,6 @@
                             <x-icons.trash/>
                         </button>
 
-
                         <!-- Edit Modal -->
                         <button data-reserve-id="{{ $reserve->id }}"
                                 data-modal-target="edit-modal" data-modal-toggle="edit-modal"

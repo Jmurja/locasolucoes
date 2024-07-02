@@ -262,7 +262,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-
 document.addEventListener('DOMContentLoaded', function () {
     const editButtons = document.querySelectorAll('[data-modal-toggle="edit-modal"]');
     const editModal = document.getElementById('edit-modal');
@@ -275,17 +274,35 @@ document.addEventListener('DOMContentLoaded', function () {
             const userEmail = this.getAttribute('data-user-email');
             const userPhone = this.getAttribute('data-user-phone');
             const userCpfCnpj = this.getAttribute('data-user-cpf_cnpj');
+            const userCep = this.getAttribute('data-user-cep');
+            const userRua = this.getAttribute('data-user-rua');
+            const userBairro = this.getAttribute('data-user-bairro');
+            const userCidade = this.getAttribute('data-user-cidade');
             const userRole = this.getAttribute('data-user-role');
 
             // Preenche os campos do modal com os dados do usuário
             editModal.querySelector('input[name="name"]').value = userName;
+            editModal.querySelector('input[name="email"]').value = userEmail;
             editModal.querySelector('input[name="phone"]').value = userPhone;
             editModal.querySelector('input[name="cpf_cnpj"]').value = userCpfCnpj;
-            editModal.querySelector('input[name="email"]').value = userEmail;
+            editModal.querySelector('input[name="cep"]').value = userCep;
+            editModal.querySelector('input[name="rua"]').value = userRua;
+            editModal.querySelector('input[name="bairro"]').value = userBairro;
+            editModal.querySelector('input[name="cidade"]').value = userCidade;
             editModal.querySelector('select[name="role"]').value = userRole;
 
-            // Atualiza a action do formulário de edição
+            // Define a action do formulário para o usuário específico
             editForm.action = `/users/${userId}`;
+
+            // Adiciona evento blur no campo CEP do modal de edição
+            const cepInput = editModal.querySelector('input[name="cep"]');
+            cepInput.addEventListener('blur', function () {
+                pesquisacep(this.value);
+            });
+
+            // Abre o modal (caso não esteja usando Bootstrap, pode precisar ajustar a lógica de abertura do modal)
+            const modal = new bootstrap.Modal(editModal);
+            modal.show();
         });
     });
 });

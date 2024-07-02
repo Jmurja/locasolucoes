@@ -66,19 +66,18 @@ document.addEventListener('DOMContentLoaded', function () {
             const reserve = await response.json();
 
             // Fill the modal with the reserve data
-            viewModal.querySelector('.modal-reserve-name').textContent = reserve.user.name;
-            viewModal.querySelector('.modal-reserve-phone').textContent = reserve.user.phone;
-            viewModal.querySelector('.modal-reserve-start').textContent = reserve.start_date;
-            viewModal.querySelector('.modal-reserve-end').textContent = reserve.end_date;
-            viewModal.querySelector('.modal-reserve-notes').textContent = reserve.reserve_notes;
-            viewModal.querySelector('.modal-reserve-created').textContent = reserve.created_at;
+            viewModal.querySelector('#modal-reserve-user').textContent = reserve.user.name;
+            viewModal.querySelector('#modal-reserve-space').textContent = reserve.rentalitem.name;
+            viewModal.querySelector('#modal-reserve-start').textContent = reserve.start_date;
+            viewModal.querySelector('#modal-reserve-end').textContent = reserve.end_date;
+            viewModal.querySelector('#modal-reserve-notes').textContent = reserve.reserve_notes;
 
             // Show the modal
-            const modal = new bootstrap.Modal(viewModal);
-            modal.show();
+            viewModal.classList.remove('hidden');
         });
     });
 });
+
 document.addEventListener('DOMContentLoaded', function () {
     // Modal de edição
     const editButtons = document.querySelectorAll('.edit-reserve-button');

@@ -16,6 +16,9 @@
                     Nome
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    CPF/CPNJ
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Criado em
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -31,6 +34,9 @@
                     </th>
                     <td class="px-6 py-4">
                         {{ $user->name }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $user->cpf_cnpj }}
                     </td>
                     <td class="px-6 py-4">
                         {{ $user->created_at }}
@@ -65,13 +71,12 @@
                         </button>
 
                         <!-- Edit Modal -->
-                        <button data-user-id="{{ $user->id }}"
-                                data-user-name="{{ $user->name }}"
-                                data-user-email="{{ $user->email }}"
-                                data-user-phone="{{ $user->phone }}"
-                                data-user-cpf_cnpj="{{ $user->cpf_cnpj }}"
-                                data-user-role="{{ $user->role }}"
-                                data-modal-target="edit-modal" data-modal-toggle="edit-modal"
+                        <button data-modal-target="edit-modal" data-modal-toggle="edit-modal"
+                                data-user-id="{{ $user->id }}" data-user-name="{{ $user->name }}"
+                                data-user-email="{{ $user->email }}" data-user-phone="{{ $user->phone }}"
+                                data-user-cpf_cnpj="{{ $user->cpf_cnpj }}" data-user-cep="{{ $user->cep }}"
+                                data-user-rua="{{ $user->rua }}" data-user-bairro="{{ $user->bairro }}"
+                                data-user-cidade="{{ $user->cidade }}" data-user-role="{{ $user->role }}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline" type="button">
                             <x-icons.edit/>
                         </button>
