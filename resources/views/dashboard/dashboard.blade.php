@@ -11,9 +11,7 @@
         </h1>
     </div>
 
-    <div id='calendar'>
-
-    </div>
+    <div id='calendar'></div>
 
     @vite('resources/js/fullcalendar.js')
     @vite('resources/js/solicitar-reserva.js')

@@ -25,88 +25,110 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="mb-4">
                         <label for="eventTitle"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titulo do
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título do
                             Evento</label>
                         <input type="text" name="title" id="eventTitle"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o Título do seu Evento" required="">
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventResponsible"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsável</label>
-                        <input type="text" name="responsible" id="eventResponsible"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o Responsável pela locação" required="">
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventCompany"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa</label>
-                        <input type="text" name="company" id="eventCompany"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o nome da Empresa" required="">
+                               placeholder="Digite o Título do seu Evento" required>
+                        <small class="text-red-500 text-xs"></small>
                     </div>
                     <div class="mb-4">
                         <label for="eventCpfCnpj"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CPF/CNPJ</label>
                         <input type="text" name="cpf_cnpj" id="eventCpfCnpj" onblur="pesquisacnpj(this.value)"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o CPF/CNPJ" required="">
+                               placeholder="Digite o CPF/CNPJ" required>
+                        <small class="text-red-500 text-xs"></small>
+                    </div>
+                    <div class="mb-4">
+                        <label for="eventResponsible"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsável</label>
+                        <input type="text" name="responsible" id="eventResponsible"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                               placeholder="Digite o Responsável pela locação" required>
+                        <small class="text-red-500 text-xs"></small>
+                    </div>
+                    <div class="mb-4">
+                        <label for="eventCompany"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa</label>
+                        <input type="text" name="company" id="eventCompany"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                               placeholder="Digite o nome da Empresa" required>
+                        <small class="text-red-500 text-xs"></small>
+                    </div>
+                    <div class="mb-4">
+                        <label for="eventPhone"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefone</label>
+                        <input type="text" name="phone" id="eventPhone"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                               placeholder="Digite o Telefone" required>
+                        <small class="text-red-500 text-xs"></small>
+                    </div>
+                    <div class="mb-4">
+                        <label for="eventEmail"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                        <input type="email" name="email" id="eventEmail"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                               placeholder="Digite o Email" required>
+                        <small class="text-red-500 text-xs"></small>
                     </div>
                     <div class="mb-4">
                         <label for="eventCep"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CEP</label>
                         <input type="text" name="cep" id="eventCep" onblur="pesquisacep(this.value)"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o CEP da Empresa" required="">
+                               placeholder="Digite o CEP da Empresa" required>
+                        <small class="text-red-500 text-xs"></small>
                     </div>
-
                     <div class="mb-4">
                         <label for="eventCity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cidade</label>
                         <input type="text" name="city" id="eventCity"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite a city" required="">
+                               placeholder="Digite a cidade" required>
+                        <small class="text-red-500 text-xs"></small>
                     </div>
                     <div class="mb-4">
                         <label for="eventStreet"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rua</label>
                         <input type="text" name="street" id="eventStreet"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite a Rua" required="">
+                               placeholder="Digite a Rua" required>
+                        <small class="text-red-500 text-xs"></small>
                     </div>
                     <div class="mb-4">
                         <label for="eventNeighborhood"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bairro</label>
                         <input type="text" name="neighborhood" id="eventNeighborhood"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o Bairro" required="">
+                               placeholder="Digite o Bairro" required>
+                        <small class="text-red-500 text-xs"></small>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="mb-4">
                         <label for="eventStart"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Inicio</label>
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Início</label>
                         <input type="datetime-local" name="start" id="eventStart"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               required="">
+                               required>
                     </div>
                     <div class="mb-4">
                         <label for="eventEnd"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fim</label>
                         <input type="datetime-local" name="end" id="eventEnd"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               required="">
+                               required>
                     </div>
                 </div>
 
-
                 <div class="flex items-center">
-                    <input id="link-checkbox" type="checkbox" value=""
+                    <input id="termsCheckbox" type="checkbox" value=""
                            class="w-4 mb-6 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="link-checkbox" class="ms-2 mb-6 text-sm font-medium text-gray-900 dark:text-gray-300">Eu
+                    <label for="termsCheckbox" class="ms-2 mb-6 text-sm font-medium text-gray-900 dark:text-gray-300">Eu
                         li e concordo com <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Termos de
                             uso</a>.</label>
+                    <small class="text-red-500 text-xs"></small>
                 </div>
-
 
                 <button type="submit"
                         class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

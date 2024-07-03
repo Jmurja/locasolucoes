@@ -1,11 +1,11 @@
 <!-- Main modal -->
 <div id="view-modal" tabindex="-1" aria-hidden="true"
      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-6 w-full max-w-md max-h-full">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
-            <div class="flex items-center justify-between p-5 border-b rounded-t dark:border-gray-600">
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                     Sala:
                 </h3>
@@ -22,38 +22,34 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <div class="p-8 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <dl class="max-w-md text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
-                        <div class="flex flex-col">
-                            <dt class="mb-2 text-gray-500 md:text-lg dark:text-gray-400">Nome</dt>
-                            <dd class="text-lg font-semibold" data-field="name"></dd>
-                        </div>
-                        <div class="flex flex-col">
-                            <dt class="mb-2 text-gray-500 md:text-lg dark:text-gray-400">Status</dt>
-                            <dd class="text-lg font-semibold" data-field="status"></dd>
-                        </div>
+            <div class="p-4 md:p-5 bg-white border border-gray-200 rounded-b-lg dark:bg-gray-800 dark:border-gray-700">
+                <dl class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-900 dark:text-white">
+                    <div class="mb-4">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Nome</dt>
+                        <dd class="text-lg font-semibold" data-field="name"></dd>
                     </div>
-                    <div class="flex flex-col py-4">
-                        <dt class="mb-2 text-gray-500 md:text-lg dark:text-gray-400">Descrição</dt>
+                    <div class="mb-4">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Status</dt>
+                        <dd class="text-lg font-semibold" data-field="status"></dd>
+                    </div>
+                    <div class="mb-4 md:col-span-2">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Descrição</dt>
                         <dd class="text-lg font-semibold" data-field="description"></dd>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
-                        <div class="flex flex-col">
-                            <dt class="mb-2 text-gray-500 md:text-lg dark:text-gray-400">Preço por hora</dt>
-                            <dd class="text-lg font-semibold" data-field="price_per_hour"></dd>
-                        </div>
-                        <div class="flex flex-col">
-                            <dt class="mb-2 text-gray-500 md:text-lg dark:text-gray-400">Preço por dia</dt>
-                            <dd class="text-lg font-semibold" data-field="price_per_day"></dd>
-                        </div>
+                    <div class="mb-4">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Preço por hora</dt>
+                        <dd class="text-lg font-semibold" data-field="price_per_hour"></dd>
                     </div>
-                    <div class="flex flex-col py-4">
-                        <dt class="mb-2 text-gray-500 md:text-lg dark:text-gray-400">Preço por mês</dt>
+                    <div class="mb-4">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Preço por dia</dt>
+                        <dd class="text-lg font-semibold" data-field="price_per_day"></dd>
+                    </div>
+                    <div class="mb-4 md:col-span-2">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Preço por mês</dt>
                         <dd class="text-lg font-semibold" data-field="price_per_month"></dd>
                     </div>
-                    <div class="flex flex-col py-4">
-                        <dt class="mb-2 text-gray-500 md:text-lg dark:text-gray-400">Observações</dt>
+                    <div class="mb-4 md:col-span-2">
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Observações</dt>
                         <dd class="text-lg font-semibold" data-field="rental_item_notes"></dd>
                     </div>
                 </dl>
