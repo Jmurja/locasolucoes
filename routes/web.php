@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function() {
     Route::get('reserves/json', [ReserveController::class, 'json']);
     Route::resource('reserves', ReserveController::class);
     Route::resource('reports', ReportsController::class);
+    Route::get('/reservas/search', [ReserveController::class, 'search'])->name('reservas.search');
 });
 
 require __DIR__ . '/auth.php';

@@ -21,7 +21,8 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form id="eventForm" class="p-4 md:p-5">
+            <form action="{{ route('reserves.store') }}" method="post" class="p-4 md:p-5 space-y-6">
+                @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="mb-4">
                         <label for="eventTitle"
@@ -124,8 +125,10 @@
                 <div class="flex items-center">
                     <input id="termsCheckbox" type="checkbox" value=""
                            class="w-4 mb-6 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="termsCheckbox" class="ms-2 mb-6 text-sm font-medium text-gray-900 dark:text-gray-300">Eu
-                        li e concordo com <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Termos de
+                    <label for="termsCheckbox"
+                           class="ms-2 mb-6 text-sm font-medium text-gray-900 dark:text-gray-300">Eu
+                        li e concordo com <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Termos
+                            de
                             uso</a>.</label>
                     <small class="text-red-500 text-xs"></small>
                 </div>
