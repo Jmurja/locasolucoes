@@ -9,11 +9,24 @@ use Illuminate\Support\Facades\Gate;
 
 class RentalItemController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         Gate::authorize('view-users');
 
-        $rentalItems   = RentalItem::query()->orderBy('created_at', 'desc')->paginate(7);
+        $query = RentalItem::query();
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('price_per_hour', 'LIKE', "%{$search}%")
+                    ->orWhere('price_per_day', 'LIKE', "%{$search}%")
+                    ->orWhere('price_per_month', 'LIKE', "%{$search}%")
+                    ->orWhere('status', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $rentalItems   = $query->orderBy('created_at', 'desc')->paginate(7);
         $landLordUsers = User::query()->where('role', 'landlord')->get();
 
         return view('rental-items.index', compact('rentalItems', 'landLordUsers'));

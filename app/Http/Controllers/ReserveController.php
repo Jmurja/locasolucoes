@@ -9,13 +9,28 @@ use Illuminate\Http\Request;
 
 class ReserveController extends Controller
 {
-    public function index(Request $request, Reserve $reserf)
+    public function index(Request $request)
     {
-        $users       = User::query()->orderBy('created_at', 'desc')->paginate(20);
-        $RentalItems = RentalItem::all();
-        $reserves    = Reserve::query()->orderBy('created_at', 'desc')->paginate(20);
+        $query = Reserve::query();
 
-        return view('reserves.index', compact('reserves', 'RentalItems', 'users', 'reserf'));
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->whereHas('user', function($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('role', 'LIKE', "%{$search}%");
+            })
+                ->orWhereHas('rentalitem', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                })
+                ->orWhere('start_date', 'LIKE', "%{$search}%")
+                ->orWhere('end_date', 'LIKE', "%{$search}%");
+        }
+
+        $reserves    = $query->orderBy('created_at', 'desc')->paginate(20);
+        $users       = User::all();
+        $RentalItems = RentalItem::all();
+
+        return view('reserves.index', compact('reserves', 'RentalItems', 'users'));
     }
 
     public function store(Request $request)
