@@ -17,13 +17,20 @@ class ReportsController extends Controller
 
         $users       = User::all();
         $rentalItems = RentalItem::all();
-        $reserves    = [];
+        $reserves    = Reserve::query();
 
-        if ($request->has('start_date', 'end_date')) {
+        if ($request->filled('start_date') && $request->filled('end_date')) {
             $start_date = $request->input('start_date');
             $end_date   = $request->input('end_date');
-            $reserves   = Reserve::whereBetween('start_date', [$start_date, $end_date])->get();
+            $reserves->whereBetween('start_date', [$start_date, $end_date]);
         }
+
+        if ($request->filled('user_id')) {
+            $user_id = $request->input('user_id');
+            $reserves->where('user_id', $user_id);
+        }
+
+        $reserves = $reserves->get();
 
         return view('reports.index', compact('users', 'rentalItems', 'reserves'));
     }
@@ -32,13 +39,20 @@ class ReportsController extends Controller
     {
         $users       = User::all();
         $rentalItems = RentalItem::all();
-        $reserves    = [];
+        $reserves    = Reserve::query();
 
-        if ($request->has('start_date', 'end_date')) {
+        if ($request->filled('start_date') && $request->filled('end_date')) {
             $start_date = $request->input('start_date');
             $end_date   = $request->input('end_date');
-            $reserves   = Reserve::whereBetween('start_date', [$start_date, $end_date])->get();
+            $reserves->whereBetween('start_date', [$start_date, $end_date]);
         }
+
+        if ($request->filled('user_id')) {
+            $user_id = $request->input('user_id');
+            $reserves->where('user_id', $user_id);
+        }
+
+        $reserves = $reserves->get();
 
         $pdf = Pdf::loadView('reports.pdf', compact('users', 'rentalItems', 'reserves'));
 

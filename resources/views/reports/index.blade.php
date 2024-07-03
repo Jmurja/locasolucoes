@@ -13,7 +13,7 @@
                 <div class="relative z-0 w-full group">
                     <input type="datetime-local" name="start_date" id="start_date"
                            class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                           placeholder=" " required>
+                           placeholder=" ">
                     <label for="start_date"
                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Início
@@ -23,12 +23,26 @@
                 <div class="relative z-0 w-full group">
                     <input type="datetime-local" name="end_date" id="end_date"
                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                           placeholder=" " required>
+                           placeholder=" ">
                     <label for="end_date"
                            class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Fim
                     </label>
                 </div>
+            </div>
+
+            <div class="relative z-0 w-full group">
+                <select name="user_id" id="user_id"
+                        class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                    <option value="" selected>Selecione o Responsável</option>
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+                <label for="user_id"
+                       class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    Responsável
+                </label>
             </div>
 
             <button type="submit"
@@ -81,7 +95,7 @@
         </table>
     </div>
 
-    <a href="{{ route('pdf.reports', ['start_date' => request('start_date'), 'end_date' => request('end_date')]) }}"
+    <a href="{{ route('pdf.reports', ['start_date' => request('start_date'), 'end_date' => request('end_date'), 'user_id' => request('user_id')]) }}"
        class="ml-10 inline-flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition ease-in-out duration-150">
         <svg class="w-[32px] h-[32px] text-gray-800 dark:text-white" aria-hidden="true"
              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
