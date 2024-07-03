@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::query()->orderBy('created_at', 'desc')->paginate(20);
+        $users = User::query()->orderBy('created_at', 'desc')->paginate(7);
 
         return view('users.index', compact('users'));
     }
@@ -50,9 +50,23 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $user->update($request->all());
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'phone'    => 'nullable|string|max:15',
+            'cpf_cnpj' => 'nullable|string|max:14',
+            'role'     => 'required|integer',
+        ]);
 
-        return redirect()->route('users.index');
+        $user->update([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'phone'    => $request->phone,
+            'cpf_cnpj' => $request->cpf_cnpj,
+            'role'     => $request->role,
+        ]);
+
+        return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso.');
     }
 
     public function show(User $user)

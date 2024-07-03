@@ -62,13 +62,15 @@ class ReserveController extends Controller
 
     public function show($id)
     {
-        $reserve = Reserve::find($id);
+        $reserve = Reserve::with(['user', 'rentalitem'])->find($id);
 
         return response()->json($reserve);
     }
 
-    public function destroy(Reserve $reserve)
+    public function destroy(Reserve $reserf)
     {
+        $reserve = $reserf;
+
         $reserve->delete();
 
         return redirect()->route('reserves.index');

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const editUserModal = document.getElementById('editUser');
-
+    const editUserForm = document.getElementById('editUserForm');
     document.querySelectorAll('button[data-modal-target="editUser"]').forEach(button => {
         button.addEventListener('click', () => {
             const userId = button.getAttribute('data-user_id');
@@ -41,7 +41,69 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    document.querySelector('button[data-modal-hide="editUserModal"]').addEventListener('click', () => {
-        editUserModal.classList.add('hidden');
+    const modal = document.getElementById('delete-modal');
+    const deleteForm = document.getElementById('delete-form');
+    const buttons = document.querySelectorAll('[data-modal-toggle="delete-modal"]');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+            const userId = this.getAttribute('data-reserve-id');
+            deleteForm.setAttribute('action', `/reserves/${userId}`);
+        });
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+    // Modal de visualização
+    const viewButtons = document.querySelectorAll('.view-reserve-button');
+    const viewModal = document.getElementById('view-modal');
+
+    viewButtons.forEach(button => {
+        button.addEventListener('click', async function () {
+            const reserveId = this.getAttribute('data-reserve-id');
+
+            // Fetch the reserve data from the server
+            const response = await fetch(`/reserves/${reserveId}`);
+            const reserve = await response.json();
+
+            // Fill the modal with the reserve data
+            viewModal.querySelector('#modal-reserve-user').textContent = reserve.user.name;
+            viewModal.querySelector('#modal-reserve-space').textContent = reserve.rentalitem.name;
+            viewModal.querySelector('#modal-reserve-start').textContent = reserve.start_date;
+            viewModal.querySelector('#modal-reserve-end').textContent = reserve.end_date;
+            viewModal.querySelector('#modal-reserve-notes').textContent = reserve.reserve_notes;
+
+            // Show the modal
+            viewModal.classList.remove('hidden');
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Modal de edição
+    const editButtons = document.querySelectorAll('.edit-reserve-button');
+    const editModal = document.getElementById('edit-modal');
+    const editForm = document.getElementById('editForm');
+
+    editButtons.forEach(button => {
+        button.addEventListener('click', async function () {
+            const reserveId = this.getAttribute('data-reserve-id');
+
+            // Fetch the reserve data from the server
+            const response = await fetch(`/reserves/${reserveId}`);
+            const reserve = await response.json();
+
+            // Fill the modal with the reserve data
+            editModal.querySelector('select[name="user_id"]').value = reserve.user_id;
+            editModal.querySelector('input[name="start_date"]').value = reserve.start_date.replace(' ', 'T');
+            editModal.querySelector('input[name="end_date"]').value = reserve.end_date.replace(' ', 'T');
+            editModal.querySelector('input[name="reserve_notes"]').value = reserve.reserve_notes;
+
+            // Update the form action with the correct reserve ID
+            editForm.action = editForm.action.replace('reserve-id-placeholder', reserveId);
+
+            // Show the modal
+            const modal = new bootstrap.Modal(editModal);
+            modal.show();
+        });
     });
 });

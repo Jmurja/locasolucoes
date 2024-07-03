@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\RentalItem;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RentalItemController extends Controller
 {
     public function index()
     {
-        $rentalItems   = RentalItem::query()->orderBy('created_at', 'desc')->paginate(20);
+        Gate::authorize('view-users');
+
+        $rentalItems   = RentalItem::query()->orderBy('created_at', 'desc')->paginate(7);
         $landLordUsers = User::query()->where('role', 'landlord')->get();
 
         return view('rental-items.index', compact('rentalItems', 'landLordUsers'));
@@ -41,7 +44,7 @@ class RentalItemController extends Controller
 
     public function show(RentalItem $rentalItem)
     {
-        return view('rental-items.show', compact('rentalItem'));
+        return response()->json($rentalItem);
     }
 
     public function destroy(RentalItem $rentalItem)
