@@ -77,7 +77,7 @@
                         {{'R$ ' . $rentalItem->price_per_month ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $rentalItem->status }}
+                        {{ $rentalItem->status->label()}}
                     </td>
 
                     <td class="flex items-center px-6 py-4 space-x-2">

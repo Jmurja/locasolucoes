@@ -5,44 +5,38 @@
         </h2>
     </x-slot>
 
-    <div class="p-6 max-w-lg mx-auto sm:px-4 mt-10 bg-slate-800 rounded-2xl shadow-lg">
+    <div class="p-2 max-w-lg mx-auto sm:px-4 mt-10 bg-slate-800 rounded-2xl shadow-lg">
         <form action="{{ route('reports.index') }}" method="get" class="space-y-6">
             @csrf
 
             <div class="flex space-x-4">
-                <div class="relative z-0 w-full group">
-                    <input type="datetime-local" name="start_date" id="start_date"
-                           class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                           placeholder=" ">
+                <div class="mb-4 w-full">
                     <label for="start_date"
-                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Início
-                    </label>
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Início</label>
+                    <input type="datetime-local" name="start_date" id="start_date"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                           placeholder=" ">
                 </div>
 
-                <div class="relative z-0 w-full group">
-                    <input type="datetime-local" name="end_date" id="end_date"
-                           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                           placeholder=" ">
+                <div class="mb-4 w-full">
                     <label for="end_date"
-                           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                        Fim
-                    </label>
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fim</label>
+                    <input type="datetime-local" name="end_date" id="end_date"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                           placeholder=" ">
                 </div>
             </div>
 
-            <div class="relative z-0 w-full group">
+            <div class="mb-4 w-full">
+                <label for="user_id"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsável</label>
                 <select name="user_id" id="user_id"
-                        class="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                     <option value="" selected>Selecione o Responsável</option>
                     @foreach($users as $user)
                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
                 </select>
-                <label for="user_id"
-                       class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                    Responsável
-                </label>
             </div>
 
             <button type="submit"
@@ -52,7 +46,7 @@
         </form>
     </div>
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-10">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-6">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>

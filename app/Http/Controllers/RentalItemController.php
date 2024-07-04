@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\RentalItemStatus;
 use App\Models\RentalItem;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,8 +29,9 @@ class RentalItemController extends Controller
 
         $rentalItems   = $query->orderBy('created_at', 'desc')->paginate(7);
         $landLordUsers = User::query()->where('role', 'landlord')->get();
+        $statuses      = RentalItemStatus::options();
 
-        return view('rental-items.index', compact('rentalItems', 'landLordUsers'));
+        return view('rental-items.index', compact('rentalItems', 'landLordUsers', 'statuses'));
     }
 
     public function create()
