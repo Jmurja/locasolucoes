@@ -17,8 +17,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        Gate::define('no-view-adm', function($user) {
-            return $user->role !== 'visitor';
+        Gate::define('simple-user', function($user) {
+            return $user->role !== 'visitor' || $user->role !== 'tenant';
         });
     }
 

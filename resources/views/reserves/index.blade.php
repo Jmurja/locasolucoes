@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
 
+
     <!--------Pesquisar---------->
     <form class="max-w-lg mx-auto mt-10" method="GET" action="{{ route('reserves.index') }}">
         <div class="relative w-full">

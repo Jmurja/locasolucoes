@@ -21,7 +21,7 @@
                         {{ __('Calendário') }}
                     </x-nav-link>
 
-                    @can('no-view-adm')
+                    @can('simple-user')
                         <x-nav-link :href="route('rental-items.index')"
                                     :active="request()->routeIs('rental-items.index')">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -52,7 +52,6 @@
                                       stroke-width="2"
                                       d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 7 2 2 4-4m-5-9v4h4V3h-4Z"/>
                             </svg>
-
                             {{ __('Reservas') }}
                         </x-nav-link>
                         <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.index')">

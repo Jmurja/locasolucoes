@@ -15,12 +15,22 @@
 
     @vite('resources/js/fullcalendar.js')
     @vite('resources/js/solicitar-reserva.js')
-    @include('dashboard.modal.solicitar-reserva-modal')
+    @include('dashboard.modal.visitor-reserve-modal')
+    @include('dashboard.modal.tenant-reserve-modal')
     @include('dashboard.modal.termo-service-modal')
 
     <!-- Modal Service -->
-    <button id="modalToggleButton" data-modal-target="solicitar-reserva" data-modal-toggle="solicitar-reserva"
-            class="hidden">s
-    </button>
+    @if (auth()->user()->role == 'visitor')
+        <button id="modalToggleButton" data-modal-target="solicitar-reserva" data-modal-toggle="solicitar-reserva"
+                class="hidden">
+            Solicitar Reserva
+        </button>
+    @elseif (auth()->user()->role == 'tenant')
+        <button id="modalToggleButton" data-modal-target="tenant-reserve" data-modal-toggle="tenant-reserve"
+                class="hidden">
+            Solicitar Reserva
+        </button>
+    @endif
+
 
 </x-app-layout>
