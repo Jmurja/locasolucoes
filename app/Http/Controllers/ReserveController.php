@@ -6,11 +6,14 @@ use App\Models\RentalItem;
 use App\Models\Reserve;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReserveController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('no-view-adm');
+
         $query = Reserve::query();
 
         if ($request->filled('search')) {

@@ -20,7 +20,8 @@
                         </svg>
                         {{ __('Calendário') }}
                     </x-nav-link>
-                    @can('view-users')
+
+                    @can('no-view-adm')
                         <x-nav-link :href="route('rental-items.index')"
                                     :active="request()->routeIs('rental-items.index')">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -32,9 +33,7 @@
                             </svg>
                             {{ __(' Salas') }}
                         </x-nav-link>
-                    @endcan
 
-                    @can('view-users')
                         <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -44,7 +43,6 @@
                                       d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                             </svg>
                             {{ __('Usuários') }}
-                            @endcan
                         </x-nav-link>
                         <x-nav-link :href="route('reserves.index')" :active="request()->routeIs('reserves.index')">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
@@ -57,25 +55,23 @@
 
                             {{ __('Reservas') }}
                         </x-nav-link>
-                        @can('view-reports')
-                            <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.index')">
-                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                     viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                          stroke-width="2"
-                                          d="M5 19V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v13H7a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h12M9 3v14m7 0v4"/>
-                                </svg>
+                        <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.index')">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                 viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                       stroke-width="2"
-                                      d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 7 2 2 4-4m-5-9v4h4V3h-4Z"/>
+                                      d="M5 19V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v13H7a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h12M9 3v14m7 0v4"/>
+                            </svg>
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 7 2 2 4-4m-5-9v4h4V3h-4Z"/>
 
-                                {{ __('Relatórios') }}
-                                @endcan()
-                            </x-nav-link>
+                            {{ __('Relatórios') }}
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
-
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">

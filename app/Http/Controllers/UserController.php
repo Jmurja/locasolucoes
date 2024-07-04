@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('no-view-adm');
+
         $query = User::query();
 
         if ($request->filled('search')) {

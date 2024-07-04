@@ -13,7 +13,7 @@ class ReportsController extends Controller
 {
     public function index(Request $request)
     {
-        Gate::authorize('view-users');
+        Gate::authorize('no-view-adm');
 
         $users       = User::all();
         $rentalItems = RentalItem::all();

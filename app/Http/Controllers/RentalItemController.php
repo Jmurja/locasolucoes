@@ -12,7 +12,7 @@ class RentalItemController extends Controller
 {
     public function index(Request $request)
     {
-        Gate::authorize('view-users');
+        Gate::authorize('no-view-adm');
 
         $query = RentalItem::query();
 
