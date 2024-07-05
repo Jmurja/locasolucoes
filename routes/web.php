@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RentalItemController;
 use App\Http\Controllers\ReportsController;
@@ -13,9 +14,9 @@ Route::get('/', function() {
 
 Route::get('/pdf', [ReportsController::class, 'generatePdf'])->name('pdf.reports');
 
-Route::get('/dashboard', function() {
-    return view('dashboard.dashboard    ');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::resource('/dashboard', DashboardController::class)->only('index')->names('dashboard')->middleware([
+    'auth', 'verified',
+]);
 
 Route::middleware('auth')->group(function() {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -26,6 +27,7 @@ Route::middleware('auth')->group(function() {
     Route::get('reserves/json', [ReserveController::class, 'json']);
     Route::resource('reserves', ReserveController::class);
     Route::resource('reports', ReportsController::class);
+    Route::get('/reservas/search', [ReserveController::class, 'search'])->name('reservas.search');
 });
 
 require __DIR__ . '/auth.php';
