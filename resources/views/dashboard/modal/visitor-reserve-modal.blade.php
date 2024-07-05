@@ -23,6 +23,34 @@
             <!-- Modal body -->
             <form action="{{ route('reserves.store') }}" method="post" class="p-4 md:p-5 space-y-4">
                 @csrf
+                <!-- Dados do Visitante Section -->
+                <div class="space-y-3">
+                    <h4 class="text-md font-semibold text-gray-900 dark:text-white">Dados do Visitante</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label for="visitorName"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
+                            <input type="text" name="visitor_name" id="visitorName"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite o nome do visitante" required>
+                        </div>
+                        <div>
+                            <label for="visitorEmail"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                            <input type="email" name="visitor_email" id="visitorEmail"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite o email do visitante" required>
+                        </div>
+                        <div>
+                            <label for="visitorPhone"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Telefone</label>
+                            <input type="text" name="visitor_phone" id="visitorPhone"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite o telefone do visitante" required>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Dados da Empresa Section -->
                 <div class="space-y-3">
                     <h4 class="text-md font-semibold text-gray-900 dark:text-white">Dados da Empresa</h4>
@@ -47,13 +75,6 @@
                             <input type="text" name="phone" id="eventPhone"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                    placeholder="Digite o Telefone" required>
-                        </div>
-                        <div>
-                            <label for="eventEmail"
-                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                            <input type="email" name="email" id="eventEmail"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                   placeholder="Digite o Email" required>
                         </div>
                     </div>
                 </div>
@@ -126,24 +147,21 @@
                                    required>
                         </div>
                         <div>
-                            <label for="eventSpace"
-                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Espaço
-                                Disponível</label>
-                            <input type="text" name="space" id="eventSpace"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                   placeholder="Digite o espaço disponível" required>
+                            <!---------RESOLVER-------------->
+                            <label for="rental_item_id"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Espaço</label>
+                            <select id="rental_item_id" name="rental_item_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                @foreach($RentalItems as $RentalItem)
+                                    <option value="{{$RentalItem->id}}">{{$RentalItem->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
 
                 <!-- Terms and Submit -->
-                <div class="flex items-center mt-4">
-                    <input id="termsCheckbox" type="checkbox" value=""
-                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="termsCheckbox"
-                           class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Eu li e concordo com <a
-                            href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Termos de uso</a>.</label>
-                </div>
+
 
                 <button type="submit"
                         class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
