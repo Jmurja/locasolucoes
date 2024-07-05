@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Gate::define('simple-user', function($user) {
-            return $user->role !== 'visitor' || $user->role !== 'tenant';
+            return $user->role !== 'visitor' && $user->role !== 'tenant';
         });
     }
 

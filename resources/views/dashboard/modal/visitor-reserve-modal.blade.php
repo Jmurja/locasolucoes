@@ -1,17 +1,17 @@
 <!-- Main modal -->
-<div id="solicitar-reserva" tabindex="-1" aria-hidden="true"
+<div id="visitor-reserve" tabindex="-1" aria-hidden="true"
      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-2xl max-h-full">
+    <div class="relative p-4 w-full max-w-4xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <div class="flex items-center justify-between p-3 md:p-4 border-b rounded-t dark:border-gray-600">
                 <h3 id="modalTitle" class="text-lg font-semibold text-gray-900 dark:text-white">
                     Solicitar Reserva
                 </h3>
                 <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        data-modal-toggle="solicitar-reserva">
+                        data-modal-toggle="visitor-reserve">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                          viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -21,116 +21,128 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form action="{{ route('reserves.store') }}" method="post" class="p-4 md:p-5 space-y-6">
+            <form action="{{ route('reserves.store') }}" method="post" class="p-4 md:p-5 space-y-4">
                 @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="mb-4">
-                        <label for="eventTitle"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título do
-                            Evento</label>
-                        <input type="text" name="title" id="eventTitle"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o Título do seu Evento" required>
-                        <small class="text-red-500 text-xs"></small>
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventCpfCnpj"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CPF/CNPJ</label>
-                        <input type="text" name="cpf_cnpj" id="eventCpfCnpj" onblur="pesquisacnpj(this.value)"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o CPF/CNPJ" required>
-                        <small class="text-red-500 text-xs"></small>
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventResponsible"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsável</label>
-                        <input type="text" name="responsible" id="eventResponsible"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o Responsável pela locação" required>
-                        <small class="text-red-500 text-xs"></small>
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventCompany"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa</label>
-                        <input type="text" name="company" id="eventCompany"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o nome da Empresa" required>
-                        <small class="text-red-500 text-xs"></small>
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventPhone"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefone</label>
-                        <input type="text" name="phone" id="eventPhone"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o Telefone" required>
-                        <small class="text-red-500 text-xs"></small>
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventEmail"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                        <input type="email" name="email" id="eventEmail"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o Email" required>
-                        <small class="text-red-500 text-xs"></small>
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventCep"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CEP</label>
-                        <input type="text" name="cep" id="eventCep" onblur="pesquisacep(this.value)"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o CEP da Empresa" required>
-                        <small class="text-red-500 text-xs"></small>
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventCity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cidade</label>
-                        <input type="text" name="city" id="eventCity"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite a cidade" required>
-                        <small class="text-red-500 text-xs"></small>
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventStreet"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rua</label>
-                        <input type="text" name="street" id="eventStreet"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite a Rua" required>
-                        <small class="text-red-500 text-xs"></small>
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventNeighborhood"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bairro</label>
-                        <input type="text" name="neighborhood" id="eventNeighborhood"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o Bairro" required>
-                        <small class="text-red-500 text-xs"></small>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="mb-4">
-                        <label for="eventStart"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Início</label>
-                        <input type="datetime-local" name="start" id="eventStart"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="eventEnd"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fim</label>
-                        <input type="datetime-local" name="end" id="eventEnd"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               required>
+                <!-- Dados da Empresa Section -->
+                <div class="space-y-3">
+                    <h4 class="text-md font-semibold text-gray-900 dark:text-white">Dados da Empresa</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label for="eventCompany"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Empresa</label>
+                            <input type="text" name="company" id="eventCompany"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite o nome da Empresa" required>
+                        </div>
+                        <div>
+                            <label for="eventCpfCnpj"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">CPF/CNPJ</label>
+                            <input type="text" name="cpf_cnpj" id="eventCpfCnpj" onblur="pesquisacnpj(this.value)"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite o CPF/CNPJ" required>
+                        </div>
+                        <div>
+                            <label for="eventPhone"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Telefone</label>
+                            <input type="text" name="phone" id="eventPhone"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite o Telefone" required>
+                        </div>
+                        <div>
+                            <label for="eventEmail"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                            <input type="email" name="email" id="eventEmail"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite o Email" required>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex items-center">
+                <!-- Endereço Section -->
+                <div class="space-y-3">
+                    <h4 class="text-md font-semibold text-gray-900 dark:text-white">Endereço</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label for="eventCep"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">CEP</label>
+                            <input type="text" name="cep" id="eventCep" onblur="pesquisacep(this.value)"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite o CEP da Empresa" required>
+                        </div>
+                        <div>
+                            <label for="eventCity" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Cidade</label>
+                            <input type="text" name="city" id="eventCity"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite a cidade" required>
+                        </div>
+                        <div>
+                            <label for="eventStreet"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Rua</label>
+                            <input type="text" name="street" id="eventStreet"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite a Rua" required>
+                        </div>
+                        <div>
+                            <label for="eventNeighborhood"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Bairro</label>
+                            <input type="text" name="neighborhood" id="eventNeighborhood"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite o Bairro" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dados da Locação Section -->
+                <div class="space-y-3">
+                    <h4 class="text-md font-semibold text-gray-900 dark:text-white">Dados da Locação</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label for="eventTitle"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Título do
+                                Evento</label>
+                            <input type="text" name="title" id="eventTitle"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite o Título do seu Evento" required>
+                        </div>
+                        <div class="col-span-2">
+                            <label for="eventDescription"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Descrição</label>
+                            <textarea name="description" id="eventDescription"
+                                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                      placeholder="Digite a descrição do evento" required></textarea>
+                        </div>
+                        <div>
+                            <label for="eventStart"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Início</label>
+                            <input type="datetime-local" name="start" id="eventStart"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   required>
+                        </div>
+                        <div>
+                            <label for="eventEnd"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Fim</label>
+                            <input type="datetime-local" name="end" id="eventEnd"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   required>
+                        </div>
+                        <div>
+                            <label for="eventSpace"
+                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Espaço
+                                Disponível</label>
+                            <input type="text" name="space" id="eventSpace"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Digite o espaço disponível" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms and Submit -->
+                <div class="flex items-center mt-4">
                     <input id="termsCheckbox" type="checkbox" value=""
-                           class="w-4 mb-6 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                     <label for="termsCheckbox"
-                           class="ms-2 mb-6 text-sm font-medium text-gray-900 dark:text-gray-300">Eu
-                        li e concordo com <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Termos
-                            de
-                            uso</a>.</label>
-                    <small class="text-red-500 text-xs"></small>
+                           class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Eu li e concordo com <a
+                            href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Termos de uso</a>.</label>
                 </div>
 
                 <button type="submit"

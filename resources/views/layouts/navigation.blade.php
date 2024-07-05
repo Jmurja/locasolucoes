@@ -54,6 +54,7 @@
                             </svg>
                             {{ __('Reservas') }}
                         </x-nav-link>
+
                         <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.index')">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"

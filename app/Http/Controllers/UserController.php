@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        Gate::authorize('no-view-adm');
+        Gate::authorize('simple-user');
 
         $query = User::query();
 
