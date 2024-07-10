@@ -56,13 +56,6 @@ class UserController extends Controller
         return back();
     }
 
-    public function edit(User $user)
-    {
-        $users = User::all();
-
-        return view('users.edit', compact('user', 'users'));
-    }
-
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -82,17 +75,5 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso.');
-    }
-
-    public function show(User $user)
-    {
-        return view('users.show', compact('user'));
-    }
-
-    public function create()
-    {
-        $users = User::query()->orderBy('created_at', 'desc')->paginate(20);
-
-        return view('users.create', compact('users'));
     }
 }

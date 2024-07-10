@@ -18,7 +18,8 @@ class Reserve extends Model
         'end_date',
         'rental_item_id',
         'reserve_notes',
-
+        'status',
+        'title',
     ];
 
     public function user(): BelongsTo

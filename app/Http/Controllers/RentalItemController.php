@@ -34,13 +34,6 @@ class RentalItemController extends Controller
         return view('rental-items.index', compact('rentalItems', 'landLordUsers', 'statuses'));
     }
 
-    public function create()
-    {
-        $landLordUsers = User::query()->where('role', 'landlord')->get();
-
-        return view('rental-items.create', compact('landLordUsers'));
-    }
-
     public function store(Request $request)
     {
         RentalItem::query()->create([
@@ -67,13 +60,6 @@ class RentalItemController extends Controller
         $rentalItem->delete();
 
         return redirect()->route('rental-items.index');
-    }
-
-    public function edit(RentalItem $rentalItem)
-    {
-        $landLordUsers = User::query()->where('role', 'landlord')->get();
-
-        return view('rental-items.edit', compact('rentalItem', 'landLordUsers'));
     }
 
     public function update(Request $request, RentalItem $rentalItem)

@@ -14,6 +14,7 @@ return new class () extends Migration {
             $table->id();
             $table->foreignId(('user_id'))->constrained();
             $table->foreignId(('rental_item_id'))->constrained();
+            $table->string('title');
             $table->datetime('start_date');
             $table->datetime('end_date');
             $table->longText('reserve_notes')->nullable();
