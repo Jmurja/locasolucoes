@@ -9,6 +9,9 @@
                 <h3 id="modalTitle" class="text-lg font-semibold text-gray-900 dark:text-white">
                     Solicitar Reserva
                 </h3>
+
+
+                <!-----RESOLVER ISSO---------->
                 <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                         data-modal-toggle="tenant-reserve">
@@ -23,6 +26,8 @@
             <!-- Modal body -->
             <form action="{{ route('reserves.store') }}" method="post" class="p-6 space-y-6">
                 @csrf
+                <input type="hidden" name="cpf_cnpj" value="{{auth()->user()->cpf_cnpj}}">
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label for="eventTitle"
@@ -36,7 +41,7 @@
                     <div>
                         <label for="eventResponsible"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsável</label>
-                        <input type="text" name="responsible" id="eventResponsible"
+                        <input type="text" name="name" id="eventResponsible" value="{{auth()->user()->name}}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o Responsável pela locação" required>
                         <small class="text-red-500 text-xs"></small>
@@ -44,7 +49,7 @@
                     <div>
                         <label for="eventCompany"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa</label>
-                        <input type="text" name="company" id="eventCompany"
+                        <input type="text" name="company" id="eventCompany" value="{{auth()->user()->company}}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o nome da Empresa" required>
                         <small class="text-red-500 text-xs"></small>
@@ -53,24 +58,24 @@
                         <label for="eventRoom"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sala
                             Disponível</label>
-                        <select name="room" id="eventRoom"
+                        <select name="rental_item_id" id="eventRoom"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <option value="Sala 1">Sala 1</option>
-                            <option value="Sala 2">Sala 2</option>
-                            <option value="Sala 3">Sala 3</option>
+                            @foreach($RentalItems as $rentalItem)
+                                <option value="{{ $rentalItem->id }}">{{ $rentalItem->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div>
                         <label for="eventStart"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Início</label>
-                        <input type="datetime-local" name="start" id="eventStart"
+                        <input type="datetime-local" name="start_date" id="eventStart"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                required>
                     </div>
                     <div>
                         <label for="eventEnd"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fim</label>
-                        <input type="datetime-local" name="end" id="eventEnd"
+                        <input type="datetime-local" name="end_date" id="eventEnd"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                required>
                     </div>
@@ -78,7 +83,7 @@
                     <div class="col-span-1 md:col-span-2">
                         <label for="eventObservations"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observações</label>
-                        <textarea name="observations" id="eventObservations"
+                        <textarea name="reserve_notes" id="eventObservations"
                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                   placeholder="Adicione observações adicionais"></textarea>
                     </div>

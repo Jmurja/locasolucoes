@@ -29,22 +29,22 @@
                     <div class="mb-4">
                         <label for="edit-name"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
-                        <input type="text" name="name" id="edit-name" value="{{$user->name}}"
+                        <input type="text" name="name" id="edit-name"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o nome" required>
                     </div>
                     <div class="mb-4">
                         <label for="edit-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                        <input type="email" name="email" id="edit-email" value="{{$user->email}}"
+                        <input type="email" name="email" id="edit-email"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600
-                        focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
-                        dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500
-                        dark:focus:border-primary-500"
+                            focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500
+                            dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500
+                            dark:focus:border-primary-500"
                                placeholder="Digite o email" required>
                     </div>
                     <div class="mb-4">
                         <label for="edit-phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefone</label>
-                        <input type="text" name="phone" id="edit-phone" value="{{$user->phone}}"
+                        <input type="text" name="phone" id="edit-phone"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o telefone" required>
                     </div>
@@ -61,15 +61,14 @@
                     </div>
                     <div class="mb-4">
                         <label for="edit-cpf_cnpj" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CPF/CNPJ</label>
-                        <input type="text" name="cpf_cnpj" id="edit-cpf_cnpj" value="{{$user->cpf_cnpj}}"
+                        <input type="text" name="cpf_cnpj" id="edit-cpf_cnpj"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o CPF/CNPJ" required>
                     </div>
                     <div class="mb-4">
                         <label for="edit-cep"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CEP</label>
-                        <input type="text" name="cep" id="edit-cep" onblur="pesquisacep(this.value);"
-                               value="{{$user->cep}}"
+                        <input type="text" name="cep" id="edit-cep"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o CEP" required>
                     </div>
@@ -77,7 +76,7 @@
                 <div class="mb-4">
                     <label for="edit-cidade"
                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cidade</label>
-                    <input type="text" name="cidade" id="edit-cidade" value="{{$user->city}}"
+                    <input type="text" name="cidade" id="edit-cidade"
                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                            placeholder="Digite a cidade" required>
                 </div>
@@ -85,13 +84,13 @@
                     <div class="mb-4">
                         <label for="edit-rua"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rua</label>
-                        <input type="text" name="rua" id="edit-rua" value="{{$user->street}}"
+                        <input type="text" name="rua" id="edit-rua"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite a rua" required>
                     </div>
                     <div class="mb-4">
                         <label for="edit-bairro" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bairro</label>
-                        <input type="text" name="bairro" id="edit-bairro" value="{{$user->neighborhood}}"
+                        <input type="text" name="bairro" id="edit-bairro"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o bairro" required>
                     </div>
