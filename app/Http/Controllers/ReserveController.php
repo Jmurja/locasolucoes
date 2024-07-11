@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\RentalItemStatus;
 use App\Models\RentalItem;
 use App\Models\Reserve;
 use App\Models\User;
@@ -32,8 +33,9 @@ class ReserveController extends Controller
         $reserves    = $query->orderBy('created_at', 'desc')->paginate(20);
         $users       = User::all();
         $RentalItems = RentalItem::all();
+        $statuses    = RentalItemStatus::options(); // Obter opções de status do enum
 
-        return view('reserves.index', compact('reserves', 'RentalItems', 'users'));
+        return view('reserves.index', compact('reserves', 'RentalItems', 'users', 'statuses'));
     }
 
     public function store(Request $request)
