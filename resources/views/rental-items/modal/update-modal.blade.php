@@ -21,16 +21,43 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form action="{{route('rental-items.update', $rentalItem->id)}}" method="post" class="p-4 md:p-5 space-y-6">
+            <form action="{{route('rental-items.update', $rentalItem->id)}}" method="post" class="p-4 md:p-5 space-y-6"
+                  id="edit-form">
                 @csrf
                 @method('patch')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label for="user_id"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecione o
+                            Responsável</label>
+                        <select id="user_id" name="user_id"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                required>
+                            <option disabled selected>Selecione o Responsável</option>
+                            @foreach($landLordUsers as $landLordUser)
+                                <option
+                                    value="{{$landLordUser->id}}" {{$rentalItem->user_id == $landLordUser->id ? 'selected' : ''}}>{{$landLordUser->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="mb-4">
                         <label for="name"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
                         <input type="text" name="name" id="name" value="{{$rentalItem->name}}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o nome" required>
+                        <small id="name-error" class="text-red-500 text-xs hidden">Nome é obrigatório e deve ter pelo
+                            menos 3 caracteres.</small>
+                    </div>
+                    <div class="mb-4">
+                        <label for="description"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descrição</label>
+                        <textarea name="description" id="description"
+                                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                  placeholder="Digite a descrição"
+                                  required>{{$rentalItem->description}}</textarea>
+                        <small id="description-error" class="text-red-500 text-xs hidden">Descrição é obrigatória e deve
+                            ter pelo menos 5 caracteres.</small>
                     </div>
                     <div class="mb-4">
                         <label for="price_per_hour"
@@ -40,16 +67,8 @@
                                value="{{$rentalItem->price_per_hour}}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o valor por hora" required>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="mb-4">
-                        <label for="description"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descrição</label>
-                        <textarea name="description" id="description"
-                                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                  value="{{$rentalItem->description}}" placeholder="Digite a descrição"
-                                  required>{{$rentalItem->description}}</textarea>
+                        <small id="price_per_hour-error" class="text-red-500 text-xs hidden">Valor por hora deve ser um
+                            número.</small>
                     </div>
                     <div class="mb-4">
                         <label for="price_per_day"
@@ -59,6 +78,8 @@
                                value="{{$rentalItem->price_per_day}}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o valor por dia" required>
+                        <small id="price_per_day-error" class="text-red-500 text-xs hidden">Valor por dia deve ser um
+                            número.</small>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -70,6 +91,8 @@
                                value="{{$rentalItem->price_per_month}}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o valor por mês" required>
+                        <small id="price_per_month-error" class="text-red-500 text-xs hidden">Valor por mês deve ser um
+                            número.</small>
                     </div>
                     <div class="mb-4">
                         <label for="status"

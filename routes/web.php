@@ -25,7 +25,9 @@ Route::middleware('auth')->group(function() {
     Route::resource('rental-items', RentalItemController::class);
     Route::resource('users', UserController::class);
     Route::get('reserves/json', [ReserveController::class, 'json']);
-    Route::resource('reserves', ReserveController::class);
+    Route::resource('reserves', ReserveController::class)->names('reserves')->parameters([
+        'reserves' => 'reserve'
+    ]);
     Route::resource('reports', ReportsController::class);
     Route::get('/reservas/search', [ReserveController::class, 'search'])->name('reservas.search');
 });

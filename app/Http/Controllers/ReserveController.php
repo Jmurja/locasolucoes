@@ -15,7 +15,7 @@ class ReserveController extends Controller
     {
         Gate::authorize('simple-user');
 
-        $query = Reserve::query();
+        $query = Reserve::query()->with(['user', 'rentalitem']);
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -24,7 +24,8 @@ class ReserveController extends Controller
                     ->orWhere('role', 'LIKE', "%{$search}%");
             })
                 ->orWhereHas('rentalitem', function($q) use ($search) {
-                    $q->where('name', 'LIKE', "%{$search}%");
+                    $q->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('status', 'LIKE', "%{$search}%");
                 })
                 ->orWhere('start_date', 'LIKE', "%{$search}%")
                 ->orWhere('end_date', 'LIKE', "%{$search}%");
@@ -99,21 +100,34 @@ class ReserveController extends Controller
         return response()->json($reserve);
     }
 
-    public function destroy(Reserve $reserf)
+    public function destroy(User $user)
     {
-        $reserve = $reserf;
+        $user->delete();
 
-        $reserve->delete();
-
-        return redirect()->route('reserves.index');
+        return back()->with('success', 'Usuário deletado com sucesso.');
     }
 
-    public function update(Request $request, Reserve $reserf)
+    public function update(Request $request, Reserve $reserve)
     {
-        $reserveUpdated = $request->all();
-        $reserf->update($reserveUpdated);
-        $rentalItems = RentalItem::all();
+        $request->validate([
+            'user_id'        => 'required|exists:users,id',
+            'title'          => 'required|string|max:255',
+            'status'         => 'required|string',
+            'rental_item_id' => 'required|exists:rental_items,id',
+            'start_date'     => 'required|date',
+            'end_date'       => 'required|date',
+            'reserve_notes'  => 'nullable|string',
+        ]);
 
-        return view('reserves.index', compact('reserf', 'rentalItems'));
+        $reserve->update([
+            'user_id'        => $request->user_id,
+            'title'          => $request->title,
+            'rental_item_id' => $request->rental_item_id,
+            'start_date'     => $request->start_date,
+            'end_date'       => $request->end_date,
+            'reserve_notes'  => $request->reserve_notes,
+        ]);
+
+        return redirect()->route('reserves.index')->with('success', 'Reserva atualizada com sucesso.');
     }
 }

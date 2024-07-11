@@ -24,10 +24,10 @@
                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Você
                     deseja deletar este Usuário?
                 </h3>
-                <form id="delete-form" method="post" action="{{ route('users.destroy', $user->id) }}"
-                      class="flex items-center justify-center space-x-3">
+                <form id="delete-form" method="post" action="" class="flex items-center justify-center space-x-3">
                     @csrf
                     @method('DELETE')
+                    <input type="hidden" id="delete-user-id" name="user_id" value="">
                     <button type="submit"
                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                         Sim, desejo
@@ -41,5 +41,3 @@
         </div>
     </div>
 </div>
-
-@vite('resources/js/delete-user.js')

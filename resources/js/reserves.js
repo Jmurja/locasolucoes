@@ -1,82 +1,180 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Modal de edição
-    const editButtons = document.querySelectorAll('.edit-reserve-button');
+    const editButtons = document.querySelectorAll('.edit-user-button');
+    const viewButtons = document.querySelectorAll('.view-user-button');
+    const deleteButtons = document.querySelectorAll('.delete-button');
+    const closeModalButtons = document.querySelectorAll('button[data-modal-toggle]');
     const editModal = document.getElementById('edit-modal');
-    const editForm = document.getElementById('editForm');
+    const viewModal = document.getElementById('view-modal');
+    const deleteModal = document.getElementById('delete-modal');
+
+    function populateEditForm(button) {
+        const userId = button.getAttribute('data-user-id');
+        const userName = button.getAttribute('data-user-name');
+        const userEmail = button.getAttribute('data-user-email');
+        const userPhone = button.getAttribute('data-user-phone');
+        const userCpfCnpj = button.getAttribute('data-user-cpf_cnpj');
+        const userCep = button.getAttribute('data-user-cep');
+        const userRua = button.getAttribute('data-user-rua');
+        const userBairro = button.getAttribute('data-user-bairro');
+        const userCidade = button.getAttribute('data-user-cidade');
+        const userRole = button.getAttribute('data-user-role');
+        const userResponsavel = button.getAttribute('data-user-responsavel');
+        const userStatus = button.getAttribute('data-user-status');
+
+        document.getElementById('edit-name').value = userName;
+        document.getElementById('edit-email').value = userEmail;
+        document.getElementById('edit-phone').value = userPhone;
+        document.getElementById('edit-cpf_cnpj').value = userCpfCnpj;
+        document.getElementById('edit-cep').value = userCep;
+        document.getElementById('edit-rua').value = userRua;
+        document.getElementById('edit-bairro').value = userBairro;
+        document.getElementById('edit-cidade').value = userCidade;
+
+        const roleSelect = document.getElementById('edit-role');
+        roleSelect.value = userRole;
+
+        document.getElementById('edit-responsavel').value = userResponsavel;
+        document.getElementById('edit-status').value = userStatus;
+
+        const form = document.getElementById('edit-user-form');
+        form.action = `/users/${userId}`;
+
+        editModal.classList.remove('hidden');
+        editModal.setAttribute('aria-hidden', 'false');
+        editModal.setAttribute('role', 'dialog');
+    }
+
+    function populateViewModal(button) {
+        const userName = button.getAttribute('data-user-name');
+        const userEmail = button.getAttribute('data-user-email');
+        const userPhone = button.getAttribute('data-user-phone');
+        const userCpfCnpj = button.getAttribute('data-user-cpf_cnpj');
+        const userCep = button.getAttribute('data-user-cep');
+        const userRua = button.getAttribute('data-user-rua');
+        const userBairro = button.getAttribute('data-user-bairro');
+        const userCidade = button.getAttribute('data-user-cidade');
+        const userRole = button.getAttribute('data-user-role');
+        const userResponsavel = button.getAttribute('data-user-responsavel');
+        const userStatus = button.getAttribute('data-user-status');
+        const userCreatedAt = button.getAttribute('data-user-created_at');
+        const userUpdatedAt = button.getAttribute('data-user-updated_at');
+
+        document.querySelector('.modal-user-name').textContent = userName;
+        document.querySelector('.modal-user-email').textContent = userEmail;
+        document.querySelector('.modal-user-phone').textContent = userPhone;
+        document.querySelector('.modal-user-cpf_cnpj').textContent = userCpfCnpj;
+        document.querySelector('.modal-user-cep').textContent = userCep;
+        document.querySelector('.modal-user-rua').textContent = userRua;
+        document.querySelector('.modal-user-bairro').textContent = userBairro;
+        document.querySelector('.modal-user-cidade').textContent = userCidade;
+        document.querySelector('.modal-user-role').textContent = userRole;
+        document.querySelector('.modal-user-responsavel').textContent = userResponsavel;
+        document.querySelector('.modal-user-status').textContent = userStatus;
+        document.querySelector('.modal-user-created_at').textContent = userCreatedAt;
+        document.querySelector('.modal-user-updated_at').textContent = userUpdatedAt;
+
+        viewModal.classList.remove('hidden');
+        viewModal.setAttribute('aria-hidden', 'false');
+        viewModal.setAttribute('role', 'dialog');
+    }
+
+    function populateDeleteForm(button) {
+        const userId = button.getAttribute('data-user-id');
+        const form = document.getElementById('delete-form');
+        form.action = `/users/${userId}`;
+        document.getElementById('delete-user-id').value = userId;
+
+        deleteModal.classList.remove('hidden');
+        deleteModal.setAttribute('aria-hidden', 'false');
+        deleteModal.setAttribute('role', 'dialog');
+    }
+
+    function validateField(field) {
+        const errorField = document.querySelector(`#${field.id}-error`);
+        if (!field.value.trim()) {
+            errorField.textContent = 'Este campo é obrigatório';
+            field.classList.add('border-red-500');
+        } else {
+            errorField.textContent = '';
+            field.classList.remove('border-red-500');
+        }
+    }
+
+    function validateEditForm() {
+        const requiredFields = ['edit-name', 'edit-email', 'edit-phone', 'edit-cpf_cnpj', 'edit-cep', 'edit-rua', 'edit-bairro', 'edit-cidade', 'edit-role', 'edit-responsavel', 'edit-status'];
+        let isValid = true;
+
+        requiredFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            validateField(field);
+            if (!field.value.trim()) {
+                isValid = false;
+            }
+        });
+
+        return isValid;
+    }
+
+    document.getElementById('edit-user-form').addEventListener('submit', function (event) {
+        if (!validateEditForm()) {
+            event.preventDefault();
+        }
+    });
+
+    const requiredFields = ['edit-name', 'edit-email', 'edit-phone', 'edit-cpf_cnpj', 'edit-cep', 'edit-rua', 'edit-bairro', 'edit-cidade', 'edit-role', 'edit-responsavel', 'edit-status'];
+
+    requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        field.addEventListener('blur', function () {
+            validateField(field);
+        });
+        field.addEventListener('input', function () {
+            validateField(field);
+        });
+    });
 
     editButtons.forEach(button => {
-        button.addEventListener('click', async function () {
-            const reserveId = this.getAttribute('data-reserve-id');
-
-            // Fetch the reserve data from the server
-            const response = await fetch(`/reserves/${reserveId}`);
-            const reserve = await response.json();
-
-            // Fill the modal with the reserve data
-            editModal.querySelector('select[name="user_id"]').value = reserve.user_id;
-            editModal.querySelector('input[name="title"]').value = reserve.title;
-            editModal.querySelector('select[name="status"]').value = reserve.rentalitem.status;
-            editModal.querySelector('input[name="start_date"]').value = reserve.start_date.replace(' ', 'T');
-            editModal.querySelector('input[name="end_date"]').value = reserve.end_date.replace(' ', 'T');
-            editModal.querySelector('input[name="reserve_notes"]').value = reserve.reserve_notes;
-
-            // Update the form action with the correct reserve ID
-            editForm.action = editForm.action.replace('reserve-id-placeholder', reserveId);
-
-            // Show the modal
-            editModal.classList.remove('hidden');
+        button.addEventListener('click', function () {
+            populateEditForm(this);
         });
     });
-
-    // Modal de visualização
-    const viewButtons = document.querySelectorAll('.view-reserve-button');
-    const viewModal = document.getElementById('view-modal');
 
     viewButtons.forEach(button => {
-        button.addEventListener('click', async function () {
-            const reserveId = this.getAttribute('data-reserve-id');
-
-            // Fetch the reserve data from the server
-            const response = await fetch(`/reserves/${reserveId}`);
-            const reserve = await response.json();
-
-            // Fill the modal with the reserve data
-            viewModal.querySelector('#modal-reserve-user').textContent = reserve.user.name;
-            viewModal.querySelector('#modal-reserve-space').textContent = reserve.rentalitem.name;
-            viewModal.querySelector('#modal-reserve-start').textContent = reserve.start_date;
-            viewModal.querySelector('#modal-reserve-end').textContent = reserve.end_date;
-            viewModal.querySelector('#modal-reserve-notes').textContent = reserve.reserve_notes;
-
-            // Show the modal
-            viewModal.classList.remove('hidden');
-        });
-    });
-
-    // Modal de exclusão
-    const modal = document.getElementById('delete-modal');
-    const deleteForm = document.getElementById('delete-form');
-    const buttons = document.querySelectorAll('[data-modal-toggle="delete-modal"]');
-
-    buttons.forEach(button => {
         button.addEventListener('click', function () {
-            const userId = this.getAttribute('data-reserve-id');
-            deleteForm.setAttribute('action', `/reserves/${userId}`);
+            populateViewModal(this);
         });
     });
 
-    // Modal de criação - Atualizar campo de nome
-    const userSelect = document.getElementById('user_id');
-    const userNameInput = document.getElementById('name');
-
-    if (userSelect) {
-        userSelect.addEventListener('change', function () {
-            const selectedOption = userSelect.options[userSelect.selectedIndex];
-            const userName = selectedOption.getAttribute('data-name');
-            userNameInput.value = userName;
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            populateDeleteForm(this);
         });
+    });
 
-        // Trigger change event on load to set the initial value
-        const event = new Event('change');
-        userSelect.dispatchEvent(event);
-    }
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const targetModal = this.getAttribute('data-modal-toggle');
+            const modal = document.getElementById(targetModal);
+
+            modal.classList.add('hidden');
+            modal.setAttribute('aria-hidden', 'true');
+            modal.removeAttribute('role');
+        });
+    });
+
+    window.addEventListener('click', function (event) {
+        if (event.target == editModal) {
+            editModal.classList.add('hidden');
+            editModal.setAttribute('aria-hidden', 'true');
+            editModal.removeAttribute('role');
+        } else if (event.target == viewModal) {
+            viewModal.classList.add('hidden');
+            viewModal.setAttribute('aria-hidden', 'true');
+            viewModal.removeAttribute('role');
+        } else if (event.target == deleteModal) {
+            deleteModal.classList.add('hidden');
+            deleteModal.setAttribute('aria-hidden', 'true');
+            deleteModal.removeAttribute('role');
+        }
+    });
 });

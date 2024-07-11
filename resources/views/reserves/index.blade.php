@@ -94,6 +94,7 @@
                             <x-icons.eye/>
                         </button>
 
+
                         <!-- Delete Modal -->
                         <button data-reserve-id="{{ $reserve->id }}"
                                 class="delete-button block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
@@ -114,6 +115,7 @@
                 <div class="text-center text-white">Nenhuma Reserva Cadastrada</div>
             @endforelse
             </tbody>
+
         </table>
 
         <div class="my-4">
