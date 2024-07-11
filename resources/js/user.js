@@ -1,176 +1,124 @@
-console.log('arquivo carregado');
-
-function limpa_formulário_cep() {
-    // Limpa valores do formulário de cep.
-    document.getElementById('rua').value = ("");
-    document.getElementById('bairro').value = ("");
-    document.getElementById('cidade').value = ("");
-}
-
-window.meu_callback = function (conteudo) {
-    if (!("erro" in conteudo)) {
-        // Atualiza os campos com os valores.
-        document.getElementById('rua').value = (conteudo.logradouro);
-        document.getElementById('bairro').value = (conteudo.bairro);
-        document.getElementById('cidade').value = (conteudo.localidade);
-    } else {
-        // CEP não Encontrado.
-        limpa_formulário_cep();
-        alert("CEP não encontrado.");
-    }
-}
-
-window.pesquisacep = function (valor) {
-    // Nova variável "cep" somente com dígitos.
-    var cep = valor.replace(/\D/g, '');
-
-    // Verifica se campo cep possui valor informado.
-    if (cep != "") {
-        // Expressão regular para validar o CEP.
-        var validacep = /^[0-9]{8}$/;
-
-        // Valida o formato do CEP.
-        if (validacep.test(cep)) {
-            // Preenche os campos com "..." enquanto consulta webservice.
-            document.getElementById('rua').value = "...";
-            document.getElementById('bairro').value = "...";
-            document.getElementById('cidade').value = "...";
-
-            // Cria um elemento javascript.
-            var script = document.createElement('script');
-
-            // Sincroniza com o callback.
-            script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
-
-            // Insere script no documento e carrega o conteúdo.
-            document.body.appendChild(script);
-        } else {
-            // cep é inválido.
-            limpa_formulário_cep();
-            alert("Formato de CEP inválido.");
-        }
-    } else {
-        // cep sem valor, limpa formulário.
-        limpa_formulário_cep();
-    }
-}
-
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('form');
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
-    const phoneInput = document.getElementById('phone');
-    const cpfCnpjInput = document.getElementById('cpf_cnpj');
-    const passwordInput = document.getElementById('password');
-    const cepInput = document.getElementById('cep');
+    const editButtons = document.querySelectorAll('.edit-user-button');
+    const viewButtons = document.querySelectorAll('.view-user-button');
+    const closeModalButtons = document.querySelectorAll('button[data-modal-toggle]');
+    const editModal = document.getElementById('edit-modal');
+    const viewModal = document.getElementById('view-modal');
 
-    const errorMessages = {
-        name: "O nome é obrigatório e deve ter entre 3 e 50 caracteres.",
-        email: "O email é obrigatório e deve conter '@'.",
-        phone: "O telefone é obrigatório e deve ter entre 10 e 15 caracteres.",
-        password: "A senha é obrigatória e deve ter pelo menos 6 caracteres.",
-        cep: "O CEP é obrigatório e deve ter 8 caracteres."
-    };
+    // Função para preencher campos de edição
+    function populateEditForm(button) {
+        const userId = button.getAttribute('data-user-id');
+        const userName = button.getAttribute('data-user-name');
+        const userEmail = button.getAttribute('data-user-email');
+        const userPhone = button.getAttribute('data-user-phone');
+        const userCpfCnpj = button.getAttribute('data-user-cpf_cnpj');
+        const userCep = button.getAttribute('data-user-cep');
+        const userRua = button.getAttribute('data-user-rua');
+        const userBairro = button.getAttribute('data-user-bairro');
+        const userCidade = button.getAttribute('data-user-cidade');
+        const userRole = button.getAttribute('data-user-role');
 
-    function showError(input, message) {
-        const parent = input.parentElement;
-        let errorElement = parent.querySelector('small');
-        if (!errorElement) {
-            errorElement = document.createElement('small');
-            errorElement.classList.add('text-red-500', 'text-xs');
-            parent.appendChild(errorElement);
-        }
-        errorElement.innerText = message;
+        // Debugging logs
+        console.log({
+            userId, userName, userEmail, userPhone, userCpfCnpj, userCep, userRua, userBairro, userCidade, userRole
+        });
+
+        document.getElementById('edit-name').value = userName;
+        document.getElementById('edit-email').value = userEmail;
+        document.getElementById('edit-phone').value = userPhone;
+        document.getElementById('edit-cpf_cnpj').value = userCpfCnpj;
+        document.getElementById('edit-cep').value = userCep;
+        document.getElementById('edit-rua').value = userRua;
+        document.getElementById('edit-bairro').value = userBairro;
+        document.getElementById('edit-cidade').value = userCidade;
+        document.getElementById('edit-role').value = userRole;
+
+        const form = document.getElementById('edit-user-form');
+        form.action = `/users/${userId}`;
+
+        editModal.classList.remove('hidden');
+        editModal.setAttribute('aria-hidden', 'false');
+        editModal.setAttribute('role', 'dialog');
     }
 
-    function clearError(input) {
-        const parent = input.parentElement;
-        const errorElement = parent.querySelector('small');
-        if (errorElement) {
-            parent.removeChild(errorElement);
-        }
+    // Função para preencher campos de visualização
+    function populateViewModal(button) {
+        const userName = button.getAttribute('data-user-name');
+        const userEmail = button.getAttribute('data-user-email');
+        const userPhone = button.getAttribute('data-user-phone');
+        const userCpfCnpj = button.getAttribute('data-user-cpf_cnpj');
+        const userCep = button.getAttribute('data-user-cep');
+        const userRua = button.getAttribute('data-user-rua');
+        const userBairro = button.getAttribute('data-user-bairro');
+        const userCidade = button.getAttribute('data-user-cidade');
+        const userRole = button.getAttribute('data-user-role');
+        const userCreatedAt = button.getAttribute('data-user-created_at');
+        const userUpdatedAt = button.getAttribute('data-user-updated_at');
+
+        // Debugging logs
+        console.log({
+            userName,
+            userEmail,
+            userPhone,
+            userCpfCnpj,
+            userCep,
+            userRua,
+            userBairro,
+            userCidade,
+            userRole,
+            userCreatedAt,
+            userUpdatedAt
+        });
+
+        document.querySelector('.modal-user-name').textContent = userName;
+        document.querySelector('.modal-user-email').textContent = userEmail;
+        document.querySelector('.modal-user-phone').textContent = userPhone;
+        document.querySelector('.modal-user-cpf_cnpj').textContent = userCpfCnpj;
+        document.querySelector('.modal-user-cep').textContent = userCep;
+        document.querySelector('.modal-user-rua').textContent = userRua;
+        document.querySelector('.modal-user-bairro').textContent = userBairro;
+        document.querySelector('.modal-user-cidade').textContent = userCidade;
+        document.querySelector('.modal-user-role').textContent = userRole;
+        document.querySelector('.modal-user-created_at').textContent = userCreatedAt;
+        document.querySelector('.modal-user-updated_at').textContent = userUpdatedAt;
+
+        viewModal.classList.remove('hidden');
+        viewModal.setAttribute('aria-hidden', 'false');
+        viewModal.setAttribute('role', 'dialog');
     }
 
-    function validateInput(input, type) {
-        let isValid = true;
-        const value = input.value.trim();
+    editButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            populateEditForm(this);
+        });
+    });
 
-        if (value === '') {
-            showError(input, errorMessages[type]);
-            isValid = false;
-        } else {
-            switch (type) {
-                case 'name':
-                    if (value.length < 3 || value.length > 50) {
-                        showError(input, errorMessages[type]);
-                        isValid = false;
-                    } else {
-                        clearError(input);
-                    }
-                    break;
-                case 'email':
-                    if (!value.includes('@')) {
-                        showError(input, errorMessages[type]);
-                        isValid = false;
-                    } else {
-                        clearError(input);
-                    }
-                    break;
-                case 'phone':
-                    if (value.length < 10 || value.length > 15) {
-                        showError(input, errorMessages[type]);
-                        isValid = false;
-                    } else {
-                        clearError(input);
-                    }
-                    break;
-                case 'password':
-                    if (value.length < 6) {
-                        showError(input, errorMessages[type]);
-                        isValid = false;
-                    } else {
-                        clearError(input);
-                    }
-                    break;
-                case 'cep':
-                    if (value.length !== 8) {
-                        showError(input, errorMessages[type]);
-                        isValid = false;
-                    } else {
-                        clearError(input);
-                    }
-                    break;
-            }
-        }
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            populateViewModal(this);
+        });
+    });
 
-        return isValid;
-    }
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const targetModal = this.getAttribute('data-modal-toggle');
+            const modal = document.getElementById(targetModal);
 
-    nameInput.addEventListener('blur', () => validateInput(nameInput, 'name'));
-    nameInput.addEventListener('input', () => validateInput(nameInput, 'name'));
-    emailInput.addEventListener('blur', () => validateInput(emailInput, 'email'));
-    emailInput.addEventListener('input', () => validateInput(emailInput, 'email'));
-    phoneInput.addEventListener('blur', () => validateInput(phoneInput, 'phone'));
-    phoneInput.addEventListener('input', () => validateInput(phoneInput, 'phone'));
-    cpfCnpjInput.addEventListener('blur', () => pesquisacnpj(cpfCnpjInput.value)); // Remove validação, apenas pesquisa CNPJ
-    cpfCnpjInput.addEventListener('input', () => clearError(cpfCnpjInput)); // Limpa erro ao digitar
-    passwordInput.addEventListener('blur', () => validateInput(passwordInput, 'password'));
-    passwordInput.addEventListener('input', () => validateInput(passwordInput, 'password'));
-    cepInput.addEventListener('blur', () => validateInput(cepInput, 'cep'));
-    cepInput.addEventListener('input', () => validateInput(cepInput, 'cep'));
+            modal.classList.add('hidden');
+            modal.setAttribute('aria-hidden', 'true');
+            modal.removeAttribute('role');
+        });
+    });
 
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const isNameValid = validateInput(nameInput, 'name');
-        const isEmailValid = validateInput(emailInput, 'email');
-        const isPhoneValid = validateInput(phoneInput, 'phone');
-        const isPasswordValid = validateInput(passwordInput, 'password');
-        const isCepValid = validateInput(cepInput, 'cep');
-
-        if (isNameValid && isEmailValid && isPhoneValid && isPasswordValid && isCepValid) {
-            form.submit();
-
+    window.addEventListener('click', function (event) {
+        if (event.target == editModal) {
+            editModal.classList.add('hidden');
+            editModal.setAttribute('aria-hidden', 'true');
+            editModal.removeAttribute('role');
+        } else if (event.target == viewModal) {
+            viewModal.classList.add('hidden');
+            viewModal.setAttribute('aria-hidden', 'true');
+            viewModal.removeAttribute('role');
         }
     });
 });

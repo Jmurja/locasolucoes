@@ -43,7 +43,13 @@
                     Usuário
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Título
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Espaço
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Status
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Hora de Início
@@ -66,7 +72,13 @@
                         {{ $reserve->user->role ?? 'N/A'}}
                     </td>
                     <td class="px-6 py-4">
+                        {{ $reserve->title ?? 'N/A'}}
+                    </td>
+                    <td class="px-6 py-4">
                         {{ $reserve->rentalitem->name ?? 'N/A'}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $reserve->rentalitem->status ?? 'N/A'}}
                     </td>
                     <td class="px-6 py-4">
                         {{ $reserve->start_date}}

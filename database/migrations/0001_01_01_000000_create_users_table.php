@@ -17,7 +17,7 @@ return new class () extends Migration {
             $table->string('phone')->nullable();
             $table->string('mobile')->nullable();
             $table->enum('role', ['admin', 'landlord', 'tenant', 'visitor'])->default('visitor');
-            $table->string('cpf_cnpj')->nullable();
+            $table->string('cpf_cnpj')->nullable()->unique();
             $table->longText('user_notes')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -25,6 +25,7 @@ return new class () extends Migration {
             $table->string('rua', 2048)->nullable();
             $table->string('bairro', 2048)->nullable();
             $table->string('cidade', 2048)->nullable();
+            $table->string('company', 2048)->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

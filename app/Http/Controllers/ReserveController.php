@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\RentalItemStatus;
 use App\Models\RentalItem;
 use App\Models\Reserve;
 use App\Models\User;
@@ -32,29 +33,42 @@ class ReserveController extends Controller
         $reserves    = $query->orderBy('created_at', 'desc')->paginate(20);
         $users       = User::all();
         $RentalItems = RentalItem::all();
+        $statuses    = RentalItemStatus::options(); // Obter opções de status do enum
 
-        return view('reserves.index', compact('reserves', 'RentalItems', 'users'));
+        return view('reserves.index', compact('reserves', 'RentalItems', 'users', 'statuses'));
     }
 
     public function store(Request $request)
     {
+        $user = User::where('cpf_cnpj', '=', $request->cpf_cnpj)->first();
+
+        if (!$user) {
+            $user = User::query()->create([
+                'name'       => $request->name,
+                'email'      => $request->email,
+                'phone'      => $request->phone,
+                'mobile'     => $request->mobile,
+                'role'       => $request->role,
+                'cpf_cnpj'   => $request->cpf_cnpj,
+                'user_notes' => $request->user_notes,
+                'password'   => bcrypt($request->password),
+                'cep'        => $request->cep,
+                'rua'        => $request->rua,
+                'bairro'     => $request->bairro,
+                'cidade'     => $request->cidade,
+            ]);
+        }
+
         Reserve::query()->create([
-            'user_id'        => $request->user_id,
+            'user_id'        => $user->id,
             'start_date'     => $request->start_date,
             'end_date'       => $request->end_date,
             'rental_item_id' => $request->rental_item_id,
             'reserve_notes'  => $request->reserve_notes,
+            'title'          => $request->title,
         ]);
 
         return back();
-    }
-
-    public function create(Request $request)
-    {
-        $users       = User::query()->orderBy('created_at', 'desc')->paginate(20);
-        $RentalItems = RentalItem::all();
-
-        return view('reserves.create', compact('RentalItems', 'users'));
     }
 
     public function json()
@@ -94,19 +108,12 @@ class ReserveController extends Controller
         return redirect()->route('reserves.index');
     }
 
-    public function edit(Reserve $reserf)
-    {
-        $users   = User::all();
-        $reserve = $reserf;
-
-        return view('reserves.edit', compact('reserve', 'users'));
-    }
-
     public function update(Request $request, Reserve $reserf)
     {
         $reserveUpdated = $request->all();
         $reserf->update($reserveUpdated);
+        $rentalItems = RentalItem::all();
 
-        return redirect()->route('reserves.index');
+        return view('reserves.index', compact('reserf', 'rentalItems'));
     }
 }

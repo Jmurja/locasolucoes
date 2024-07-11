@@ -30,14 +30,14 @@
                         <div>
                             <label for="visitorName"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
-                            <input type="text" name="visitor_name" id="visitorName"
+                            <input type="text" name="name" id="visitorName"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                    placeholder="Digite o nome do visitante" required>
                         </div>
                         <div>
                             <label for="visitorEmail"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                            <input type="email" name="visitor_email" id="visitorEmail"
+                            <input type="email" name="email" id="visitorEmail"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                    placeholder="Digite o email do visitante" required>
                         </div>
@@ -68,13 +68,6 @@
                             <input type="text" name="cpf_cnpj" id="eventCpfCnpj" onblur="pesquisacnpj(this.value)"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                    placeholder="Digite o CPF/CNPJ" required>
-                        </div>
-                        <div>
-                            <label for="eventPhone"
-                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Telefone</label>
-                            <input type="text" name="phone" id="eventPhone"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                   placeholder="Digite o Telefone" required>
                         </div>
                     </div>
                 </div>
@@ -135,19 +128,18 @@
                         <div>
                             <label for="eventStart"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Início</label>
-                            <input type="datetime-local" name="start" id="eventStart"
+                            <input type="datetime-local" name="start_date" id="eventStart"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                    required>
                         </div>
                         <div>
                             <label for="eventEnd"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Fim</label>
-                            <input type="datetime-local" name="end" id="eventEnd"
+                            <input type="datetime-local" name="end_date" id="eventEnd"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                    required>
                         </div>
                         <div>
-                            <!---------RESOLVER-------------->
                             <label for="rental_item_id"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Espaço</label>
                             <select id="rental_item_id" name="rental_item_id"

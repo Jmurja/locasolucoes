@@ -32,6 +32,10 @@
                         <dd class="text-lg font-semibold break-words" id="modal-reserve-space"></dd>
                     </div>
                     <div class="flex flex-col pt-3">
+                        <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Empresa</dt>
+                        <dd class="text-lg font-semibold break-words" id="modal-reserve-company"></dd>
+                    </div>
+                    <div class="flex flex-col pt-3">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Hora de Início</dt>
                         <dd class="text-lg font-semibold break-words" id="modal-reserve-start"></dd>
                     </div>

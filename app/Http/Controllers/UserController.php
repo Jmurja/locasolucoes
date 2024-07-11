@@ -35,7 +35,6 @@ class UserController extends Controller
             'name'       => $request->name,
             'email'      => $request->email,
             'phone'      => $request->phone,
-            'mobile'     => $request->mobile,
             'role'       => $request->role,
             'cpf_cnpj'   => $request->cpf_cnpj,
             'user_notes' => $request->user_notes,
@@ -44,6 +43,7 @@ class UserController extends Controller
             'rua'        => $request->rua,
             'bairro'     => $request->bairro,
             'cidade'     => $request->cidade,
+            'company'    => $request->company,
         ]);
 
         return back();
@@ -56,13 +56,6 @@ class UserController extends Controller
         return back();
     }
 
-    public function edit(User $user)
-    {
-        $users = User::all();
-
-        return view('users.edit', compact('user', 'users'));
-    }
-
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -71,6 +64,11 @@ class UserController extends Controller
             'phone'    => 'nullable|string|max:15',
             'cpf_cnpj' => 'nullable|string|max:14',
             'role'     => 'required|integer',
+            'company'  => 'nullable|string|max:255',
+            'cep'      => 'nullable|string|max:9',
+            'rua'      => 'nullable|string|max:255',
+            'bairro'   => 'nullable|string|max:255',
+            'cidade'   => 'nullable|string|max:255',
         ]);
 
         $user->update([
@@ -79,20 +77,13 @@ class UserController extends Controller
             'phone'    => $request->phone,
             'cpf_cnpj' => $request->cpf_cnpj,
             'role'     => $request->role,
+            'company'  => $request->company,
+            'cep'      => $request->cep,
+            'rua'      => $request->rua,
+            'bairro'   => $request->bairro,
+            'cidade'   => $request->cidade,
         ]);
 
         return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso.');
-    }
-
-    public function show(User $user)
-    {
-        return view('users.show', compact('user'));
-    }
-
-    public function create()
-    {
-        $users = User::query()->orderBy('created_at', 'desc')->paginate(20);
-
-        return view('users.create', compact('users'));
     }
 }

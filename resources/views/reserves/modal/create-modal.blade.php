@@ -1,6 +1,6 @@
 <!-- Main modal -->
 <div id="create-modal" tabindex="-1" aria-hidden="true"
-     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-full bg-black bg-opacity-50">
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -29,9 +29,11 @@
                         <select id="user_id" name="user_id"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             @foreach($users as $user)
-                                <option value="{{$user->id}}">{{$user->name}}</option>
+                                <option value="{{$user->id}}" data-name="{{$user->name}}">{{$user->name}}</option>
                             @endforeach
                         </select>
+                        <!-- Campo oculto para o nome do usuário -->
+                        <input type="hidden" name="name" id="name">
                     </div>
                     <div class="mb-4">
                         <label for="rental_item_id"
@@ -42,6 +44,13 @@
                                 <option value="{{$RentalItem->id}}">{{$RentalItem->name}}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título
+                            da Reserva</label>
+                        <input type="text" name="title" id="title"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                               required>
                     </div>
                     <div class="mb-4">
                         <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora
@@ -59,7 +68,8 @@
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label for="reserve_notes" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observações</label>
+                    <label for="reserve_notes"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observações</label>
                     <textarea name="reserve_notes" id="reserve_notes"
                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                               placeholder="Digite as observações"></textarea>

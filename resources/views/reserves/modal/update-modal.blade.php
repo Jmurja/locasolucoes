@@ -39,6 +39,23 @@
                         </select>
                     </div>
                     <div class="mb-4">
+                        <label for="title"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Titulo</label>
+                        <input type="text" name="title" id="title"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                               required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="status"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
+                        <select id="status" name="status"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @foreach($statuses as $status)
+                                <option value="{{ $status['value'] }}">{{ $status['label'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-4">
                         <label for="update_start_date"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora de
                             Início</label>
