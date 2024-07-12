@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "flowbite": "^2.3.0",
-    "fullcalendar": "^6.1.14"
+    "fullcalendar": "^6.1.14",
+    "simple-mask-money": "^4.1.3"
   }
 }

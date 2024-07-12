@@ -61,8 +61,6 @@
                         <input type="text" name="price_per_hour" id="price_per_hour"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o valor por hora" required>
-                        <small id="price_per_hour-error" class="text-red-500 text-xs hidden">Valor por hora deve ser um
-                            número.</small>
                     </div>
                     <div class="mb-4">
                         <label for="price_per_day"
@@ -71,8 +69,6 @@
                         <input type="text" name="price_per_day" id="price_per_day"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o valor por dia" required>
-                        <small id="price_per_day-error" class="text-red-500 text-xs hidden">Valor por dia deve ser um
-                            número.</small>
                     </div>
                     <div class="mb-4">
                         <label for="price_per_month"
@@ -81,8 +77,6 @@
                         <input type="text" name="price_per_month" id="price_per_month"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o valor por mês" required>
-                        <small id="price_per_month-error" class="text-red-500 text-xs hidden">Valor por mês deve ser um
-                            número.</small>
                     </div>
                     <div class="mb-4">
                         <label for="status"

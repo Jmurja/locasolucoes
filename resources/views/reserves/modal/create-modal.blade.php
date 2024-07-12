@@ -26,10 +26,10 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="mb-4">
                         <label for="user_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsável</label>
-                        <select id="user_id" name="user_id"
+                        <select id="user_id" name="cpf_cnpj"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             @foreach($users as $user)
-                                <option value="{{$user->id}}" data-name="{{$user->name}}">{{$user->name}}</option>
+                                <option value="{{$user->cpf_cnpj}}" data-name="{{$user->name}}">{{$user->name}}</option>
                             @endforeach
                         </select>
                         <!-- Campo oculto para o nome do usuário -->
@@ -45,13 +45,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-4">
-                        <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título
-                            da Reserva</label>
-                        <input type="text" name="title" id="title"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               required>
-                    </div>
+
                     <div class="mb-4">
                         <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora
                             de Início</label>
@@ -66,6 +60,13 @@
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                required>
                     </div>
+                </div>
+                <div class="mb-4">
+                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título
+                        da Reserva</label>
+                    <input type="text" name="title" id="title" placeholder="Digite um título para sua reserva"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                           required>
                 </div>
                 <div class="mb-4">
                     <label for="reserve_notes"

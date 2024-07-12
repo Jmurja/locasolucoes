@@ -24,7 +24,7 @@
                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Você
                     deseja deletar este Usuário?
                 </h3>
-                <form id="delete-form" method="post" action="" class="flex items-center justify-center space-x-3">
+                <form id="delete-form" method="POST" action="{{ route('users.index', ['user' => '']) }}">
                     @csrf
                     @method('DELETE')
                     <input type="hidden" id="delete-user-id" name="user_id" value="">

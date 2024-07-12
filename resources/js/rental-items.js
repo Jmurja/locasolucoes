@@ -1,3 +1,73 @@
+import SimpleMaskMoney from 'simple-mask-money';
+
+const optionsUSD = {
+    afterFormat(e) {
+        console.log('afterFormat', e);
+    },
+    allowNegative: false,
+    beforeFormat(e) {
+        console.log('beforeFormat', e);
+    },
+    negativeSignAfter: false,
+    prefix: '$',
+    suffix: '',
+    fixed: true,
+    fractionDigits: 2,
+    decimalSeparator: ',',
+    thousandsSeparator: '.',
+    cursor: 'end'
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+    const pricePerHourCreate = document.getElementById('price_per_hour');
+    const pricePerDayCreate = document.getElementById('price_per_day');
+    const pricePerMonthCreate = document.getElementById('price_per_month');
+
+    SimpleMaskMoney.setMask(pricePerHourCreate, optionsUSD);
+    SimpleMaskMoney.setMask(pricePerDayCreate, optionsUSD);
+    SimpleMaskMoney.setMask(pricePerMonthCreate, optionsUSD);
+
+    function convertToNumberCreate() {
+        pricePerHourCreate.value = SimpleMaskMoney.formatToNumber(pricePerHourCreate.value);
+        pricePerDayCreate.value = SimpleMaskMoney.formatToNumber(pricePerDayCreate.value);
+        pricePerMonthCreate.value = SimpleMaskMoney.formatToNumber(pricePerMonthCreate.value);
+    }
+
+    const formCreate = document.getElementById('rental-form');
+    formCreate.addEventListener('submit', function (event) {
+        convertToNumberCreate();
+    });
+
+    // Parte de atualização
+    const pricePerHourUpdate = document.getElementById('edit_price_per_hour');
+    const pricePerDayUpdate = document.getElementById('edit_price_per_day');
+    const pricePerMonthUpdate = document.getElementById('edit_price_per_month');
+
+    function applyMaskToUpdateFields() {
+        SimpleMaskMoney.setMask(pricePerHourUpdate, optionsUSD);
+        SimpleMaskMoney.setMask(pricePerDayUpdate, optionsUSD);
+        SimpleMaskMoney.setMask(pricePerMonthUpdate, optionsUSD);
+    }
+
+    function convertToNumberUpdate() {
+        pricePerHourUpdate.value = SimpleMaskMoney.formatToNumber(pricePerHourUpdate.value);
+        pricePerDayUpdate.value = SimpleMaskMoney.formatToNumber(pricePerDayUpdate.value);
+        pricePerMonthUpdate.value = SimpleMaskMoney.formatToNumber(pricePerMonthUpdate.value);
+    }
+
+    const formUpdate = document.getElementById('edit-form');
+    formUpdate.addEventListener('submit', function (event) {
+        convertToNumberUpdate();
+    });
+
+    // Adicionando evento de abertura do modal para aplicar máscara
+    document.querySelectorAll('[data-modal-toggle="edit-modal"]').forEach(button => {
+        button.addEventListener('click', function () {
+            applyMaskToUpdateFields();
+        });
+    });
+});
+
 function validateName() {
     const name = document.getElementById('name').value;
     const nameError = document.getElementById('name-error');

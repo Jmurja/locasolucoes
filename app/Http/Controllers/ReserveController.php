@@ -7,15 +7,12 @@ use App\Models\RentalItem;
 use App\Models\Reserve;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class ReserveController extends Controller
 {
     public function index(Request $request)
     {
-        Gate::authorize('simple-user');
-
-        $query = Reserve::query()->with(['user', 'rentalitem']);
+        $query = Reserve::query();
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -24,14 +21,14 @@ class ReserveController extends Controller
                     ->orWhere('role', 'LIKE', "%{$search}%");
             })
                 ->orWhereHas('rentalitem', function($q) use ($search) {
-                    $q->where('name', 'LIKE', "%{$search}%")
-                        ->orWhere('status', 'LIKE', "%{$search}%");
+                    $q->where('name', 'LIKE', "%{$search}%");
                 })
                 ->orWhere('start_date', 'LIKE', "%{$search}%")
                 ->orWhere('end_date', 'LIKE', "%{$search}%");
         }
 
-        $reserves    = $query->orderBy('created_at', 'desc')->paginate(20);
+        $reserves = $query->orderBy('created_at', 'desc')->paginate(20);
+        $reserves->load(['user']);
         $users       = User::all();
         $RentalItems = RentalItem::all();
         $statuses    = RentalItemStatus::options(); // Obter opções de status do enum
@@ -44,12 +41,17 @@ class ReserveController extends Controller
         $user = User::where('cpf_cnpj', '=', $request->cpf_cnpj)->first();
 
         if (!$user) {
+            $role = $request->input(
+                'role',
+                'VISITOR'
+            ); // Define 'VISITOR' como padrão se o campo role não estiver presente.
+
             $user = User::query()->create([
                 'name'       => $request->name,
                 'email'      => $request->email,
                 'phone'      => $request->phone,
                 'mobile'     => $request->mobile,
-                'role'       => $request->role,
+                'role'       => $role,
                 'cpf_cnpj'   => $request->cpf_cnpj,
                 'user_notes' => $request->user_notes,
                 'password'   => bcrypt($request->password),
@@ -57,6 +59,7 @@ class ReserveController extends Controller
                 'rua'        => $request->rua,
                 'bairro'     => $request->bairro,
                 'cidade'     => $request->cidade,
+                'company'    => $request->company,
             ]);
         }
 
@@ -100,34 +103,19 @@ class ReserveController extends Controller
         return response()->json($reserve);
     }
 
-    public function destroy(User $user)
+    public function destroy(Reserve $reserve)
     {
-        $user->delete();
+        $reserve->delete();
 
-        return back()->with('success', 'Usuário deletado com sucesso.');
+        return redirect()->route('reserves.index');
     }
 
     public function update(Request $request, Reserve $reserve)
     {
-        $request->validate([
-            'user_id'        => 'required|exists:users,id',
-            'title'          => 'required|string|max:255',
-            'status'         => 'required|string',
-            'rental_item_id' => 'required|exists:rental_items,id',
-            'start_date'     => 'required|date',
-            'end_date'       => 'required|date',
-            'reserve_notes'  => 'nullable|string',
-        ]);
+        $reserveUpdated = $request->all();
+        $reserve->update($reserveUpdated);
+        $rentalItems = RentalItem::all();
 
-        $reserve->update([
-            'user_id'        => $request->user_id,
-            'title'          => $request->title,
-            'rental_item_id' => $request->rental_item_id,
-            'start_date'     => $request->start_date,
-            'end_date'       => $request->end_date,
-            'reserve_notes'  => $request->reserve_notes,
-        ]);
-
-        return redirect()->route('reserves.index')->with('success', 'Reserva atualizada com sucesso.');
+        return view('reserves.index', compact('reserve', 'rentalItems'));
     }
 }

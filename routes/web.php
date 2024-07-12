@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function() {
     Route::resource('reserves', ReserveController::class)->names('reserves')->parameters([
         'reserves' => 'reserve'
     ]);
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
     Route::resource('reports', ReportsController::class);
     Route::get('/reservas/search', [ReserveController::class, 'search'])->name('reservas.search');
 });

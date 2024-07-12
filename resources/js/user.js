@@ -1,56 +1,83 @@
 document.addEventListener('DOMContentLoaded', function () {
     const editButtons = document.querySelectorAll('.edit-user-button');
     const viewButtons = document.querySelectorAll('.view-user-button');
-    const deleteButtons = document.querySelectorAll('.delete-button');
+    const deleteButtons = document.querySelectorAll('.delete-button'); // Seleciona os botões de delete
     const closeModalButtons = document.querySelectorAll('button[data-modal-toggle]');
     const editModal = document.getElementById('edit-modal');
     const viewModal = document.getElementById('view-modal');
-    const deleteModal = document.getElementById('delete-modal');
-    const createModal = document.getElementById('create-user');
+    const deleteForm = document.getElementById('delete-form'); // Seleciona o formulário de delete
+    const deleteModal = document.getElementById('delete-modal'); // Seleciona o modal de delete
 
-    function validateField(field) {
-        const errorField = document.querySelector(`#${field.id}-error`);
-        if (!field.value.trim()) {
-            errorField.textContent = 'Este campo é obrigatório';
-            field.classList.add('border-red-500');
-        } else {
-            errorField.textContent = '';
-            field.classList.remove('border-red-500');
-        }
+    // Função para preencher campos de edição
+    function populateEditForm(button) {
+        const userId = button.getAttribute('data-user-id');
+        const userName = button.getAttribute('data-user-name');
+        const userEmail = button.getAttribute('data-user-email');
+        const userPhone = button.getAttribute('data-user-phone');
+        const userCpfCnpj = button.getAttribute('data-user-cpf_cnpj');
+        const userCep = button.getAttribute('data-user-cep');
+        const userRua = button.getAttribute('data-user-rua');
+        const userBairro = button.getAttribute('data-user-bairro');
+        const userCidade = button.getAttribute('data-user-cidade');
+        const userRole = button.getAttribute('data-user-role');
+
+        document.getElementById('edit-name').value = userName;
+        document.getElementById('edit-email').value = userEmail;
+        document.getElementById('edit-phone').value = userPhone;
+        document.getElementById('edit-cpf_cnpj').value = userCpfCnpj;
+        document.getElementById('edit-cep').value = userCep;
+        document.getElementById('edit-rua').value = userRua;
+        document.getElementById('edit-bairro').value = userBairro;
+        document.getElementById('edit-cidade').value = userCidade;
+        document.getElementById('edit-role').value = userRole;
+
+        const form = document.getElementById('edit-user-form');
+        form.action = `/users/${userId}`;
+
+        editModal.classList.remove('hidden');
+        editModal.setAttribute('aria-hidden', 'false');
+        editModal.setAttribute('role', 'dialog');
     }
 
-    function validateCreateForm() {
-        const requiredFields = ['name', 'email', 'phone', 'company', 'role', 'cpf_cnpj', 'cep', 'cidade', 'rua', 'bairro', 'password'];
-        let isValid = true;
+    // Função para preencher campos de visualização
+    function populateViewModal(button) {
+        const userName = button.getAttribute('data-user-name');
+        const userEmail = button.getAttribute('data-user-email');
+        const userPhone = button.getAttribute('data-user-phone');
+        const userCpfCnpj = button.getAttribute('data-user-cpf_cnpj');
+        const userCep = button.getAttribute('data-user-cep');
+        const userRua = button.getAttribute('data-user-rua');
+        const userBairro = button.getAttribute('data-user-bairro');
+        const userCidade = button.getAttribute('data-user-cidade');
+        const userRole = button.getAttribute('data-user-role');
+        const userCreatedAt = button.getAttribute('data-user-created_at');
+        const userUpdatedAt = button.getAttribute('data-user-updated_at');
 
-        requiredFields.forEach(fieldId => {
-            const field = document.getElementById(fieldId);
-            validateField(field);
-            if (!field.value.trim()) {
-                isValid = false;
-            }
-        });
+        document.querySelector('.modal-user-name').textContent = userName;
+        document.querySelector('.modal-user-email').textContent = userEmail;
+        document.querySelector('.modal-user-phone').textContent = userPhone;
+        document.querySelector('.modal-user-cpf_cnpj').textContent = userCpfCnpj;
+        document.querySelector('.modal-user-cep').textContent = userCep;
+        document.querySelector('.modal-user-rua').textContent = userRua;
+        document.querySelector('.modal-user-bairro').textContent = userBairro;
+        document.querySelector('.modal-user-cidade').textContent = userCidade;
+        document.querySelector('.modal-user-role').textContent = userRole;
+        document.querySelector('.modal-user-created_at').textContent = userCreatedAt;
+        document.querySelector('.modal-user-updated_at').textContent = userUpdatedAt;
 
-        return isValid;
+        viewModal.classList.remove('hidden');
+        viewModal.setAttribute('aria-hidden', 'false');
+        viewModal.setAttribute('role', 'dialog');
     }
 
-    document.getElementById('create-user-form').addEventListener('submit', function (event) {
-        if (!validateCreateForm()) {
-            event.preventDefault();
-        }
-    });
-
-    const requiredFieldsCreate = ['name', 'email', 'phone', 'company', 'role', 'cpf_cnpj', 'cep', 'cidade', 'rua', 'bairro', 'password'];
-
-    requiredFieldsCreate.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        field.addEventListener('blur', function () {
-            validateField(field);
-        });
-        field.addEventListener('input', function () {
-            validateField(field);
-        });
-    });
+    // Função para configurar o formulário de exclusão
+    function setupDeleteForm(button) {
+        const userId = button.getAttribute('data-user-id');
+        deleteForm.action = `/users/${userId}`;
+        deleteModal.classList.remove('hidden');
+        deleteModal.setAttribute('aria-hidden', 'false');
+        deleteModal.setAttribute('role', 'dialog');
+    }
 
     editButtons.forEach(button => {
         button.addEventListener('click', function () {
@@ -66,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     deleteButtons.forEach(button => {
         button.addEventListener('click', function () {
-            populateDeleteForm(this);
+            setupDeleteForm(this);
         });
     });
 
@@ -94,10 +121,44 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteModal.classList.add('hidden');
             deleteModal.setAttribute('aria-hidden', 'true');
             deleteModal.removeAttribute('role');
-        } else if (event.target == createModal) {
-            createModal.classList.add('hidden');
-            createModal.setAttribute('aria-hidden', 'true');
-            createModal.removeAttribute('role');
         }
     });
+
+    // Função para consultar a API ViaCEP
+    function pesquisacep(valor) {
+        // Remove tudo o que não é número do CEP
+        var cep = valor.replace(/\D/g, '');
+
+        // Verifica se o CEP tem tamanho válido
+        if (cep.length === 8) {
+            // Consulta o webservice viacep.com.br/
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!("erro" in data)) {
+                        // Atualiza os campos com os valores retornados pela API
+                        document.getElementById('rua').value = data.logradouro;
+                        document.getElementById('bairro').value = data.bairro;
+                        document.getElementById('cidade').value = data.localidade;
+                    } else {
+                        // CEP não encontrado
+                        alert("CEP não encontrado.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar CEP:', error);
+                });
+        } else {
+            // CEP inválido
+            alert("Formato de CEP inválido.");
+        }
+    }
+
+    // Adiciona o evento ao campo de CEP
+    const cepInput = document.getElementById('cep');
+    if (cepInput) {
+        cepInput.addEventListener('blur', function () {
+            pesquisacep(this.value);
+        });
+    }
 });
