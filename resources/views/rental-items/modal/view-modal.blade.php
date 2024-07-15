@@ -52,6 +52,8 @@
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Observações</dt>
                         <dd class="text-lg font-semibold break-words" data-field="rental_item_notes"></dd>
                     </div>
+
+
                 </dl>
             </div>
         </div>

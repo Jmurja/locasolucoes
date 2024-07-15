@@ -21,7 +21,8 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form id="editForm" method="POST" class="p-4 md:p-5 space-y-6">
+            <form id="editForm" method="POST" class="p-4 md:p-5 space-y-6"
+                  action="{{ route('reserves.update', $reserve->id) }}">
                 @csrf
                 @method('PATCH')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -43,16 +44,6 @@
                                required>
                     </div>
                     <div class="mb-4">
-                        <label for="status"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                        <select id="update_status" name="status"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            @foreach($statuses as $status)
-                                <option value="{{ $status['value'] }}">{{ $status['label'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-4">
                         <label for="rental_item_id"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Espaço</label>
                         <select id="update_rental_item_id" name="rental_item_id"
@@ -62,20 +53,69 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-4">
-                        <label for="update_start_date"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora de
-                            Início</label>
-                        <input type="datetime-local" name="start_date" id="update_start_date"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               required>
+                    <div class="mb-4 col-span-2">
+                        <div id="update-date-range-picker" date-rangepicker class="flex items-center space-x-4">
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                    </svg>
+                                </div>
+                                <input id="update_start_date" name="start_date" type="text" autocomplete="off"
+                                       class="datepicker-custom bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full ps-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                       placeholder="Selecione a data de início">
+                            </div>
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                    </svg>
+                                </div>
+                                <input id="update_end_date" name="end_date" type="text" autocomplete="off"
+                                       class="datepicker-custom bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full ps-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                       placeholder="Selecione a data de término">
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-4">
-                        <label for="update_end_date"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora do Fim</label>
-                        <input type="datetime-local" name="end_date" id="update_end_date"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               required>
+                        <label for="update_start_time"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora
+                            de Início</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                          d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <input type="time" id="update_start_time" name="start_time"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full ps-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   min="08:00" max="18:00" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="update_end_time"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora
+                            de Término</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                          d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <input type="time" id="update_end_time" name="end_time"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full ps-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   min="09:00" max="18:00" required>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-4">

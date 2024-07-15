@@ -1,24 +1,27 @@
-const $datepickerEl = document.getElementById('datepicker-custom');
-
-// optional options with default values and callback functions
-const options = {
-    defaultDatepickerId: null,
-    autohide: false,
+Datepicker.locales['pt'] = {
+    days: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+    daysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+    daysMin: ['Do', 'Se', 'Te', 'Qa', 'Qi', 'Se', 'Sa'],
+    months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+    monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+    today: 'Hoje',
+    clear: 'Limpar',
     format: 'dd/mm/yyyy',
-    maxDate: null,
-    minDate: null,
-    orientation: 'bottom',
-    buttons: false,
-    autoSelectToday: false,
-    title: null,
-    rangePicker: false,
-    onShow: () => {
-    },
-    onHide: () => {
-    },
+    titleFormat: 'MM yyyy',
+    weekStart: 0
 };
 
-const instanceOptions = {
-    id: 'datepicker-custom-example',
-    override: true
-};
+const datepickerEl = document.querySelectorAll('.datepicker-custom');
+
+datepickerEl.forEach((el) => {
+    new Datepicker(el, {
+        defaultDatepickerId: null,
+        autohide: true,
+        format: 'dd/mm/yyyy',
+        orientation: 'bottom',
+        autoSelectToday: false,
+        language: 'pt',
+        rangePicker: false,
+        locale: 'pt',
+    });
+});

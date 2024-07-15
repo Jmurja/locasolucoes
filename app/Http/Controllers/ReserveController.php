@@ -6,12 +6,16 @@ use App\Enum\RentalItemStatus;
 use App\Models\RentalItem;
 use App\Models\Reserve;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReserveController extends Controller
 {
     public function index(Request $request)
     {
+        Gate::authorize('simple-user');
+
         $query = Reserve::query();
 
         if ($request->filled('search')) {
@@ -44,7 +48,7 @@ class ReserveController extends Controller
             $role = $request->input(
                 'role',
                 'VISITOR'
-            ); // Define 'VISITOR' como padrão se o campo role não estiver presente.
+            );
 
             $user = User::query()->create([
                 'name'       => $request->name,
@@ -63,10 +67,13 @@ class ReserveController extends Controller
             ]);
         }
 
+        $FormatStartDate = Carbon::createFromFormat('d/m/Y H:i', $request->start_date . ' ' . $request->start_time);
+        $FormatEndDate   = Carbon::createFromFormat('d/m/Y H:i', $request->end_date . ' ' . $request->end_time);
+
         Reserve::query()->create([
             'user_id'        => $user->id,
-            'start_date'     => $request->start_date,
-            'end_date'       => $request->end_date,
+            'start_date'     => $FormatStartDate,
+            'end_date'       => $FormatEndDate,
             'rental_item_id' => $request->rental_item_id,
             'reserve_notes'  => $request->reserve_notes,
             'title'          => $request->title,

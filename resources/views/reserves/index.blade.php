@@ -5,6 +5,8 @@
         </h2>
     </x-slot>
 
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
 
     <!--------Pesquisar---------->
     <form class="max-w-lg mx-auto mt-10" method="GET" action="{{ route('reserves.index') }}">
@@ -128,4 +130,5 @@
     @include('reserves.modal.delete-modal')
     @include('reserves.modal.view-modal')
     @vite('resources/js/reserves.js')
+    @vite('resources/js/datepicker.js')
 </x-app-layout>
