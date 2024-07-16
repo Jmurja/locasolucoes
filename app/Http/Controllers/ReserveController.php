@@ -42,6 +42,7 @@ class ReserveController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         $user = User::where('cpf_cnpj', '=', $request->cpf_cnpj)->first();
 
         if (!$user) {
