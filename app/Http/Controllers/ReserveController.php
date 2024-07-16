@@ -119,10 +119,20 @@ class ReserveController extends Controller
 
     public function update(Request $request, Reserve $reserve)
     {
-        $reserveUpdated = $request->all();
-        $reserve->update($reserveUpdated);
-        $rentalItems = RentalItem::all();
+        $FormatStartDate = Carbon::createFromFormat('d/m/Y H:i', $request->start_date . ' ' . $request->start_time);
+        $FormatEndDate   = Carbon::createFromFormat('d/m/Y H:i', $request->end_date . ' ' . $request->end_time);
 
-        return view('reserves.index', compact('reserve', 'rentalItems'));
+        $reserveUpdated = [
+            'user_id'        => $request->user_id,
+            'start_date'     => $FormatStartDate,
+            'end_date'       => $FormatEndDate,
+            'rental_item_id' => $request->rental_item_id,
+            'reserve_notes'  => $request->reserve_notes,
+            'title'          => $request->title,
+        ];
+
+        $reserve->update($reserveUpdated);
+
+        return redirect()->route('reserves.index');
     }
 }

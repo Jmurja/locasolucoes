@@ -6,11 +6,13 @@ use App\Http\Controllers\RentalItemController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ReserveController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function() {
-    return view('welcome');
-});
+Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/welcome/{id}', [WelcomeController::class, 'show']);
+Route::get('/welcome/create', [WelcomeController::class, 'create']);
+Route::get('/welcome/store', [WelcomeController::class, 'destroy']);
 
 Route::get('/pdf', [ReportsController::class, 'generatePdf'])->name('pdf.reports');
 
@@ -24,10 +26,10 @@ Route::middleware('auth')->group(function() {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('rental-items', RentalItemController::class);
     Route::resource('users', UserController::class);
-    Route::get('reserves/json', [ReserveController::class, 'json']);
     Route::resource('reserves', ReserveController::class)->names('reserves')->parameters([
         'reserves' => 'reserve'
     ]);
+    Route::get('reserves/json', [ReserveController::class, 'json']);
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
     Route::resource('reports', ReportsController::class);

@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
-    var modalToggleButton = document.getElementById('modalToggleButton');
     var eventForm = document.getElementById('eventForm');
     var eventTitleInput = document.getElementById('eventTitle');
     var eventStartInput = document.getElementById('eventStart');
@@ -23,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         dateClick: function (info) {
             currentEventDate = info.dateStr;
             eventStartInput.value = currentEventDate + 'T00:00';
-            modalToggleButton.click();
+            openModal('visitor-reserve'); // Função para abrir o modal
         },
 
         events: '/reserves/json',
@@ -42,7 +41,38 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             eventTitleInput.value = '';
             eventStartInput.value = '';
-            document.querySelector('[data-modal-toggle="crud-modal"]').click();
+            closeModal('visitor-reserve'); // Função para fechar o modal
         }
     });
+
+    document.querySelectorAll('[data-modal-close]').forEach(function (closeButton) {
+        closeButton.addEventListener('click', function () {
+            var modalId = closeButton.getAttribute('data-modal-close');
+            closeModal(modalId);
+        });
+    });
+
+    document.querySelectorAll('.modal').forEach(function (modal) {
+        modal.addEventListener('click', function (event) {
+            if (event.target === modal) {
+                closeModal(modal.id);
+            }
+        });
+    });
 });
+
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+    }
+}
