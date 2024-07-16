@@ -12,9 +12,23 @@
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet'/>
 </head>
 <body class="font-sans antialiased dark:bg-gray-900 dark:text-white/50">
+<div class="bg-slate-700 w-full h-12 flex items-center justify-center shadow-lg">
+    <form action="{{ route('dev.login') }}" method="GET" class="flex items-center space-x-1">
+        @csrf
+        <select name="user_id"
+                class="px-2 py-1 bg-slate-200 border border-slate-400 rounded-lg shadow-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent">
+            @foreach($users as $user)
+                <option value="{{ $user->id }}">{{ $user->name }}</option>
+            @endforeach
+        </select>
+        <button type="submit"
+                class="px-2 py-1 bg-slate-600 text-white rounded-lg shadow-sm hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-opacity-50">
+            Login
+        </button>
+    </form>
+</div>
 <div
     class="bg-gray-50 text-black/50 dark:bg-gray-900 dark:text-white/50 min-h-screen flex flex-col items-center justify-center relative">
-
     <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl z-10">
         <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
             <img src="{!! asset('digiplace.png') !!}" alt="Logo">
@@ -50,11 +64,10 @@
     </div>
 </div>
 
-@vite('resources/js/app.js')
-@vite('resources/js/welcomeCalendar.js')
-@vite('resources/js/fullcalendar.js')
-@vite('resources/js/solicitar-reserva.js')
-@include('dashboard.modal.visitor-reserve-modal')
+@vite('resources/js/fullcalendar-visitor.js')
+@vite('resources/js/reserves-request.js')
+@include('welcome.modal.visitor-reserve-modal')
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
+<script src='{{ mix("js/calendar.js") }}'></script>
 </body>
 </html>

@@ -25,8 +25,8 @@
     <div id='calendar'></div>
 
     @vite('resources/js/fullcalendar.js')
-    @vite('resources/js/solicitar-reserva.js')
-    @include('dashboard.modal.visitor-reserve-modal')
+    @vite('resources/js/reserves-request.js')
+    @include('welcome.modal.visitor-reserve-modal')
     @include('dashboard.modal.tenant-reserve-modal')
     @include('dashboard.modal.termo-service-modal')
 

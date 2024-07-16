@@ -15,15 +15,13 @@ document.addEventListener('DOMContentLoaded', function () {
             // Fill the modal with the reserve data
             editModal.querySelector('select[name="user_id"]').value = reserve.user_id;
             editModal.querySelector('input[name="title"]').value = reserve.title;
-            editModal.querySelector('select[name="rental_item_id"]').value = reserve.rental_item_id;
-            editModal.querySelector('input[name="start_date"]').value = reserve.start_date.split(' ')[0]; // Data de início
-            editModal.querySelector('input[name="start_time"]').value = reserve.start_date.split(' ')[1]; // Hora de início
-            editModal.querySelector('input[name="end_date"]').value = reserve.end_date.split(' ')[0]; // Data de término
-            editModal.querySelector('input[name="end_time"]').value = reserve.end_date.split(' ')[1]; // Hora de término
+            editModal.querySelector('select[name="status"]').value = reserve.rentalitem.status;
+            editModal.querySelector('input[name="start_date"]').value = reserve.start_date.replace(' ', 'T');
+            editModal.querySelector('input[name="end_date"]').value = reserve.end_date.replace(' ', 'T');
             editModal.querySelector('input[name="reserve_notes"]').value = reserve.reserve_notes;
 
             // Update the form action with the correct reserve ID
-            editForm.action = `/reserves/${reserveId}`;
+            editForm.action = editForm.action.replace('reserve-id-placeholder', reserveId);
 
             // Show the modal
             editModal.classList.remove('hidden');
@@ -62,8 +60,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     buttons.forEach(button => {
         button.addEventListener('click', function () {
-            const reserveId = this.getAttribute('data-reserve-id');
-            deleteForm.setAttribute('action', `/reserves/${reserveId}`);
+            const userId = this.getAttribute('data-reserve-id');
+            deleteForm.setAttribute('action', `/reserves/${userId}`);
         });
     });
 
@@ -82,10 +80,4 @@ document.addEventListener('DOMContentLoaded', function () {
         const event = new Event('change');
         userSelect.dispatchEvent(event);
     }
-
-    // Fechar modal ao clicar no botão de fechar
-    const closeModalButton = document.getElementById('close-modal');
-    closeModalButton.addEventListener('click', function () {
-        editModal.classList.add('hidden');
-    });
 });

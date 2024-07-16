@@ -21,8 +21,7 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form id="editForm" method="POST" class="p-4 md:p-5 space-y-6"
-                  action="{{ route('reserves.update', $reserve->id) }}">
+            <form id="editForm" method="POST" class="p-4 md:p-5 space-y-6">
                 @csrf
                 @method('PATCH')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

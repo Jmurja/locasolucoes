@@ -15,7 +15,7 @@ export default defineConfig({
                 'resources/js/fullcalendar.js',
                 'resources/js/rental-items.js',
                 'resources/js/reserves.js',
-                'resources/js/solicitar-reserva.js',
+                'resources/js/reserves-request.js',
                 'resources/js/user.js',
             ],
             refresh: true,
