@@ -41,11 +41,6 @@
                 <th scope="col" class="px-6 py-3">
                     Responsável
                 </th>
-                @can('simple-user')
-                    <th scope="col" class="px-6 py-3">
-                        Categoria
-                    </th>
-                @endcan
                 <th scope="col" class="px-6 py-3">
                     Título
                 </th>
@@ -57,6 +52,9 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Hora do Fim
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Status
                 </th>
                 @can('simple-user')
                     <th scope="col" class="px-6 py-3">
@@ -76,11 +74,7 @@
                     <td class="px-6 py-4">
                         {{ $reserve->user->name ?? 'N/A'}}
                     </td>
-                    @can('simple-user')
-                        <td class="px-6 py-4">
-                            {{ $reserve->user->role ?? 'N/A'}}
-                        </td>
-                    @endcan
+
                     <td class="px-6 py-4">
                         {{ $reserve->title ?? 'N/A'}}
                     </td>
@@ -93,6 +87,9 @@
                     <td class="px-6 py-4">
                         {{ $reserve->end_date}}
                     </td>
+                    <td class="px-6 py-4">
+                        {{ $reserve->reserve_status ?? 'N/A'}}
+                    </td>
                     <td class="flex items-center px-6 py-4 space-x-2">
                         @can('simple-user')
                             <!-- View Modal -->
@@ -101,7 +98,14 @@
                                     class="cursor-pointer view-reserve-button">
                                 <x-icons.eye/>
                             </button>
-
+                        @endcan
+                        <!-- Delete Modal -->
+                        <button data-reserve-id="{{ $reserve->id }}"
+                                class="delete-button block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
+                                data-modal-target="delete-modal" data-modal-toggle="delete-modal" type="button">
+                            <x-icons.trash/>
+                        </button>
+                        @can('simple-user')
                             <!-- Edit Modal -->
                             <button data-reserve-id="{{ $reserve->id }}"
                                     data-modal-target="edit-modal" data-modal-toggle="edit-modal"
@@ -110,12 +114,6 @@
                                 <x-icons.edit/>
                             </button>
                         @endcan
-                        <!-- Delete Modal -->
-                        <button data-reserve-id="{{ $reserve->id }}"
-                                class="delete-button ml-8 block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
-                                data-modal-target="delete-modal" data-modal-toggle="delete-modal" type="button">
-                            <x-icons.trash/>
-                        </button>
                     </td>
                 </tr>
             @empty

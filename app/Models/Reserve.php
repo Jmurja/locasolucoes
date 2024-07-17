@@ -18,6 +18,8 @@ class Reserve extends Model
         'reserve_notes',
         'status',
         'title',
+        'description',
+        'reserve_status',
     ];
 
     public function user(): BelongsTo

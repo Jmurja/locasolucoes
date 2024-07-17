@@ -11,7 +11,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/bootstrap.js',
                 'resources/js/datepicker.js',
-                'resources/js/delete-user.js',
+                'resources/js/user-delete.js',
                 'resources/js/fullcalendar.js',
                 'resources/js/rental-items.js',
                 'resources/js/reserves.js',

@@ -140,6 +140,7 @@
             </button>
 
             @vite('resources/js/user.js')
+            @vite('resources/js/user-mask.js')
             @include('users/modal/create-user')
             @include('users/modal/delete-modal')
             @include('users/modal/update-modal')

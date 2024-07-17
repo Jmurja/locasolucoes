@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
     const editButtons = document.querySelectorAll('.edit-user-button');
     const viewButtons = document.querySelectorAll('.view-user-button');
-    const deleteButtons = document.querySelectorAll('.delete-button'); // Seleciona os botões de delete
+    const deleteButtons = document.querySelectorAll('.delete-button');
     const closeModalButtons = document.querySelectorAll('button[data-modal-toggle]');
     const editModal = document.getElementById('edit-modal');
     const viewModal = document.getElementById('view-modal');
-    const deleteForm = document.getElementById('delete-form'); // Seleciona o formulário de delete
-    const deleteModal = document.getElementById('delete-modal'); // Seleciona o modal de delete
+    const deleteForm = document.getElementById('delete-form');
+    const deleteModal = document.getElementById('delete-modal');
 
     // Função para preencher campos de edição
     function populateEditForm(button) {
@@ -126,22 +126,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Função para consultar a API ViaCEP
     function pesquisacep(valor) {
-        // Remove tudo o que não é número do CEP
         var cep = valor.replace(/\D/g, '');
 
-        // Verifica se o CEP tem tamanho válido
         if (cep.length === 8) {
-            // Consulta o webservice viacep.com.br/
             fetch(`https://viacep.com.br/ws/${cep}/json/`)
                 .then(response => response.json())
                 .then(data => {
                     if (!("erro" in data)) {
-                        // Atualiza os campos com os valores retornados pela API
                         document.getElementById('rua').value = data.logradouro;
                         document.getElementById('bairro').value = data.bairro;
                         document.getElementById('cidade').value = data.localidade;
                     } else {
-                        // CEP não encontrado
                         alert("CEP não encontrado.");
                     }
                 })
@@ -149,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('Erro ao buscar CEP:', error);
                 });
         } else {
-            // CEP inválido
             alert("Formato de CEP inválido.");
         }
     }

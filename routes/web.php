@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 Route::get('/dev/login', DevController::class)->name('dev.login');
+Route::get('reserves/json', [ReserveController::class, 'json']);
 Route::resource('reserves', ReserveController::class)->names('reserves')->parameters([
     'reserves' => 'reserve'
 ]);
 Route::resource('/dashboard', DashboardController::class)->only('index')->names('dashboard')->middleware([
     'auth', 'verified',
 ]);
-Route::get('reserves/json', [ReserveController::class, 'json']);
 
 Route::middleware('auth')->group(function() {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -26,6 +26,7 @@
 
     @vite('resources/js/fullcalendar.js')
     @vite('resources/js/reserves-request.js')
+    @vite('resources/js/datepicker.js')
     @include('welcome.modal.visitor-reserve-modal')
     @include('dashboard.modal.tenant-reserve-modal')
     @include('dashboard.modal.termo-service-modal')
