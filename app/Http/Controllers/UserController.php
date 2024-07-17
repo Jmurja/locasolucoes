@@ -31,19 +31,23 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $user = User::query()->create([
-            'name'       => $request->name,
-            'email'      => $request->email,
-            'phone'      => $request->phone,
-            'role'       => $request->role,
-            'cpf_cnpj'   => $request->cpf_cnpj,
-            'user_notes' => $request->user_notes,
-            'password'   => bcrypt($request->password),
-            'cep'        => $request->cep,
-            'rua'        => $request->rua,
-            'bairro'     => $request->bairro,
-            'cidade'     => $request->cidade,
-            'company'    => $request->company,
+        $input             = $request->all();
+        $input['phone']    = preg_replace('/\D/', '', $input['phone']);
+        $input['cpf_cnpj'] = preg_replace('/\D/', '', $input['cpf_cnpj']);
+        $input['cep']      = preg_replace('/\D/', '', $input['cep']);
+
+        $user = User::create([
+            'name'     => $input['name'],
+            'email'    => $input['email'],
+            'phone'    => $input['phone'],
+            'role'     => $input['role'],
+            'cpf_cnpj' => $input['cpf_cnpj'],
+            'password' => bcrypt($input['password']),
+            'cep'      => $input['cep'],
+            'rua'      => $input['rua'],
+            'bairro'   => $input['bairro'],
+            'cidade'   => $input['cidade'],
+            'company'  => $input['company'],
         ]);
 
         return back();
@@ -71,18 +75,12 @@ class UserController extends Controller
             'cidade'   => 'nullable|string|max:255',
         ]);
 
-        $user->update([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'phone'    => $request->phone,
-            'cpf_cnpj' => $request->cpf_cnpj,
-            'role'     => $request->role,
-            'company'  => $request->company,
-            'cep'      => $request->cep,
-            'rua'      => $request->rua,
-            'bairro'   => $request->bairro,
-            'cidade'   => $request->cidade,
-        ]);
+        $input             = $request->all();
+        $input['phone']    = preg_replace('/\D/', '', $input['phone']);
+        $input['cpf_cnpj'] = preg_replace('/\D/', '', $input['cpf_cnpj']);
+        $input['cep']      = preg_replace('/\D/', '', $input['cep']);
+
+        $user->update($input);
 
         return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso.');
     }

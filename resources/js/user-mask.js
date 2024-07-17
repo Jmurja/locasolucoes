@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Funções de máscara
     function applyPhoneMask(input) {
         input.addEventListener('input', function () {
             let value = input.value.replace(/\D/g, '');
@@ -32,8 +31,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Aplica as máscaras aos campos relevantes na página de formulário
     applyPhoneMask(document.getElementById('phone'));
     applyCepMask(document.getElementById('cep'));
     applyCpfCnpjMask(document.getElementById('cpf_cnpj'));
+
+    function applyMasksToEditModal() {
+        applyPhoneMask(document.getElementById('edit-phone'));
+        applyCepMask(document.getElementById('edit-cep'));
+        applyCpfCnpjMask(document.getElementById('edit-cpf_cnpj'));
+    }
+
+    document.querySelector('[data-modal-toggle="edit-modal"]').addEventListener('click', function () {
+        applyMasksToEditModal();
+    });
+
+    document.getElementById('edit-modal').addEventListener('show.bs.modal', function () {
+        applyMasksToEditModal();
+    });
 });
