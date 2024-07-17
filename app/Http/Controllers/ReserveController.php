@@ -14,9 +14,13 @@ class ReserveController extends Controller
 {
     public function index(Request $request)
     {
-        Gate::authorize('simple-user');
+        Gate::authorize('tenant-user');
 
         $query = Reserve::query();
+
+        if (auth()->user()->role === 'tenant') {
+            $query->where('user_id', auth()->user()->id);
+        }
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -42,16 +46,11 @@ class ReserveController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $user = User::where('cpf_cnpj', '=', $request->cpf_cnpj)->first();
 
         if (!$user) {
-            $role = $request->input(
-                'role',
-                'VISITOR'
-            );
-
-            $user = User::query()->create([
+            $role = $request->input('role', 'VISITOR');
+            $user = User::create([
                 'name'       => $request->name,
                 'email'      => $request->email,
                 'phone'      => $request->phone,
@@ -68,10 +67,16 @@ class ReserveController extends Controller
             ]);
         }
 
-        $FormatStartDate = Carbon::createFromFormat('d/m/Y H:i', $request->start_date . ' ' . $request->start_time);
-        $FormatEndDate   = Carbon::createFromFormat('d/m/Y H:i', $request->end_date . ' ' . $request->end_time);
+        $FormatStartDate = Carbon::createFromFormat(
+            'd/m/Y H:i',
+            $request->start_date . ' ' . $request->start_time
+        )->format('Y-m-d H:i:s');
+        $FormatEndDate = Carbon::createFromFormat(
+            'd/m/Y H:i',
+            $request->end_date . ' ' . $request->end_time
+        )->format('Y-m-d H:i:s');
 
-        Reserve::query()->create([
+        Reserve::create([
             'user_id'        => $user->id,
             'start_date'     => $FormatStartDate,
             'end_date'       => $FormatEndDate,
@@ -89,14 +94,14 @@ class ReserveController extends Controller
         $events   = $reserves->map(function($reserve) {
             return [
                 'id'            => $reserve->id,
-                'title'         => $reserve->user->name,
+                'title'         => $reserve->title,
                 'start'         => $reserve->start_date,
                 'end'           => $reserve->end_date,
                 'extendedProps' => [
                     'user_id'        => $reserve->user_id,
                     'rental_item_id' => $reserve->rental_item_id,
                     'reserve_notes'  => $reserve->reserve_notes,
-                    'description'    => $reserve->user->name,
+                    'description'    => $reserve->reserve_notes,
                 ],
             ];
         });

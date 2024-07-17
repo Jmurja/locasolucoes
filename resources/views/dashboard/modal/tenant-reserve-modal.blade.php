@@ -3,13 +3,12 @@
      class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center">
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="relative bg-white rounded-lg shadow-lg dark:bg-gray-700">
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
                 <h3 id="modalTitle" class="text-lg font-semibold text-gray-900 dark:text-white">
                     Solicitar Reserva
                 </h3>
-
                 <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                         data-modal-toggle="tenant-reserve">
@@ -24,13 +23,12 @@
             <!-- Modal body -->
             <form action="{{ route('reserves.store') }}" method="post" class="p-6 space-y-6">
                 @csrf
-                <input type="hidden" name="cpf_cnpj" value="{{auth()->user()->cpf_cnpj}}">
+                <input type="hidden" name="cpf_cnpj" value="{{ auth()->user()->cpf_cnpj }}">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="eventTitle"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título do
-                            Evento</label>
+                        <label for="eventTitle" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título
+                            do Evento</label>
                         <input type="text" name="title" id="eventTitle"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o Título do seu Evento" required>
@@ -39,22 +37,19 @@
                     <div>
                         <label for="eventResponsible"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsável</label>
-                        <input type="text" name="name" id="eventResponsible" value="{{auth()->user()->name}}" readonly
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               placeholder="Digite o Responsável pela locação" required>
+                        <input type="text" name="name" id="eventResponsible" value="{{ auth()->user()->name }}" readonly
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                         <small class="text-red-500 text-xs"></small>
                     </div>
                     <div>
-                        <label for="eventCompany"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa</label>
-                        <input type="text" name="company" id="eventCompany" value="{{auth()->user()->company}}"
+                        <label for="eventCompany" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Empresa</label>
+                        <input type="text" name="company" id="eventCompany" value="{{ auth()->user()->company }}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o nome da Empresa" required>
                         <small class="text-red-500 text-xs"></small>
                     </div>
                     <div>
-                        <label for="eventRoom"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sala
+                        <label for="eventRoom" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sala
                             Disponível</label>
                         <select name="rental_item_id" id="eventRoom"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -63,21 +58,68 @@
                             @endforeach
                         </select>
                     </div>
-                    <div>
-                        <label for="eventStart"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Início</label>
-                        <input type="datetime-local" name="start_date" id="eventStart"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               required>
+                    <div class="md:col-span-2">
+                        <div id="date-range-picker" date-rangepicker class="flex items-center space-x-4">
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                    </svg>
+                                </div>
+                                <input id="eventStart" name="start_date" type="text" autocomplete="off"
+                                       class="datepicker-custom bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full pl-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                       placeholder="Selecione a data de início">
+                            </div>
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path
+                                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                    </svg>
+                                </div>
+                                <input id="eventEnd" name="end_date" type="text" autocomplete="off"
+                                       class="datepicker-custom bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full pl-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                       placeholder="Selecione a data de término">
+                            </div>
+                        </div>
                     </div>
                     <div>
-                        <label for="eventEnd"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fim</label>
-                        <input type="datetime-local" name="end_date" id="eventEnd"
-                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                               required>
+                        <label for="start_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora
+                            de Início</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                          d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <input type="time" id="start_time" name="start_time"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full pl-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   min="08:00" max="18:00" required>
+                        </div>
                     </div>
-
+                    <div>
+                        <label for="end_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora
+                            de Término</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                          d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                                          clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <input type="time" id="end_time" name="end_time"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full pl-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   min="09:00" max="18:00" required>
+                        </div>
+                    </div>
                     <div class="col-span-1 md:col-span-2">
                         <label for="eventObservations"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observações</label>
@@ -88,11 +130,9 @@
                     <div class="flex items-center col-span-1 md:col-span-2">
                         <input id="termsCheckbox" type="checkbox" value=""
                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="termsCheckbox"
-                               class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Eu
+                        <label for="termsCheckbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Eu
                             li e concordo com <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline">Termos
-                                de
-                                uso</a>.</label>
+                                de uso</a>.</label>
                         <small class="text-red-500 text-xs"></small>
                     </div>
                 </div>

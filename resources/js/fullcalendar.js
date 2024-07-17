@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         dateClick: function (info) {
             currentEventDate = info.dateStr;
-            eventStartInput.value = currentEventDate + 'T00:00';
+            eventStartInput.value = currentEventDate;
             modalToggleButton.click();
         },
 
@@ -42,6 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             eventTitleInput.value = '';
             eventStartInput.value = '';
+
+
             document.querySelector('[data-modal-toggle="crud-modal"]').click();
         }
     });

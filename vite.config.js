@@ -17,6 +17,8 @@ export default defineConfig({
                 'resources/js/reserves.js',
                 'resources/js/reserves-request.js',
                 'resources/js/user.js',
+                'resources/js/welcome.js',
+                'resources/js/fullcalendar-visitor.js',
             ],
             refresh: true,
         }),

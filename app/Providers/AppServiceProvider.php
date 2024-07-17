@@ -20,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('simple-user', function($user) {
             return $user->role !== 'visitor' && $user->role !== 'tenant';
         });
+        Gate::define('tenant-user', function($user) {
+            return $user->role !== 'visitor';
+        });
+        Gate::define('some-tenant', function($user) {
+            return $user->role == 'tenant';
+        });
     }
 
     /**

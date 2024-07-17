@@ -12,17 +12,17 @@
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet'/>
 </head>
 <body class="font-sans antialiased dark:bg-gray-900 dark:text-white/50">
-<div class="bg-slate-700 w-full h-12 flex items-center justify-center shadow-lg">
-    <form action="{{ route('dev.login') }}" method="GET" class="flex items-center space-x-1">
+<div class="bg-slate-800 w-full h-16 flex items-center justify-center shadow-md">
+    <form action="{{ route('dev.login') }}" method="GET" class="flex items-center space-x-3">
         @csrf
         <select name="user_id"
-                class="px-2 py-1 bg-slate-200 border border-slate-400 rounded-lg shadow-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent">
+                class="px-3 py-2 bg-slate-300 border border-slate-500 rounded-lg shadow-md text-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent">
             @foreach($users as $user)
                 <option value="{{ $user->id }}">{{ $user->name }}</option>
             @endforeach
         </select>
         <button type="submit"
-                class="px-2 py-1 bg-slate-600 text-white rounded-lg shadow-sm hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-opacity-50">
+                class="px-4 py-2 bg-slate-600 text-white rounded-lg shadow-md hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-75 transition duration-200">
             Login
         </button>
     </form>
