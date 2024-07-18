@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
-    var modalToggleButton = document.getElementById('modalToggleButton');
-    var eventForm = document.getElementById('eventForm');
-    var eventTitleInput = document.getElementById('eventTitle');
-    var eventStartInput = document.getElementById('eventStart');
-    var currentEventDate = null;
+    let calendarEl = document.getElementById('calendar');
+    let modalToggleButton = document.getElementById('modalToggleButton');
+    let eventForm = document.getElementById('eventForm');
+    let eventTitleInput = document.getElementById('eventTitle');
+    let eventStartInput = document.getElementById('eventStart');
+    let currentEventDate = null;
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    let calendar = new FullCalendar.Calendar(calendarEl, {
         contentHeight: 500,
         locale: 'pt-br',
         selectable: true,

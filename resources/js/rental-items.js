@@ -181,7 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(`/rental-items/${itemId}`);
             const data = await response.json();
 
-            // Preenchendo o modal com os dados do item de locação
             document.querySelector('#view-modal dd[data-field="name"]').innerText = data.name;
             document.querySelector('#view-modal dd[data-field="description"]').innerText = data.description;
             document.querySelector('#view-modal dd[data-field="price_per_hour"]').innerText = `R$ ${data.price_per_hour}`;
@@ -190,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('#view-modal dd[data-field="status"]').innerText = data.status;
             document.querySelector('#view-modal dd[data-field="rental_item_notes"]').innerText = data.rental_item_notes;
 
-            // Exibir o modal
             const viewModal = document.getElementById('view-modal');
             viewModal.classList.remove('hidden');
             viewModal.setAttribute('aria-hidden', 'false');
@@ -198,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Adicionando evento para fechar o modal
     document.querySelectorAll('[data-modal-toggle="view-modal"]').forEach(button => {
         button.addEventListener('click', () => {
             const viewModal = document.getElementById('view-modal');

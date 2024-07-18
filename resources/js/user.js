@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const deleteForm = document.getElementById('delete-form');
     const deleteModal = document.getElementById('delete-modal');
 
-    // Função para preencher campos de edição
     function populateEditForm(button) {
         const userId = button.getAttribute('data-user-id');
         const userName = button.getAttribute('data-user-name');
@@ -39,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
         editModal.setAttribute('role', 'dialog');
     }
 
-    // Função para preencher campos de visualização
     function populateViewModal(button) {
         const userName = button.getAttribute('data-user-name');
         const userEmail = button.getAttribute('data-user-email');
@@ -70,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function () {
         viewModal.setAttribute('role', 'dialog');
     }
 
-    // Função para configurar o formulário de exclusão
     function setupDeleteForm(button) {
         const userId = button.getAttribute('data-user-id');
         deleteForm.action = `/users/${userId}`;
@@ -124,7 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Função para consultar a API ViaCEP
     function pesquisacep(valor) {
         var cep = valor.replace(/\D/g, '');
 
@@ -148,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Adiciona o evento ao campo de CEP
     const cepInput = document.getElementById('cep');
     if (cepInput) {
         cepInput.addEventListener('blur', function () {
