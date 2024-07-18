@@ -5,7 +5,6 @@
         </h2>
     </x-slot>
 
-    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
 
     <!--------Pesquisar---------->
@@ -33,6 +32,17 @@
             </button>
         </div>
     </form>
+
+    <!-- Mensagens de Erro -->
+    @if ($errors->any())
+        <div
+            class="max-w-lg mx-auto mt-4 p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+            role="alert">
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-8">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

@@ -46,7 +46,7 @@
                         </select>
                     </div>
                     <div class="mb-4 col-span-2">
-                        <div id="date-range-picker" date-rangepicker class="flex items-center space-x-4">
+                        <div id="date-range-picker" class="flex items-center space-x-4">
                             <div class="relative w-full">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"

@@ -1,3 +1,5 @@
+import {Datepicker} from 'flowbite-datepicker';
+
 Datepicker.locales['pt'] = {
     days: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
     daysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
@@ -10,7 +12,6 @@ Datepicker.locales['pt'] = {
     titleFormat: 'MM yyyy',
     weekStart: 0
 };
-
 const datepickerEl = document.querySelectorAll('.datepicker-custom');
 
 datepickerEl.forEach((el) => {
@@ -21,7 +22,7 @@ datepickerEl.forEach((el) => {
         orientation: 'bottom',
         autoSelectToday: false,
         language: 'pt',
-        rangePicker: false,
+        rangePicker: true,
         locale: 'pt',
     });
 });

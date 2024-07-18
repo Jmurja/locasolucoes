@@ -39,17 +39,46 @@ class ReserveController extends Controller
         $reserves->load(['user']);
         $users       = User::all();
         $RentalItems = RentalItem::all();
-        $statuses    = RentalItemStatus::options(); // Obter opções de status do enum
+        $statuses    = RentalItemStatus::options();
 
         return view('reserves.index', compact('reserves', 'RentalItems', 'users', 'statuses'));
     }
 
     public function store(Request $request)
     {
+        $startDateTime = $request->input('start') . ' ' . $request->input('start_time');
+        $endDateTime   = $request->input('end') . ' ' . $request->input('end_time');
+
+        try {
+            $FormatStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime)->format('Y-m-d H:i:s');
+            $FormatEndDate   = Carbon::createFromFormat('d/m/Y H:i', $endDateTime)->format('Y-m-d H:i:s');
+        } catch (\Exception $e) {
+            return back()->withErrors(['date_format' => 'O formato da data ou hora está incorreto.'])->withInput();
+        }
+
+        $existingReserve = Reserve::where('rental_item_id', $request->rental_item_id)
+            ->where(function($query) use ($FormatStartDate, $FormatEndDate) {
+                $query->whereBetween('start_date', [$FormatStartDate, $FormatEndDate])
+                    ->orWhereBetween('end_date', [$FormatStartDate, $FormatEndDate])
+                    ->orWhere(function($query) use ($FormatStartDate, $FormatEndDate) {
+                        $query->where('start_date', '<=', $FormatStartDate)
+                            ->where('end_date', '>=', $FormatEndDate);
+                    });
+            })
+            ->first();
+
+        if ($existingReserve) {
+            $conflictMessage = "Já existe uma reserva no mesmo período: " . $existingReserve->title
+                . " de " . Carbon::parse($existingReserve->start_date)->format('d/m/Y H:i')
+                . " até " . Carbon::parse($existingReserve->end_date)->format('d/m/Y H:i') . ".";
+
+            return back()->withErrors(['conflict' => $conflictMessage])->withInput();
+        }
+
         $user = User::where('cpf_cnpj', '=', $request->cpf_cnpj)->first();
 
         if (!$user) {
-            $role = $request->input('role', 'VISITOR');
+            $role = $request->input('role', 'VISITANTE');
             $user = User::create([
                 'name'       => $request->name,
                 'email'      => $request->email,
@@ -66,15 +95,6 @@ class ReserveController extends Controller
                 'company'    => $request->company,
             ]);
         }
-
-        $FormatStartDate = Carbon::createFromFormat(
-            'd/m/Y H:i',
-            $request->start_date . ' ' . $request->start_time
-        )->format('Y-m-d H:i:s');
-        $FormatEndDate = Carbon::createFromFormat(
-            'd/m/Y H:i',
-            $request->end_date . ' ' . $request->end_time
-        )->format('Y-m-d H:i:s');
 
         Reserve::create([
             'user_id'        => $user->id,
@@ -120,16 +140,45 @@ class ReserveController extends Controller
     {
         $reserve->delete();
 
-        return redirect()->route('reserves.index');
+        return redirect()->route('reserves.index')->with('success', 'Reserva deletada com sucesso.');
     }
 
     public function update(Request $request, Reserve $reserve)
     {
-        $reserveUpdated = $request->all();
-        $reserve->update($reserveUpdated);
-        $rentalItems = RentalItem::all();
-        $reserves    = Reserve::all();
+        $startDateTime = $request->input('start_date') . ' ' . $request->input('start_time');
+        $endDateTime   = $request->input('end_date') . ' ' . $request->input('end_time');
 
-        return view('reserves.index', compact('reserve', 'rentalItems', 'reserve', 'reserves'));
+        try {
+            $FormatStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime)->format('Y-m-d H:i:s');
+            $FormatEndDate   = Carbon::createFromFormat('d/m/Y H:i', $endDateTime)->format('Y-m-d H:i:s');
+        } catch (\Exception $e) {
+            return back()->withErrors(['date_format' => 'O formato da data ou hora está incorreto.'])->withInput();
+        }
+
+        $existingReserve = Reserve::where('rental_item_id', $request->rental_item_id)
+            ->where('id', '!=', $reserve->id)
+            ->where(function($query) use ($FormatStartDate, $FormatEndDate) {
+                $query->whereBetween('start_date', [$FormatStartDate, $FormatEndDate])
+                    ->orWhereBetween('end_date', [$FormatStartDate, $FormatEndDate])
+                    ->orWhere(function($query) use ($FormatStartDate, $FormatEndDate) {
+                        $query->where('start_date', '<=', $FormatStartDate)
+                            ->where('end_date', '>=', $FormatEndDate);
+                    });
+            })
+            ->exists();
+
+        if ($existingReserve) {
+            return back()->withErrors(['conflict' => 'Já existe uma reserva no mesmo período.']);
+        }
+
+        $reserve->update([
+            'start_date'     => $FormatStartDate,
+            'end_date'       => $FormatEndDate,
+            'rental_item_id' => $request->rental_item_id,
+            'reserve_notes'  => $request->reserve_notes,
+            'title'          => $request->title,
+        ]);
+
+        return back()->with('success', 'Reserva atualizada com sucesso.');
     }
 }
