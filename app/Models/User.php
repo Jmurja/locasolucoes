@@ -33,6 +33,7 @@ class User extends Authenticatable
         'cidade',
         'rua',
         'bairro',
+        'number',
         'company',
     ];
 

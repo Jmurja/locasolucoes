@@ -48,6 +48,7 @@ class UserController extends Controller
             'bairro'   => $input['bairro'],
             'cidade'   => $input['cidade'],
             'company'  => $input['company'],
+            'number'   => $input['number'],
         ]);
 
         return back();

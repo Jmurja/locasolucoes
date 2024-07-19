@@ -52,25 +52,34 @@ class RentalItemController extends Controller
 
     public function update(Request $request, RentalItem $rentalItem)
     {
-        $rentalItemUpdated = $request->all();
+        $updatedData = $request->only([
+            'user_id',
+            'name',
+            'description',
+            'price_per_hour',
+            'price_per_day',
+            'price_per_month',
+            'status',
+            'rental_item_notes'
+        ]);
 
-        $rentalItemUpdated['price_per_hour'] = preg_replace(
+        $updatedData['price_per_hour'] = preg_replace(
             '/[^\d]/',
             '',
-            str_replace(['.', ','], '', $rentalItemUpdated['price_per_hour'])
+            str_replace(['.', ','], '', $updatedData['price_per_hour'])
         );
-        $rentalItemUpdated['price_per_day'] = preg_replace(
+        $updatedData['price_per_day'] = preg_replace(
             '/[^\d]/',
             '',
-            str_replace(['.', ','], '', $rentalItemUpdated['price_per_day'])
+            str_replace(['.', ','], '', $updatedData['price_per_day'])
         );
-        $rentalItemUpdated['price_per_month'] = preg_replace(
+        $updatedData['price_per_month'] = preg_replace(
             '/[^\d]/',
             '',
-            str_replace(['.', ','], '', $rentalItemUpdated['price_per_month'])
+            str_replace(['.', ','], '', $updatedData['price_per_month'])
         );
 
-        $rentalItem->update($rentalItemUpdated);
+        $rentalItem->update($updatedData);
 
         return redirect()->route('rental-items.index');
     }

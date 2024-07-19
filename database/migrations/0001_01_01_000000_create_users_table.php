@@ -26,6 +26,7 @@ return new class () extends Migration {
             $table->string('bairro', 2048)->nullable();
             $table->string('cidade', 2048)->nullable();
             $table->string('company', 2048)->nullable();
+            $table->bigInteger('number')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

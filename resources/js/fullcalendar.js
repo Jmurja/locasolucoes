@@ -19,6 +19,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 buttonText: 'Mês',
             },
         },
+        eventDidMount: function (info) {
+            var tooltip = new Tooltip(info.el, {
+                title: info.event.extendedProps.description,
+                placement: 'top',
+                trigger: 'hover',
+                container: 'body'
+            });
+        },
 
         dateClick: function (info) {
             currentEventDate = info.dateStr;
@@ -44,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
             eventStartInput.value = '';
 
 
-            document.querySelector('[data-modal-toggle="crud-modal"]').click();
+            document.querySelector('[data-modal-toggle="tenant-reserve"]').click();
         }
     });
 });

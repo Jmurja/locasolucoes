@@ -10,6 +10,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/api/cnpj/{cnpj}', function($cnpj) {
+    $response = Http::get("https://www.receitaws.com.br/v1/cnpj/{$cnpj}");
+
+    return response()->json($response->json());
+});
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 Route::get('/dev/login', DevController::class)->name('dev.login');
 Route::get('reserves/json', [ReserveController::class, 'json']);

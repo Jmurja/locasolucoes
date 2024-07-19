@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
             editModal.querySelector('input[name="end_date"]').value = formatDate(reserve.end_date);
             editModal.querySelector('input[name="start_time"]').value = formatTime(reserve.start_date);
             editModal.querySelector('input[name="end_time"]').value = formatTime(reserve.end_date);
-            editModal.querySelector('input[name="reserve_notes"]').value = reserve.reserve_notes;
+            editModal.querySelector('textarea[name="reserve_notes"]').value = reserve.reserve_notes;
 
             editForm.action = `/reserves/${reserveId}`;
 
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
             viewModal.querySelector('#modal-reserve-company').textContent = reserve.user.company;
             viewModal.querySelector('#modal-reserve-start').textContent = reserve.start_date;
             viewModal.querySelector('#modal-reserve-end').textContent = reserve.end_date;
-            viewModal.querySelector('#modal-reserve-notes').textContent = reserve.reserve_notes; // Preenchendo o campo de observações
+            viewModal.querySelector('#modal-reserve-notes').textContent = reserve.reserve_notes;
             viewModal.classList.remove('hidden');
         });
     });
@@ -96,5 +96,52 @@ document.addEventListener('DOMContentLoaded', function () {
                 conflictMessage.remove();
             }, 100);
         }, 1000);
+    }
+
+    // Validação em tempo real
+    const fieldsToValidate = ['title', 'start_date', 'end_date', 'start_time', 'end_time'];
+
+    fieldsToValidate.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        field.addEventListener('blur', validateField);
+        field.addEventListener('input', validateField);
+    });
+
+    function validateField(event) {
+        const field = event.target;
+        const value = field.value;
+        let errorMessage = '';
+
+        if (!value) {
+            errorMessage = 'Este campo é obrigatório.';
+        } else {
+            if (field.type === 'date') {
+                const date = new Date(value);
+                if (isNaN(date)) {
+                    errorMessage = 'Por favor, insira uma data válida.';
+                }
+            } else if (field.type === 'time') {
+                const timePattern = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+                if (!timePattern.test(value)) {
+                    errorMessage = 'Por favor, insira um horário válido.';
+                }
+            }
+        }
+
+        const errorElement = field.nextElementSibling;
+        if (errorMessage) {
+            if (!errorElement) {
+                const error = document.createElement('span');
+                error.classList.add('text-red-500', 'text-sm');
+                error.textContent = errorMessage;
+                field.after(error);
+            } else {
+                errorElement.textContent = errorMessage;
+            }
+        } else {
+            if (errorElement) {
+                errorElement.remove();
+            }
+        }
     }
 });
