@@ -41,6 +41,7 @@ class UserFactory extends Factory
             'rua'               => fake()->streetAddress(),
             'bairro'            => fake()->streetName(),
             'cidade'            => fake()->city(),
+            'company'           => fake()->company(),
         ];
     }
 

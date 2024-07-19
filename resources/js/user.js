@@ -133,14 +133,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         document.getElementById('bairro').value = data.bairro;
                         document.getElementById('cidade').value = data.localidade;
                     } else {
-                        alert("CEP não encontrado.");
+                        showError('cep', 'CEP não encontrado.');
                     }
                 })
                 .catch(error => {
                     console.error('Erro ao buscar CEP:', error);
                 });
         } else {
-            alert("Formato de CEP inválido.");
+            showError('cep', 'Formato de CEP inválido.');
         }
     }
 
@@ -150,4 +150,157 @@ document.addEventListener('DOMContentLoaded', function () {
             pesquisacep(this.value);
         });
     }
+
+    function applyPhoneMask(input) {
+        input.addEventListener('input', function () {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length > 10) {
+                value = value.replace(/^(\d{2})(\d{5})(\d)/, '($1) $2-$3');
+            } else {
+                value = value.replace(/^(\d{2})(\d{4})(\d)/, '($1) $2-$3');
+            }
+            input.value = value;
+        });
+    }
+
+    function applyCepMask(input) {
+        input.addEventListener('input', function () {
+            let value = input.value.replace(/\D/g, '');
+            value = value.replace(/^(\d{5})(\d)/, '$1-$2');
+            input.value = value;
+        });
+    }
+
+    function applyCpfCnpjMask(input) {
+        input.addEventListener('input', function () {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length > 11) {
+                value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d)/, '$1.$2.$3/$4-$5');
+            } else {
+                value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            }
+            input.value = value;
+        });
+    }
+
+    function showError(inputId, message) {
+        const input = document.getElementById(inputId);
+        let errorElement = input.nextElementSibling;
+
+        if (!errorElement || !errorElement.classList.contains('error-message')) {
+            errorElement = document.createElement('div');
+            errorElement.classList.add('error-message');
+            errorElement.style.color = 'red';
+            input.parentNode.insertBefore(errorElement, input.nextSibling);
+        }
+
+        errorElement.textContent = message;
+        input.classList.add('border-red-500');
+    }
+
+    function clearError(inputId) {
+        const input = document.getElementById(inputId);
+        const errorElement = input.nextElementSibling;
+
+        if (errorElement && errorElement.classList.contains('error-message')) {
+            errorElement.remove();
+        }
+
+        input.classList.remove('border-red-500');
+    }
+
+    function validateInput(input) {
+        input.addEventListener('blur', function () {
+            validateField(input);
+        });
+
+        input.addEventListener('input', function () {
+            validateField(input);
+        });
+    }
+
+    function validateField(input) {
+        const value = input.value.trim();
+        const valueDigits = value.replace(/\D/g, '');
+
+        if (input.id.includes('name') && value.length < 3) {
+            showError(input.id, 'Nome deve conter pelo menos 3 caracteres.');
+        } else if (input.id.includes('email') && !/^\S+@\S+\.\S+$/.test(value)) {
+            showError(input.id, 'Email inválido.');
+        } else if (input.id.includes('phone') && (valueDigits.length < 10 || valueDigits.length > 11)) {
+            showError(input.id, 'Número de telefone inválido. Deve conter 10 ou 11 dígitos.');
+        } else if (input.id.includes('company') && value.length < 3) {
+            showError(input.id, 'Empresa deve conter pelo menos 3 caracteres.');
+        } else if (input.id.includes('cpf_cnpj') && (valueDigits.length !== 11 && valueDigits.length !== 14)) {
+            showError(input.id, 'CPF/CNPJ inválido. CPF deve conter 11 dígitos e CNPJ deve conter 14 dígitos.');
+        } else if (input.id.includes('cep') && valueDigits.length !== 8) {
+            showError(input.id, 'CEP inválido. Deve conter 8 dígitos.');
+        } else if (input.id.includes('cidade') && value.length < 2) {
+            showError(input.id, 'Cidade deve conter pelo menos 2 caracteres.');
+        } else if (input.id.includes('rua') && value.length < 3) {
+            showError(input.id, 'Rua deve conter pelo menos 3 caracteres.');
+        } else if (input.id.includes('bairro') && value.length < 3) {
+            showError(input.id, 'Bairro deve conter pelo menos 3 caracteres.');
+        } else if (input.id.includes('password') && value.length < 8) {
+            showError(input.id, 'Senha deve conter pelo menos 8 caracteres.');
+        } else {
+            clearError(input.id);
+        }
+    }
+
+    function applyMasksAndValidations() {
+        const fieldsToValidate = [
+            'name', 'email', 'phone', 'company', 'cpf_cnpj',
+            'cep', 'cidade', 'rua', 'bairro', 'password'
+        ];
+
+        fieldsToValidate.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                validateInput(field);
+            }
+        });
+
+        applyPhoneMask(document.getElementById('phone'));
+        applyCepMask(document.getElementById('cep'));
+        applyCpfCnpjMask(document.getElementById('cpf_cnpj'));
+    }
+
+    applyMasksAndValidations();
+
+    function applyMasksToEditModal() {
+        const phoneInput = document.getElementById('edit-phone');
+        const cepInput = document.getElementById('edit-cep');
+        const cpfCnpjInput = document.getElementById('edit-cpf_cnpj');
+
+        applyPhoneMask(phoneInput);
+        applyCepMask(cepInput);
+        applyCpfCnpjMask(cpfCnpjInput);
+
+        validateInput(phoneInput);
+        validateInput(cepInput);
+        validateInput(cpfCnpjInput);
+
+        const fieldsToValidate = [
+            'edit-name', 'edit-email', 'edit-phone', 'edit-cpf_cnpj',
+            'edit-cep', 'edit-cidade', 'edit-rua', 'edit-bairro'
+        ];
+
+        fieldsToValidate.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                validateInput(field);
+            }
+        });
+    }
+
+    document.querySelectorAll('[data-modal-toggle="edit-modal"]').forEach(button => {
+        button.addEventListener('click', function () {
+            applyMasksToEditModal();
+        });
+    });
+
+    document.getElementById('edit-modal').addEventListener('show.bs.modal', function () {
+        applyMasksToEditModal();
+    });
 });

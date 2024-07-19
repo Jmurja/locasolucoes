@@ -46,12 +46,17 @@ class ReserveController extends Controller
 
     public function store(Request $request)
     {
-        $startDateTime = $request->input('start') . ' ' . $request->input('start_time');
-        $endDateTime   = $request->input('end') . ' ' . $request->input('end_time');
+        // Depuração: Exibir entradas recebidas
+        \Log::info('Entradas recebidas:', $request->all());
+
+        $startDateTime = $request->input('start_date') . ' ' . $request->input('start_time');
+        $endDateTime   = $request->input('end_date') . ' ' . $request->input('end_time');
 
         try {
             $FormatStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime)->format('Y-m-d H:i:s');
             $FormatEndDate   = Carbon::createFromFormat('d/m/Y H:i', $endDateTime)->format('Y-m-d H:i:s');
+            // Depuração: Exibir datas formatadas
+            \Log::info('Datas formatadas:', ['start' => $FormatStartDate, 'end' => $FormatEndDate]);
         } catch (\Exception $e) {
             return back()->withErrors(['date_format' => 'O formato da data ou hora está incorreto.'])->withInput();
         }
@@ -145,12 +150,17 @@ class ReserveController extends Controller
 
     public function update(Request $request, Reserve $reserve)
     {
+        // Depuração: Exibir entradas recebidas
+        \Log::info('Entradas recebidas:', $request->all());
+
         $startDateTime = $request->input('start_date') . ' ' . $request->input('start_time');
         $endDateTime   = $request->input('end_date') . ' ' . $request->input('end_time');
 
         try {
             $FormatStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime)->format('Y-m-d H:i:s');
             $FormatEndDate   = Carbon::createFromFormat('d/m/Y H:i', $endDateTime)->format('Y-m-d H:i:s');
+            // Depuração: Exibir datas formatadas
+            \Log::info('Datas formatadas:', ['start' => $FormatStartDate, 'end' => $FormatEndDate]);
         } catch (\Exception $e) {
             return back()->withErrors(['date_format' => 'O formato da data ou hora está incorreto.'])->withInput();
         }

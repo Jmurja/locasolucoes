@@ -1,15 +1,8 @@
 import SimpleMaskMoney from 'simple-mask-money';
 
 const optionsUSD = {
-    afterFormat(e) {
-        console.log('afterFormat', e);
-    },
-    allowNegative: false,
-    beforeFormat(e) {
-        console.log('beforeFormat', e);
-    },
     negativeSignAfter: false,
-    prefix: '$',
+    prefix: 'R$',
     suffix: '',
     fixed: true,
     fractionDigits: 2,
@@ -19,163 +12,101 @@ const optionsUSD = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-    const pricePerHourCreate = document.getElementById('price_per_hour');
-    const pricePerDayCreate = document.getElementById('price_per_day');
-    const pricePerMonthCreate = document.getElementById('price_per_month');
+    const priceFieldsCreate = [
+        document.getElementById('price_per_hour'),
+        document.getElementById('price_per_day'),
+        document.getElementById('price_per_month')
+    ];
 
-    SimpleMaskMoney.setMask(pricePerHourCreate, optionsUSD);
-    SimpleMaskMoney.setMask(pricePerDayCreate, optionsUSD);
-    SimpleMaskMoney.setMask(pricePerMonthCreate, optionsUSD);
+    const priceFieldsUpdate = [
+        document.getElementById('edit_price_per_hour'),
+        document.getElementById('edit_price_per_day'),
+        document.getElementById('edit_price_per_month')
+    ];
 
-    function convertToNumberCreate() {
-        pricePerHourCreate.value = SimpleMaskMoney.formatToNumber(pricePerHourCreate.value);
-        pricePerDayCreate.value = SimpleMaskMoney.formatToNumber(pricePerDayCreate.value);
-        pricePerMonthCreate.value = SimpleMaskMoney.formatToNumber(pricePerMonthCreate.value);
+    function applyMaskToFields(fields) {
+        fields.forEach(field => {
+            if (!field.dataset.maskApplied) {
+                SimpleMaskMoney.setMask(field, optionsUSD);
+                field.dataset.maskApplied = 'true';
+            }
+        });
     }
 
-    const formCreate = document.getElementById('rental-form');
-    formCreate.addEventListener('submit', function (event) {
-        convertToNumberCreate();
-    });
-
-    // Parte de atualização
-    const pricePerHourUpdate = document.getElementById('edit_price_per_hour');
-    const pricePerDayUpdate = document.getElementById('edit_price_per_day');
-    const pricePerMonthUpdate = document.getElementById('edit_price_per_month');
-
-    function applyMaskToUpdateFields() {
-        SimpleMaskMoney.setMask(pricePerHourUpdate, optionsUSD);
-        SimpleMaskMoney.setMask(pricePerDayUpdate, optionsUSD);
-        SimpleMaskMoney.setMask(pricePerMonthUpdate, optionsUSD);
+    function convertFieldsToNumber(fields) {
+        fields.forEach(field => field.value = SimpleMaskMoney.formatToNumber(field.value));
     }
 
-    function convertToNumberUpdate() {
-        pricePerHourUpdate.value = SimpleMaskMoney.formatToNumber(pricePerHourUpdate.value);
-        pricePerDayUpdate.value = SimpleMaskMoney.formatToNumber(pricePerDayUpdate.value);
-        pricePerMonthUpdate.value = SimpleMaskMoney.formatToNumber(pricePerMonthUpdate.value);
+    function validateFields() {
+        const name = document.getElementById('name').value;
+        const nameError = document.getElementById('name-error');
+        nameError.classList.toggle('hidden', name.trim() !== '' && name.length >= 3);
+
+        const description = document.getElementById('description').value;
+        const descriptionError = document.getElementById('description-error');
+        descriptionError.classList.toggle('hidden', description.trim() !== '' && description.length >= 5);
+
+        const priceFields = [
+            document.getElementById('price_per_hour'),
+            document.getElementById('price_per_day'),
+            document.getElementById('price_per_month')
+        ];
+
+        priceFields.forEach(field => {
+            const priceError = document.getElementById(`${field.id}-error`);
+            priceError.classList.toggle('hidden', !isNaN(field.value) && field.value.trim() !== '');
+        });
+
+        const valueError = document.getElementById('value-error');
+        const allPricesEmpty = priceFields.every(field => field.value.trim() === '');
+        valueError.classList.toggle('hidden', !allPricesEmpty);
     }
 
-    const formUpdate = document.getElementById('edit-form');
-    formUpdate.addEventListener('submit', function (event) {
-        convertToNumberUpdate();
-    });
+    function addValidationListeners() {
+        document.getElementById('name').addEventListener('input', validateFields);
+        document.getElementById('name').addEventListener('blur', validateFields);
 
-    // Adicionando evento de abertura do modal para aplicar máscara
+        document.getElementById('description').addEventListener('input', validateFields);
+        document.getElementById('description').addEventListener('blur', validateFields);
+
+        const priceFields = [
+            document.getElementById('price_per_hour'),
+            document.getElementById('price_per_day'),
+            document.getElementById('price_per_month')
+        ];
+
+        priceFields.forEach(field => {
+            field.addEventListener('input', validateFields);
+            field.addEventListener('blur', validateFields);
+        });
+    }
+
+    function setupFormSubmission(formId, priceFields) {
+        const form = document.getElementById(formId);
+        form.addEventListener('submit', function (event) {
+            validateFields();
+            const errors = document.querySelectorAll('.error:not(.hidden)');
+            if (errors.length > 0) {
+                event.preventDefault();
+            } else {
+                convertFieldsToNumber(priceFields);
+            }
+        });
+    }
+
+    applyMaskToFields(priceFieldsCreate);
+    addValidationListeners();
+    setupFormSubmission('rental-form', priceFieldsCreate);
+
     document.querySelectorAll('[data-modal-toggle="edit-modal"]').forEach(button => {
-        button.addEventListener('click', function () {
-            applyMaskToUpdateFields();
+        button.addEventListener('click', () => {
+            applyMaskToFields(priceFieldsUpdate);
         });
     });
-});
 
-function validateName() {
-    const name = document.getElementById('name').value;
-    const nameError = document.getElementById('name-error');
-    if (name.trim() === '' || name.length < 3) {
-        nameError.classList.remove('hidden');
-    } else {
-        nameError.classList.add('hidden');
-    }
-}
+    setupFormSubmission('edit-form', priceFieldsUpdate);
 
-function validateDescription() {
-    const description = document.getElementById('description').value;
-    const descriptionError = document.getElementById('description-error');
-    if (description.trim() === '' || description.length < 5) {
-        descriptionError.classList.remove('hidden');
-    } else {
-        descriptionError.classList.add('hidden');
-    }
-}
-
-function validatePrice(field) {
-    const price = document.getElementById(field).value;
-    const priceError = document.getElementById(`${field}-error`);
-    if (price.trim() !== '' && isNaN(price)) {
-        priceError.classList.remove('hidden');
-    } else {
-        priceError.classList.add('hidden');
-    }
-}
-
-function validateValues() {
-    const pricePerHour = document.getElementById('price_per_hour').value;
-    const pricePerDay = document.getElementById('price_per_day').value;
-    const pricePerMonth = document.getElementById('price_per_month').value;
-    const valueError = document.getElementById('value-error');
-
-    if (pricePerHour.trim() === '' && pricePerDay.trim() === '' && pricePerMonth.trim() === '') {
-        valueError.classList.remove('hidden');
-    } else {
-        valueError.classList.add('hidden');
-    }
-}
-
-document.getElementById('name').addEventListener('input', validateName);
-document.getElementById('name').addEventListener('blur', validateName);
-
-document.getElementById('description').addEventListener('input', validateDescription);
-document.getElementById('description').addEventListener('blur', validateDescription);
-
-document.getElementById('price_per_hour').addEventListener('input', () => {
-    validatePrice('price_per_hour');
-    validateValues();
-});
-document.getElementById('price_per_hour').addEventListener('blur', () => {
-    validatePrice('price_per_hour');
-    validateValues();
-});
-
-document.getElementById('price_per_day').addEventListener('input', () => {
-    validatePrice('price_per_day');
-    validateValues();
-});
-document.getElementById('price_per_day').addEventListener('blur', () => {
-    validatePrice('price_per_day');
-    validateValues();
-});
-
-document.getElementById('price_per_month').addEventListener('input', () => {
-    validatePrice('price_per_month');
-    validateValues();
-});
-document.getElementById('price_per_month').addEventListener('blur', () => {
-    validatePrice('price_per_month');
-    validateValues();
-});
-
-document.getElementById('rental-form').addEventListener('submit', function (event) {
-    validateName();
-    validateDescription();
-    validateValues();
-
-    const nameError = document.getElementById('name-error');
-    const descriptionError = document.getElementById('description-error');
-    const valueError = document.getElementById('value-error');
-
-    if (!nameError.classList.contains('hidden') || !descriptionError.classList.contains('hidden') || !valueError.classList.contains('hidden')) {
-        event.preventDefault();
-    }
-});
-
-document.getElementById('edit-form').addEventListener('submit', function (event) {
-    validateName();
-    validateDescription();
-    validateValues();
-
-    const nameError = document.getElementById('name-error');
-    const descriptionError = document.getElementById('description-error');
-    const valueError = document.getElementById('value-error');
-
-    if (!nameError.classList.contains('hidden') || !descriptionError.classList.contains('hidden') || !valueError.classList.contains('hidden')) {
-        event.preventDefault();
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const viewButtons = document.querySelectorAll('.view-item-btn');
-
-    viewButtons.forEach(button => {
+    document.querySelectorAll('.view-item-btn').forEach(button => {
         button.addEventListener('click', async () => {
             const itemId = button.getAttribute('data-id');
             const response = await fetch(`/rental-items/${itemId}`);
@@ -202,6 +133,59 @@ document.addEventListener('DOMContentLoaded', () => {
             viewModal.classList.add('hidden');
             viewModal.setAttribute('aria-hidden', 'true');
             viewModal.removeAttribute('role');
+        });
+    });
+
+    document.querySelectorAll('.edit-item-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            const itemId = button.getAttribute('data-id');
+            const response = await fetch(`/rental-items/${itemId}`);
+            const data = await response.json();
+
+            document.getElementById('edit_user_id').value = data.user_id;
+            document.getElementById('edit_name').value = data.name;
+            document.getElementById('edit_description').value = data.description;
+            document.getElementById('edit_price_per_hour').value = data.price_per_hour;
+            document.getElementById('edit_price_per_day').value = data.price_per_day;
+            document.getElementById('edit_price_per_month').value = data.price_per_month;
+            document.getElementById('edit_status').value = data.status;
+            document.getElementById('edit_rental_item_notes').value = data.rental_item_notes;
+
+            const editModal = document.getElementById('edit-modal');
+            editModal.classList.remove('hidden');
+            editModal.setAttribute('aria-hidden', 'false');
+            editModal.setAttribute('role', 'dialog');
+        });
+    });
+
+    document.querySelectorAll('[data-modal-toggle="edit-modal"]').forEach(button => {
+        button.addEventListener('click', () => {
+            const editModal = document.getElementById('edit-modal');
+            editModal.classList.add('hidden');
+            editModal.setAttribute('aria-hidden', 'true');
+            editModal.removeAttribute('role');
+        });
+    });
+
+    document.querySelectorAll('.delete-item-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+            const itemId = button.getAttribute('data-id');
+            const deleteForm = document.querySelector('#delete-modal form');
+            deleteForm.action = `/rental-items/${itemId}`;
+
+            const deleteModal = document.getElementById('delete-modal');
+            deleteModal.classList.remove('hidden');
+            deleteModal.setAttribute('aria-hidden', 'false');
+            deleteModal.setAttribute('role', 'dialog');
+        });
+    });
+
+    document.querySelectorAll('[data-modal-hide="delete-modal"]').forEach(button => {
+        button.addEventListener('click', () => {
+            const deleteModal = document.getElementById('delete-modal');
+            deleteModal.classList.add('hidden');
+            deleteModal.setAttribute('aria-hidden', 'true');
+            deleteModal.removeAttribute('role');
         });
     });
 });

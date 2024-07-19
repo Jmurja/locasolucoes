@@ -32,6 +32,7 @@
                         <input type="text" name="name" id="edit-name"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o nome" required>
+                        <div class="error-message"></div>
                     </div>
                     <div class="mb-4">
                         <label for="edit-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
@@ -41,12 +42,14 @@
                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500
                             dark:focus:border-primary-500"
                                placeholder="Digite o email" required>
+                        <div class="error-message"></div>
                     </div>
                     <div class="mb-4">
                         <label for="edit-phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telefone</label>
                         <input type="text" name="phone" id="edit-phone"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o telefone" required>
+                        <div class="error-message"></div>
                     </div>
                     <div class="mb-4">
                         <label for="edit-role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
@@ -58,12 +61,14 @@
                             <option value="3">Tenant</option>
                             <option value="4">Visitor</option>
                         </select>
+                        <div class="error-message"></div>
                     </div>
                     <div class="mb-4">
                         <label for="edit-cpf_cnpj" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CPF/CNPJ</label>
                         <input type="text" name="cpf_cnpj" id="edit-cpf_cnpj"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o CPF/CNPJ" required>
+                        <div class="error-message"></div>
                     </div>
                     <div class="mb-4">
                         <label for="edit-cep"
@@ -71,6 +76,7 @@
                         <input type="text" name="cep" id="edit-cep"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o CEP" required>
+                        <div class="error-message"></div>
                     </div>
                 </div>
                 <div class="mb-4">
@@ -79,6 +85,7 @@
                     <input type="text" name="cidade" id="edit-cidade"
                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                            placeholder="Digite a cidade" required>
+                    <div class="error-message"></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="mb-4">
@@ -87,12 +94,14 @@
                         <input type="text" name="rua" id="edit-rua"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite a rua" required>
+                        <div class="error-message"></div>
                     </div>
                     <div class="mb-4">
                         <label for="edit-bairro" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bairro</label>
                         <input type="text" name="bairro" id="edit-bairro"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o bairro" required>
+                        <div class="error-message"></div>
                     </div>
                 </div>
                 <button type="submit"

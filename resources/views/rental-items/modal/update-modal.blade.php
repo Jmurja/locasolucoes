@@ -30,32 +30,33 @@
                         <label for="user_id"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecione o
                             Responsável</label>
-                        <select id="user_id" name="user_id"
+                        <select id="edit_user_id" name="user_id"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 required>
                             <option disabled selected>Selecione o Responsável</option>
                             @foreach($landLordUsers as $landLordUser)
                                 <option
-                                    value="{{$landLordUser->id}}" {{$rentalItem->user_id == $landLordUser->id ? 'selected' : ''}}>{{$landLordUser->name}}</option>
+                                    value="{{$landLordUser->id}}">{{$landLordUser->name}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-4">
                         <label for="edit_name"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
-                        <input type="text" name="name" id="edit_name" value="{{$rentalItem->name}}"
+                        <input type="text" name="name" id="edit_name"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o nome" required>
                         <small id="name-error" class="text-red-500 text-xs hidden">Nome é obrigatório e deve ter pelo
                             menos 3 caracteres.</small>
                     </div>
+
                     <div class="mb-4">
                         <label for="edit_description"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descrição</label>
                         <textarea name="description" id="edit_description"
                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                   placeholder="Digite a descrição"
-                                  required>{{$rentalItem->description}}</textarea>
+                                  required></textarea>
                         <small id="description-error" class="text-red-500 text-xs hidden">Descrição é obrigatória e deve
                             ter pelo menos 5 caracteres.</small>
                     </div>
@@ -64,7 +65,6 @@
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor por
                             hora</label>
                         <input type="text" name="price_per_hour" id="edit_price_per_hour"
-                               value="{{$rentalItem->price_per_hour}}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o valor por hora" required>
                         <small id="edit_price_per_hour-error" class="text-red-500 text-xs hidden">Valor por hora deve
@@ -76,7 +76,6 @@
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor por
                             dia</label>
                         <input type="text" name="price_per_day" id="edit_price_per_day"
-                               value="{{$rentalItem->price_per_day}}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o valor por dia" required>
                         <small id="edit_price_per_day-error" class="text-red-500 text-xs hidden">Valor por dia deve ser
@@ -84,13 +83,13 @@
                             número.</small>
                     </div>
                 </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="mb-4">
                         <label for="edit_price_per_month"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Valor por
                             mês</label>
                         <input type="text" name="price_per_month" id="edit_price_per_month"
-                               value="{{$rentalItem->price_per_month}}"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Digite o valor por mês" required>
                         <small id="edit_price_per_month-error" class="text-red-500 text-xs hidden">Valor por mês deve
@@ -98,28 +97,23 @@
                             número.</small>
                     </div>
                     <div class="mb-4">
-                        <label for="status"
+                        <label for="edit_status"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                        <select id="status" name="status"
+                        <select id="edit_status" name="status"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 required>
-                            <option value="available" {{$rentalItem->status == 'available' ? 'selected' : ''}}>
-                                Disponível
-                            </option>
-                            <option value="reserved" {{$rentalItem->status == 'reserved' ? 'selected' : ''}}>Reservado
-                            </option>
-                            <option value="maintenance" {{$rentalItem->status == 'maintenance' ? 'selected' : ''}}>
-                                Manutenção
-                            </option>
+                            <option value="available">Disponível</option>
+                            <option value="reserved">Reservado</option>
+                            <option value="maintenance">Manutenção</option>
                         </select>
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label for="rental_item_notes"
+                    <label for="edit_rental_item_notes"
                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observações</label>
-                    <textarea name="rental_item_notes" id="rental_item_notes"
+                    <textarea name="rental_item_notes" id="edit_rental_item_notes"
                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                              placeholder="Digite as observações">{{$rentalItem->rental_item_notes}}</textarea>
+                              placeholder="Digite as observações"></textarea>
                 </div>
                 <button type="submit"
                         class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

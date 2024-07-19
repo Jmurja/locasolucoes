@@ -40,14 +40,39 @@ class RentalItemController extends Controller
             'user_id'           => $request->user_id,
             'name'              => $request->name,
             'description'       => $request->description,
-            'price_per_hour'    => $request->price_per_hour,
-            'price_per_day'     => $request->price_per_day,
-            'price_per_month'   => $request->price_per_month,
+            'price_per_hour'    => preg_replace('/[^\d]/', '', str_replace(['.', ','], '', $request->price_per_hour)),
+            'price_per_day'     => preg_replace('/[^\d]/', '', str_replace(['.', ','], '', $request->price_per_day)),
+            'price_per_month'   => preg_replace('/[^\d]/', '', str_replace(['.', ','], '', $request->price_per_month)),
             'status'            => $request->status,
             'rental_item_notes' => $request->rental_item_notes,
         ]);
 
         return back();
+    }
+
+    public function update(Request $request, RentalItem $rentalItem)
+    {
+        $rentalItemUpdated = $request->all();
+
+        $rentalItemUpdated['price_per_hour'] = preg_replace(
+            '/[^\d]/',
+            '',
+            str_replace(['.', ','], '', $rentalItemUpdated['price_per_hour'])
+        );
+        $rentalItemUpdated['price_per_day'] = preg_replace(
+            '/[^\d]/',
+            '',
+            str_replace(['.', ','], '', $rentalItemUpdated['price_per_day'])
+        );
+        $rentalItemUpdated['price_per_month'] = preg_replace(
+            '/[^\d]/',
+            '',
+            str_replace(['.', ','], '', $rentalItemUpdated['price_per_month'])
+        );
+
+        $rentalItem->update($rentalItemUpdated);
+
+        return redirect()->route('rental-items.index');
     }
 
     public function show(RentalItem $rentalItem)
@@ -58,14 +83,6 @@ class RentalItemController extends Controller
     public function destroy(RentalItem $rentalItem)
     {
         $rentalItem->delete();
-
-        return redirect()->route('rental-items.index');
-    }
-
-    public function update(Request $request, RentalItem $rentalItem)
-    {
-        $rentalItemUpdated = $request->all();
-        $rentalItem->update($rentalItemUpdated);
 
         return redirect()->route('rental-items.index');
     }
