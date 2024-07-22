@@ -13,11 +13,17 @@ document.addEventListener('DOMContentLoaded', function () {
         selectMirror: true,
         editable: true,
         themeSystem: 'slate',
-        views: {
-            mes: {
-                type: 'dayGridMonth',
-                buttonText: 'Mês',
-            },
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        initialView: 'dayGridMonth',
+        events: '/reserves/json',
+        dateClick: function (info) {
+            currentEventDate = info.dateStr;
+            eventStartInput.value = currentEventDate;
+            modalToggleButton.click();
         },
         eventDidMount: function (info) {
             var tooltip = new Tooltip(info.el, {
@@ -26,16 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 trigger: 'hover',
                 container: 'body'
             });
-        },
-
-        dateClick: function (info) {
-            currentEventDate = info.dateStr;
-            eventStartInput.value = currentEventDate;
-            modalToggleButton.click();
-        },
-
-        events: '/reserves/json',
-        initialView: 'mes'
+        }
     });
 
     calendar.render();
@@ -50,8 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             eventTitleInput.value = '';
             eventStartInput.value = '';
-
-
             document.querySelector('[data-modal-toggle="tenant-reserve"]').click();
         }
     });
