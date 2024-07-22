@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     buttons.forEach(button => {
         button.addEventListener('click', function () {
             const userId = this.getAttribute('data-reserve-id');
-            deleteForm.setAttribute('action', `/users/${userId}`);
+            deleteForm.setAttribute('action', `/usuarios/${userId}`);
         });
     });
 });

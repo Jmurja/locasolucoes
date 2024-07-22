@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', async function () {
             const reserveId = this.getAttribute('data-reserve-id');
 
-            const response = await fetch(`/reserves/${reserveId}`);
+            const response = await fetch(`/reservas/${reserveId}`);
             const reserve = await response.json();
 
             editModal.querySelector('select[name="user_id"]').value = reserve.user_id;
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     viewButtons.forEach(button => {
         button.addEventListener('click', async function () {
             const reserveId = this.getAttribute('data-reserve-id');
-            const response = await fetch(`/reserves/${reserveId}`);
+            const response = await fetch(`/reservas/${reserveId}`);
             const reserve = await response.json();
 
             viewModal.querySelector('#modal-reserve-user').textContent = reserve.user.name;
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
     buttons.forEach(button => {
         button.addEventListener('click', function () {
             const userId = this.getAttribute('data-reserve-id');
-            deleteForm.setAttribute('action', `/reserves/${userId}`);
+            deleteForm.setAttribute('action', `/reservas/${userId}`);
         });
     });
 

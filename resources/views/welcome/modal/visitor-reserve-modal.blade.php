@@ -32,6 +32,7 @@
             <!-- Modal body -->
             <form action="{{ route('reserves.store') }}" method="post" class="p-4 space-y-4">
                 @csrf
+                <input type="hidden" name="role" value="visitor">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Left side (Dados do Visitante + Empresa) -->
                     <div class="space-y-6">
@@ -125,11 +126,11 @@
                                 </div>
                                 <div>
                                     <label for="eventNumber"
-                                           class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Bairro</label>
+                                           class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Número</label>
                                     <input type="text" name="number" id="eventNumber"
                                            autocomplete="address-level3"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                           placeholder="Digite o Bairro" required value="{{ old('number') }}">
+                                           placeholder="Digite o Número" required value="{{ old('number') }}">
                                 </div>
                             </div>
                         </div>
@@ -145,17 +146,17 @@
                             <label for="datepicker-range-start"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Data de
                                 Início</label>
-                            <input id="datepicker-range-start" name="start" type="text" autocomplete="off"
+                            <input id="datepicker-range-start" name="start_date" type="text" autocomplete="off"
                                    class="datepicker-custom bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                   placeholder="Data de início" value="{{ old('start') }}">
+                                   placeholder="dd/mm/yyyy" value="{{ old('start_date') }}">
                         </div>
                         <div>
                             <label for="datepicker-range-end"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Data de
                                 Término</label>
-                            <input id="datepicker-range-end" name="end" type="text" autocomplete="off"
+                            <input id="datepicker-range-end" name="end_date" type="text" autocomplete="off"
                                    class="datepicker-custom bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                   placeholder="Data de término" value="{{ old('end') }}">
+                                   placeholder="dd/mm/yyyy" value="{{ old('end_date') }}">
                         </div>
                         <div>
                             <label for="start_time"
@@ -215,5 +216,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>

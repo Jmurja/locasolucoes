@@ -46,16 +46,12 @@ class ReserveController extends Controller
 
     public function store(Request $request)
     {
-        // Depuração: Exibir entradas recebidas
-        \Log::info('Entradas recebidas:', $request->all());
-
         $startDateTime = $request->input('start_date') . ' ' . $request->input('start_time');
         $endDateTime   = $request->input('end_date') . ' ' . $request->input('end_time');
 
         try {
             $FormatStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime)->format('Y-m-d H:i:s');
             $FormatEndDate   = Carbon::createFromFormat('d/m/Y H:i', $endDateTime)->format('Y-m-d H:i:s');
-            // Depuração: Exibir datas formatadas
             \Log::info('Datas formatadas:', ['start' => $FormatStartDate, 'end' => $FormatEndDate]);
         } catch (\Exception $e) {
             return back()->withErrors(['date_format' => 'O formato da data ou hora está incorreto.'])->withInput();
@@ -73,9 +69,9 @@ class ReserveController extends Controller
             ->first();
 
         if ($existingReserve) {
-            $conflictMessage = "Já existe uma reserva no mesmo período: " . $existingReserve->title
-                . " de " . Carbon::parse($existingReserve->start_date)->format('d/m/Y H:i')
-                . " até " . Carbon::parse($existingReserve->end_date)->format('d/m/Y H:i') . ".";
+            $conflictMessage = 'Já existe uma reserva no mesmo período: ' . $existingReserve->title
+                . ' de ' . Carbon::parse($existingReserve->start_date)->format('d/m/Y H:i')
+                . ' até ' . Carbon::parse($existingReserve->end_date)->format('d/m/Y H:i') . '.';
 
             return back()->withErrors(['conflict' => $conflictMessage])->withInput();
         }
@@ -98,6 +94,7 @@ class ReserveController extends Controller
                 'bairro'     => $request->bairro,
                 'cidade'     => $request->cidade,
                 'company'    => $request->company,
+                'number'     => $request->number,
             ]);
         }
 
@@ -117,9 +114,17 @@ class ReserveController extends Controller
     {
         $reserves = Reserve::all();
         $events   = $reserves->map(function($reserve) {
+            if (auth()->check()) {
+                $title = $reserve->title;
+            } else {
+                $startDate = Carbon::parse($reserve->start_date)->format('H');
+                $endDate   = Carbon::parse($reserve->end_date)->format('H');
+                $title     = "Ocupado ({$startDate} - {$endDate})";
+            }
+
             return [
                 'id'            => $reserve->id,
-                'title'         => $reserve->title,
+                'title'         => $title,
                 'start'         => $reserve->start_date,
                 'end'           => $reserve->end_date,
                 'extendedProps' => [
@@ -150,7 +155,6 @@ class ReserveController extends Controller
 
     public function update(Request $request, Reserve $reserve)
     {
-        // Depuração: Exibir entradas recebidas
         \Log::info('Entradas recebidas:', $request->all());
 
         $startDateTime = $request->input('start_date') . ' ' . $request->input('start_time');
@@ -159,7 +163,6 @@ class ReserveController extends Controller
         try {
             $FormatStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime)->format('Y-m-d H:i:s');
             $FormatEndDate   = Carbon::createFromFormat('d/m/Y H:i', $endDateTime)->format('Y-m-d H:i:s');
-            // Depuração: Exibir datas formatadas
             \Log::info('Datas formatadas:', ['start' => $FormatStartDate, 'end' => $FormatEndDate]);
         } catch (\Exception $e) {
             return back()->withErrors(['date_format' => 'O formato da data ou hora está incorreto.'])->withInput();

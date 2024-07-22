@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.edit-item-btn').forEach(button => {
         button.addEventListener('click', async () => {
             const itemId = button.getAttribute('data-id');
-            const response = await fetch(`/rental-items/${itemId}`);
+            const response = await fetch(`/itens-locacao/${itemId}`);
             const data = await response.json();
 
             document.getElementById(`edit_user_id_${itemId}`).value = data.user_id;
@@ -133,8 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', async () => {
             const itemId = button.getAttribute('data-id');
             const deleteForm = document.querySelector('#delete-modal form');
-            deleteForm.action = `/rental-items/${itemId}`;
-
+            deleteForm.action = `/itens-locacao/${itemId}`;
             const deleteModal = document.getElementById('delete-modal');
             deleteModal.classList.remove('hidden');
             deleteModal.setAttribute('aria-hidden', 'false');

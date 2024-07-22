@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('edit-role').value = userRole;
 
         const form = document.getElementById('edit-user-form');
-        form.action = `/users/${userId}`;
+        form.action = `/usuarios/${userId}`;
 
         editModal.classList.remove('hidden');
         editModal.setAttribute('aria-hidden', 'false');
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function setupDeleteForm(button) {
         const userId = button.getAttribute('data-user-id');
-        deleteForm.action = `/users/${userId}`;
+        deleteForm.action = `/usuarios/${userId}`;
         deleteModal.classList.remove('hidden');
         deleteModal.setAttribute('aria-hidden', 'false');
         deleteModal.setAttribute('role', 'dialog');

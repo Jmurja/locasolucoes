@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         value = value.replace(/\D/g, '');
         value = value.replace(/(\d{2})(\d)/, "$1/$2");
         value = value.replace(/(\d{2})(\d)/, "$1/$2");
+        value = value.replace(/(\d{4})(\d)/, "$1$2");
         return value;
     }
 
@@ -46,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             target.value = maskPhone(target.value);
         } else if (target.id === 'eventCep') {
             target.value = maskCep(target.value);
-        } else if (target.id === 'start_date' || target.id === 'end_date') {
+        } else if (target.id === 'datepicker-range-start' || target.id === 'datepicker-range-end') {
             target.value = maskDate(target.value);
         }
     }
@@ -54,8 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const cpfCnpjField = document.getElementById('eventCpfCnpj');
     const phoneField = document.getElementById('visitorPhone');
     const cepField = document.getElementById('eventCep');
-    const startDateField = document.getElementById('start_date');
-    const endDateField = document.getElementById('end_date');
+    const startDateField = document.getElementById('datepicker-range-start');
+    const endDateField = document.getElementById('datepicker-range-end');
 
     [cpfCnpjField, phoneField, cepField, startDateField, endDateField].forEach(field => {
         if (field) {

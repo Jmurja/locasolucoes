@@ -10,29 +10,29 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/api/cnpj/{cnpj}', function($cnpj) {
-    $response = Http::get("https://www.receitaws.com.br/v1/cnpj/{$cnpj}");
-
-    return response()->json($response->json());
-});
-Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
-Route::get('/dev/login', DevController::class)->name('dev.login');
 Route::get('reserves/json', [ReserveController::class, 'json']);
-Route::resource('reserves', ReserveController::class)->names('reserves')->parameters([
-    'reserves' => 'reserve'
+Route::resource('reservas', ReserveController::class)->names('reserves')->parameters([
+    'reservas' => 'reserve',
 ]);
+
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
+
+Route::get('/dev/login', DevController::class)->name('dev.login');
 Route::resource('/dashboard', DashboardController::class)->only('index')->names('dashboard')->middleware([
     'auth', 'verified',
 ]);
-
 Route::middleware('auth')->group(function() {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('rental-items', RentalItemController::class);
-    Route::resource('users', UserController::class);
+    Route::resource('itens-locacao', RentalItemController::class)->names('rental-items')->parameters([
+        'itens-locacao' => 'rental-item',
+    ]);
+    Route::resource('usuarios', UserController::class)->names('users')->parameters([
+        'usuarios' => 'user',
+    ]);
     Route::get('/pdf', [ReportsController::class, 'generatePdf'])->name('pdf.reports');
-    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::delete('/usuarios/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::resource('reports', ReportsController::class);
     Route::get('/reservas/search', [ReserveController::class, 'search'])->name('reservas.search');
 });

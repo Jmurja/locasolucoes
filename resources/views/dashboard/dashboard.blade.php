@@ -8,23 +8,20 @@
         <h1 class="mb-4 mt-6 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white ">
             Seja bem-vindo, Você está logado como
             @if (auth()->user()->role == 'tenant')
-                <span
-                    class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Locatário</span>
+                <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Locatário</span>
             @elseif (auth()->user()->role == 'visitor')
-                <span
-                    class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Visitante</span>
+                <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Visitante</span>
             @elseif (auth()->user()->role == 'admin')
                 <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Administrador</span>
             @else
                 <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Proprietário</span>
             @endif
-
         </h1>
     </div>
 
     <div id='calendar'></div>
 
-    @vite('resources/js/fullcalendar.js')
+    @vite('resources/js/visitor-fullcalendar.js')
     @vite('resources/js/datepicker.js')
     @include('dashboard.modal.tenant-reserve-modal')
     @include('dashboard.modal.termo-service-modal')
@@ -41,6 +38,4 @@
             Solicitar Reserva
         </button>
     @endif
-
-
 </x-app-layout>

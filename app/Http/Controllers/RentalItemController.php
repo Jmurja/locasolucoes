@@ -89,9 +89,9 @@ class RentalItemController extends Controller
         return response()->json($rentalItem);
     }
 
-    public function destroy(RentalItem $rentalItem)
+    public function destroy(RentalItem $rental_item)
     {
-        $rentalItem->delete();
+        $rental_item->delete();
 
         return redirect()->route('rental-items.index');
     }

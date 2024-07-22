@@ -30,6 +30,11 @@ class ReportsController extends Controller
             $reserves->where('user_id', $user_id);
         }
 
+        if ($request->filled('rental_item_id')) {
+            $rental_item_id = $request->input('rental_item_id');
+            $reserves->where('rental_item_id', $rental_item_id);
+        }
+
         $reserves = $reserves->get();
 
         return view('reports.index', compact('users', 'rentalItems', 'reserves'));
@@ -50,6 +55,11 @@ class ReportsController extends Controller
         if ($request->filled('user_id')) {
             $user_id = $request->input('user_id');
             $reserves->where('user_id', $user_id);
+        }
+
+        if ($request->filled('rental_item_id')) {
+            $rental_item_id = $request->input('rental_item_id');
+            $reserves->where('rental_item_id', $rental_item_id);
         }
 
         $reserves = $reserves->get();

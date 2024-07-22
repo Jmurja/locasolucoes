@@ -5,38 +5,52 @@
         </h2>
     </x-slot>
 
-    <div class="p-2 max-w-lg mx-auto sm:px-4 mt-10 bg-slate-800 rounded-2xl shadow-lg">
+    <div class="p-4 max-w-4xl mx-auto mt-10 bg-slate-800 rounded-2xl shadow-lg">
         <form action="{{ route('reports.index') }}" method="get" class="space-y-6">
             @csrf
 
-            <div class="flex space-x-4">
-                <div class="mb-4 w-full">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
                     <label for="start_date"
                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Início</label>
                     <input type="datetime-local" name="start_date" id="start_date"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                            placeholder=" ">
                 </div>
 
-                <div class="mb-4 w-full">
+                <div>
                     <label for="end_date"
                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fim</label>
                     <input type="datetime-local" name="end_date" id="end_date"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                            placeholder=" ">
                 </div>
             </div>
 
-            <div class="mb-4 w-full">
-                <label for="user_id"
-                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsável</label>
-                <select name="user_id" id="user_id"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                    <option value="" selected>Selecione o Responsável</option>
-                    @foreach($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
-                </select>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                    <label for="user_id"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Responsável</label>
+                    <select name="user_id" id="user_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="" selected>Selecione o Responsável</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label for="rental_item_id"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sala</label>
+                    <select name="rental_item_id" id="rental_item_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="" selected>Selecione a Sala</option>
+                        @foreach($rentalItems as $rentalItem)
+                            <option value="{{ $rentalItem->id }}">{{ $rentalItem->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
             <button type="submit"
@@ -89,7 +103,7 @@
         </table>
     </div>
 
-    <a href="{{ route('pdf.reports', ['start_date' => request('start_date'), 'end_date' => request('end_date'), 'user_id' => request('user_id')]) }}"
+    <a href="{{ route('pdf.reports', ['start_date' => request('start_date'), 'end_date' => request('end_date'), 'user_id' => request('user_id'), 'rental_item_id' => request('rental_item_id')]) }}"
        class="ml-10 inline-flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition ease-in-out duration-150">
         <svg class="w-[32px] h-[32px] text-gray-800 dark:text-white" aria-hidden="true"
              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
