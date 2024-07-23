@@ -33,40 +33,39 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    function validateFields(itemId) {
-        const name = document.getElementById(`edit_name_${itemId}`).value;
-        const nameError = document.getElementById(`name-error_${itemId}`);
+    function validateFields() {
+        const name = document.getElementById('edit_name').value;
+        const nameError = document.getElementById('name-error');
         nameError.classList.toggle('hidden', name.trim() !== '' && name.length >= 3);
 
-        const description = document.getElementById(`edit_description_${itemId}`).value;
-        const descriptionError = document.getElementById(`description-error_${itemId}`);
+        const description = document.getElementById('edit_description').value;
+        const descriptionError = document.getElementById('description-error');
         descriptionError.classList.toggle('hidden', description.trim() !== '' && description.length >= 5);
     }
 
-    function addValidationListeners(itemId) {
-        document.getElementById(`edit_name_${itemId}`).addEventListener('input', () => validateFields(itemId));
-        document.getElementById(`edit_name_${itemId}`).addEventListener('blur', () => validateFields(itemId));
+    function addValidationListeners() {
+        document.getElementById('edit_name').addEventListener('input', validateFields);
+        document.getElementById('edit_name').addEventListener('blur', validateFields);
 
-        document.getElementById(`edit_description_${itemId}`).addEventListener('input', () => validateFields(itemId));
-        document.getElementById(`edit_description_${itemId}`).addEventListener('blur', () => validateFields(itemId));
+        document.getElementById('edit_description').addEventListener('input', validateFields);
+        document.getElementById('edit_description').addEventListener('blur', validateFields);
 
         const priceFields = [
-            document.getElementById(`edit_price_per_hour_${itemId}`),
-            document.getElementById(`edit_price_per_day_${itemId}`),
-            document.getElementById(`edit_price_per_month_${itemId}`)
+            document.getElementById('edit_price_per_hour'),
+            document.getElementById('edit_price_per_day'),
+            document.getElementById('edit_price_per_month')
         ];
 
         priceFields.forEach(field => {
-            field.addEventListener('input', () => validateFields(itemId));
-            field.addEventListener('blur', () => validateFields(itemId));
+            field.addEventListener('input', validateFields);
+            field.addEventListener('blur', validateFields);
         });
     }
 
     function setupFormSubmission(formId, priceFields) {
         const form = document.getElementById(formId);
         form.addEventListener('submit', function (event) {
-            const itemId = formId.split('-').pop(); // Obtem o ID a partir do formId
-            validateFields(itemId);
+            validateFields();
             const errors = document.querySelectorAll('.error:not(.hidden)');
             if (errors.length > 0) {
                 event.preventDefault();
@@ -92,26 +91,27 @@ document.addEventListener('DOMContentLoaded', function () {
             const response = await fetch(`/itens-locacao/${itemId}`);
             const data = await response.json();
 
-            document.getElementById(`edit_user_id_${itemId}`).value = data.user_id;
-            document.getElementById(`edit_name_${itemId}`).value = data.name;
-            document.getElementById(`edit_description_${itemId}`).value = data.description;
-            document.getElementById(`edit_price_per_hour_${itemId}`).value = data.price_per_hour;
-            document.getElementById(`edit_price_per_day_${itemId}`).value = data.price_per_day;
-            document.getElementById(`edit_price_per_month_${itemId}`).value = data.price_per_month;
-            document.getElementById(`edit_status_${itemId}`).value = data.status;
-            document.getElementById(`edit_rental_item_notes_${itemId}`).value = data.rental_item_notes;
+            document.getElementById('edit-form').action = `/itens-locacao/${itemId}`;
+            document.getElementById('edit_user_id').value = data.user_id;
+            document.getElementById('edit_name').value = data.name;
+            document.getElementById('edit_description').value = data.description;
+            document.getElementById('edit_price_per_hour').value = data.price_per_hour;
+            document.getElementById('edit_price_per_day').value = data.price_per_day;
+            document.getElementById('edit_price_per_month').value = data.price_per_month;
+            document.getElementById('edit_status').value = data.status;
+            document.getElementById('edit_rental_item_notes').value = data.rental_item_notes;
 
             const priceFieldsUpdate = [
-                document.getElementById(`edit_price_per_hour_${itemId}`),
-                document.getElementById(`edit_price_per_day_${itemId}`),
-                document.getElementById(`edit_price_per_month_${itemId}`)
+                document.getElementById('edit_price_per_hour'),
+                document.getElementById('edit_price_per_day'),
+                document.getElementById('edit_price_per_month')
             ];
 
             applyMaskToFields(priceFieldsUpdate);
-            addValidationListeners(itemId);
-            setupFormSubmission(`edit-form-${itemId}`, priceFieldsUpdate);
+            addValidationListeners();
+            setupFormSubmission('edit-form', priceFieldsUpdate);
 
-            const editModal = document.getElementById(`edit-modal-${itemId}`);
+            const editModal = document.getElementById('edit-modal');
             centerModals(); // Centraliza o modal
             editModal.classList.remove('hidden');
             editModal.setAttribute('aria-hidden', 'false');
@@ -119,10 +119,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    document.querySelectorAll('[data-modal-toggle^="edit-modal"]').forEach(button => {
+    document.querySelectorAll('[data-modal-toggle="edit-modal"]').forEach(button => {
         button.addEventListener('click', () => {
-            const modalId = button.getAttribute('data-modal-toggle').split('-').pop();
-            const editModal = document.getElementById(`edit-modal-${modalId}`);
+            const editModal = document.getElementById('edit-modal');
             editModal.classList.add('hidden');
             editModal.setAttribute('aria-hidden', 'true');
             editModal.removeAttribute('role');
@@ -147,6 +146,43 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteModal.classList.add('hidden');
             deleteModal.setAttribute('aria-hidden', 'true');
             deleteModal.removeAttribute('role');
+        });
+    });
+
+    // Função para buscar e preencher os dados no modal de visualização
+    async function fetchAndPopulateViewModal(itemId) {
+        const response = await fetch(`/itens-locacao/${itemId}`);
+        const data = await response.json();
+
+        const modal = document.getElementById('view-modal');
+        modal.querySelector('[data-field="name"]').innerText = data.name;
+        modal.querySelector('[data-field="status"]').innerText = data.status;
+        modal.querySelector('[data-field="description"]').innerText = data.description;
+        modal.querySelector('[data-field="price_per_hour"]').innerText = `R$ ${data.price_per_hour}`;
+        modal.querySelector('[data-field="price_per_day"]').innerText = `R$ ${data.price_per_day}`;
+        modal.querySelector('[data-field="price_per_month"]').innerText = `R$ ${data.price_per_month}`;
+        modal.querySelector('[data-field="rental_item_notes"]').innerText = data.rental_item_notes;
+
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        modal.setAttribute('role', 'dialog');
+    }
+
+    // Event listener para botões que abrem o modal de visualização
+    document.querySelectorAll('.view-item-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const itemId = button.getAttribute('data-id');
+            fetchAndPopulateViewModal(itemId);
+        });
+    });
+
+    // Event listener para o botão de fechar o modal
+    document.querySelectorAll('[data-modal-toggle="view-modal"]').forEach(button => {
+        button.addEventListener('click', () => {
+            const viewModal = document.getElementById('view-modal');
+            viewModal.classList.add('hidden');
+            viewModal.setAttribute('aria-hidden', 'true');
+            viewModal.removeAttribute('role');
         });
     });
 });

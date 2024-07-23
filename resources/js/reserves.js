@@ -7,21 +7,29 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', async function () {
             const reserveId = this.getAttribute('data-reserve-id');
 
-            const response = await fetch(`/reservas/${reserveId}`);
-            const reserve = await response.json();
+            try {
+                const response = await fetch(`/reservas/${reserveId}`);
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar dados da reserva');
+                }
+                const reserve = await response.json();
 
-            editModal.querySelector('select[name="user_id"]').value = reserve.user_id;
-            editModal.querySelector('input[name="title"]').value = reserve.title;
-            editModal.querySelector('select[name="rental_item_id"]').value = reserve.rental_item_id;
-            editModal.querySelector('input[name="start_date"]').value = formatDate(reserve.start_date);
-            editModal.querySelector('input[name="end_date"]').value = formatDate(reserve.end_date);
-            editModal.querySelector('input[name="start_time"]').value = formatTime(reserve.start_date);
-            editModal.querySelector('input[name="end_time"]').value = formatTime(reserve.end_date);
-            editModal.querySelector('textarea[name="reserve_notes"]').value = reserve.reserve_notes;
+                if (editModal) {
+                    editModal.querySelector('select[name="user_id"]').value = reserve.user_id || '';
+                    editModal.querySelector('input[name="title"]').value = reserve.title || '';
+                    editModal.querySelector('select[name="rental_item_id"]').value = reserve.rental_item_id || '';
+                    editModal.querySelector('input[name="start_date"]').value = formatDate(reserve.start_date) || '';
+                    editModal.querySelector('input[name="end_date"]').value = formatDate(reserve.end_date) || '';
+                    editModal.querySelector('input[name="start_time"]').value = formatTime(reserve.start_date) || '';
+                    editModal.querySelector('input[name="end_time"]').value = formatTime(reserve.end_date) || '';
+                    editModal.querySelector('input[name="reserve_notes"]').value = reserve.reserve_notes || '';
 
-            editForm.action = `/reserves/${reserveId}`;
-
-            editModal.classList.remove('hidden');
+                    editForm.action = `/reservas/${reserveId}`;
+                    editModal.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+            }
         });
     });
 
@@ -31,16 +39,29 @@ document.addEventListener('DOMContentLoaded', function () {
     viewButtons.forEach(button => {
         button.addEventListener('click', async function () {
             const reserveId = this.getAttribute('data-reserve-id');
-            const response = await fetch(`/reservas/${reserveId}`);
-            const reserve = await response.json();
 
-            viewModal.querySelector('#modal-reserve-user').textContent = reserve.user.name;
-            viewModal.querySelector('#modal-reserve-space').textContent = reserve.rentalitem.name;
-            viewModal.querySelector('#modal-reserve-company').textContent = reserve.user.company;
-            viewModal.querySelector('#modal-reserve-start').textContent = reserve.start_date;
-            viewModal.querySelector('#modal-reserve-end').textContent = reserve.end_date;
-            viewModal.querySelector('#modal-reserve-notes').textContent = reserve.reserve_notes;
-            viewModal.classList.remove('hidden');
+            try {
+                const response = await fetch(`/reservas/${reserveId}`);
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar dados da reserva');
+                }
+                const reserve = await response.json();
+
+                if (viewModal) {
+                    viewModal.querySelector('#modal-reserve-user').textContent = reserve.user?.name || 'N/A';
+                    viewModal.querySelector('#modal-reserve-space').textContent = reserve.rentalitem?.name || 'N/A';
+                    viewModal.querySelector('#modal-reserve-company').textContent = reserve.user?.company || 'N/A';
+                    viewModal.querySelector('#modal-reserve-start').textContent = formatDate(reserve.start_date) || 'N/A';
+                    viewModal.querySelector('#modal-reserve-end').textContent = formatDate(reserve.end_date) || 'N/A';
+                    viewModal.querySelector('#modal-reserve-start-time').textContent = formatTime(reserve.start_date) || 'N/A';
+                    viewModal.querySelector('#modal-reserve-end-time').textContent = formatTime(reserve.end_date) || 'N/A';
+                    viewModal.querySelector('#modal-reserve-notes').textContent = reserve.reserve_notes || 'N/A';
+
+                    viewModal.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+            }
         });
     });
 
@@ -69,22 +90,30 @@ document.addEventListener('DOMContentLoaded', function () {
     // Funções para formatar data e hora
     function formatDate(dateTime) {
         const date = new Date(dateTime);
+        if (isNaN(date)) return 'N/A';
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
-        return `${year}-${month}-${day}`;
+        return `${day}/${month}/${year}`;
     }
 
     function formatTime(dateTime) {
         const date = new Date(dateTime);
+        if (isNaN(date)) return 'N/A';
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
         return `${hours}:${minutes}`;
     }
 
     // Fechar modal ao clicar no botão de fechar
-    document.getElementById('close-modal').addEventListener('click', function () {
-        editModal.classList.add('hidden');
+    const closeModalButtons = document.querySelectorAll('[data-modal-toggle="view-modal"], [data-modal-toggle="edit-modal"], [data-modal-toggle="delete-modal"]');
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const modal = document.getElementById(button.getAttribute('data-modal-toggle'));
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        });
     });
 
     const conflictMessage = document.getElementById('conflict-message');
@@ -102,9 +131,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const fieldsToValidate = ['title', 'start_date', 'end_date', 'start_time', 'end_time'];
 
     fieldsToValidate.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        field.addEventListener('blur', validateField);
-        field.addEventListener('input', validateField);
+        const field = document.getElementById(`update_${fieldId}`);
+        if (field) {
+            field.addEventListener('blur', validateField);
+            field.addEventListener('input', validateField);
+        }
     });
 
     function validateField(event) {

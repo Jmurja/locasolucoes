@@ -143,6 +143,10 @@ class ReserveController extends Controller
     {
         $reserve = Reserve::with(['user', 'rentalitem'])->find($id);
 
+        if (!$reserve) {
+            return response()->json(['message' => 'Reserva não encontrada'], 404);
+        }
+
         return response()->json($reserve);
     }
 
@@ -155,8 +159,6 @@ class ReserveController extends Controller
 
     public function update(Request $request, Reserve $reserve)
     {
-        \Log::info('Entradas recebidas:', $request->all());
-
         $startDateTime = $request->input('start_date') . ' ' . $request->input('start_time');
         $endDateTime   = $request->input('end_date') . ' ' . $request->input('end_time');
 

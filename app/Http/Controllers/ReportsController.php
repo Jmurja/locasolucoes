@@ -20,8 +20,8 @@ class ReportsController extends Controller
         $reserves    = Reserve::query();
 
         if ($request->filled('start_date') && $request->filled('end_date')) {
-            $start_date = $request->input('start_date');
-            $end_date   = $request->input('end_date');
+            $start_date = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('start_date'))->startOfDay();
+            $end_date   = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('end_date'))->endOfDay();
             $reserves->whereBetween('start_date', [$start_date, $end_date]);
         }
 
@@ -47,8 +47,8 @@ class ReportsController extends Controller
         $reserves    = Reserve::query();
 
         if ($request->filled('start_date') && $request->filled('end_date')) {
-            $start_date = $request->input('start_date');
-            $end_date   = $request->input('end_date');
+            $start_date = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('start_date'))->startOfDay();
+            $end_date   = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('end_date'))->endOfDay();
             $reserves->whereBetween('start_date', [$start_date, $end_date]);
         }
 

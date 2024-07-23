@@ -29,6 +29,6 @@ class Reserve extends Model
 
     public function rentalItem(): BelongsTo
     {
-        return $this->belongsTo(RentalItem::class);
+        return $this->belongsTo(RentalItem::class)->withTrashed();
     }
 }

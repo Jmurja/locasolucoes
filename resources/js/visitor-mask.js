@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const reserveForm = document.getElementById('reserveForm');
+
+    reserveForm.addEventListener('input', applyMask);
+    reserveForm.addEventListener('blur', validateField, true);
+    reserveForm.addEventListener('submit', validateForm);
+
     function setMask(input, maskFunction) {
         input.addEventListener('input', maskFunction);
     }
@@ -49,6 +55,34 @@ document.addEventListener("DOMContentLoaded", function () {
             target.value = maskCep(target.value);
         } else if (target.id === 'datepicker-range-start' || target.id === 'datepicker-range-end') {
             target.value = maskDate(target.value);
+        }
+    }
+
+    function validateField(event) {
+        const {target} = event;
+        if (!target.checkValidity()) {
+            target.classList.add('border-red-500');
+            document.getElementById(target.id + 'Error').classList.remove('hidden');
+        } else {
+            target.classList.remove('border-red-500');
+            document.getElementById(target.id + 'Error').classList.add('hidden');
+        }
+    }
+
+    function validateForm(event) {
+        const inputs = reserveForm.querySelectorAll('input[required], textarea[required], select[required]');
+        let valid = true;
+
+        inputs.forEach(input => {
+            if (!input.checkValidity()) {
+                valid = false;
+                input.classList.add('border-red-500');
+                document.getElementById(input.id + 'Error').classList.remove('hidden');
+            }
+        });
+
+        if (!valid) {
+            event.preventDefault();
         }
     }
 

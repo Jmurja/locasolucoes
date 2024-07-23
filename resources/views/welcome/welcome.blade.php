@@ -100,5 +100,6 @@
 @vite('resources/js/visitor-mask.js')
 @vite('resources/js/datepicker.js')
 @include('welcome.modal.visitor-reserve-modal')
+
 </body>
 </html>

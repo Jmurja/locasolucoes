@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('edit-rua').value = userRua;
         document.getElementById('edit-bairro').value = userBairro;
         document.getElementById('edit-cidade').value = userCidade;
-        document.getElementById('edit-role').value = userRole;
+        document.getElementById('edit-role').value = userRole;  // Adicionado para pré-selecionar o role
 
         const form = document.getElementById('edit-user-form');
         form.action = `/usuarios/${userId}`;
@@ -129,22 +129,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => response.json())
                 .then(data => {
                     if (!("erro" in data)) {
-                        document.getElementById('rua').value = data.logradouro;
-                        document.getElementById('bairro').value = data.bairro;
-                        document.getElementById('cidade').value = data.localidade;
+                        document.getElementById('edit-rua').value = data.logradouro;
+                        document.getElementById('edit-bairro').value = data.bairro;
+                        document.getElementById('edit-cidade').value = data.localidade;
                     } else {
-                        showError('cep', 'CEP não encontrado.');
+                        showError('edit-cep', 'CEP não encontrado.');
                     }
                 })
                 .catch(error => {
                     console.error('Erro ao buscar CEP:', error);
                 });
         } else {
-            showError('cep', 'Formato de CEP inválido.');
+            showError('edit-cep', 'Formato de CEP inválido.');
         }
     }
 
-    const cepInput = document.getElementById('cep');
+    const cepInput = document.getElementById('edit-cep');
     if (cepInput) {
         cepInput.addEventListener('blur', function () {
             pesquisacep(this.value);

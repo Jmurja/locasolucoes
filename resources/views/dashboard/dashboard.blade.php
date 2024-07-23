@@ -21,21 +21,7 @@
 
     <div id='calendar'></div>
 
-    @vite('resources/js/visitor-fullcalendar.js')
-    @vite('resources/js/datepicker.js')
     @include('dashboard.modal.tenant-reserve-modal')
-    @include('dashboard.modal.termo-service-modal')
-
-    <!-- Modal Service -->
-    @if (auth()->user()->role !== 'tenant')
-        <button id="modalToggleButton" data-modal-target="visitor-reserve" data-modal-toggle="visitor-reserve"
-                class="hidden">
-            Solicitar Reserva
-        </button>
-    @elseif (auth()->user()->role !== 'visitor')
-        <button id="modalToggleButton" data-modal-target="tenant-reserve" data-modal-toggle="tenant-reserve"
-                class="hidden">
-            Solicitar Reserva
-        </button>
-    @endif
+    @vite('resources/js/datepicker.js')
+    @vite('resources/js/tenant-fullcalendar.js')
 </x-app-layout>

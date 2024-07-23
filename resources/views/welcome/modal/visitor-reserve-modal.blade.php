@@ -30,7 +30,7 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form action="{{ route('reserves.store') }}" method="post" class="p-4 space-y-4">
+            <form id="reserveForm" action="{{ route('reserves.store') }}" method="post" class="p-4 space-y-4">
                 @csrf
                 <input type="hidden" name="role" value="visitor">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -46,6 +46,8 @@
                                     <input type="text" name="name" id="visitorName" autocomplete="name"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                            placeholder="Digite o nome do visitante" required value="{{ old('name') }}">
+                                    <p id="visitorNameError" class="text-red-500 text-xs mt-1 hidden">Nome é
+                                        obrigatório.</p>
                                 </div>
                                 <div>
                                     <label for="visitorEmail"
@@ -54,6 +56,8 @@
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                            placeholder="Digite o email do visitante" required
                                            value="{{ old('email') }}">
+                                    <p id="visitorEmailError" class="text-red-500 text-xs mt-1 hidden">Email é
+                                        obrigatório.</p>
                                 </div>
                                 <div>
                                     <label for="visitorPhone"
@@ -62,6 +66,8 @@
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                            placeholder="Digite o telefone do visitante" required
                                            value="{{ old('visitor_phone') }}">
+                                    <p id="visitorPhoneError" class="text-red-500 text-xs mt-1 hidden">Telefone é
+                                        obrigatório.</p>
                                 </div>
                             </div>
                         </div>
@@ -76,6 +82,8 @@
                                     <input type="text" name="company" id="eventCompany" autocomplete="organization"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                            placeholder="Digite o nome da Empresa" required value="{{ old('company') }}">
+                                    <p id="eventCompanyError" class="text-red-500 text-xs mt-1 hidden">Empresa é
+                                        obrigatório.</p>
                                 </div>
                                 <div>
                                     <label for="eventCpfCnpj"
@@ -84,6 +92,8 @@
                                            onblur="pesquisacnpj(this.value)"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                            placeholder="Digite o CPF/CNPJ" required value="{{ old('cpf_cnpj') }}">
+                                    <p id="eventCpfCnpjError" class="text-red-500 text-xs mt-1 hidden">CPF/CNPJ é
+                                        obrigatório.</p>
                                 </div>
                             </div>
                         </div>
@@ -101,6 +111,8 @@
                                            onblur="pesquisacep(this.value)"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                            placeholder="Digite o CEP da Empresa" required value="{{ old('cep') }}">
+                                    <p id="eventCepError" class="text-red-500 text-xs mt-1 hidden">CEP é
+                                        obrigatório.</p>
                                 </div>
                                 <div>
                                     <label for="eventCity"
@@ -108,6 +120,8 @@
                                     <input type="text" name="city" id="eventCity" autocomplete="address-level2"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                            placeholder="Digite a cidade" required value="{{ old('city') }}">
+                                    <p id="eventCityError" class="text-red-500 text-xs mt-1 hidden">Cidade é
+                                        obrigatório.</p>
                                 </div>
                                 <div>
                                     <label for="eventStreet"
@@ -115,6 +129,8 @@
                                     <input type="text" name="street" id="eventStreet" autocomplete="address-line1"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                            placeholder="Digite a Rua" required value="{{ old('street') }}">
+                                    <p id="eventStreetError" class="text-red-500 text-xs mt-1 hidden">Rua é
+                                        obrigatório.</p>
                                 </div>
                                 <div>
                                     <label for="eventNeighborhood"
@@ -123,6 +139,8 @@
                                            autocomplete="address-level3"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                            placeholder="Digite o Bairro" required value="{{ old('neighborhood') }}">
+                                    <p id="eventNeighborhoodError" class="text-red-500 text-xs mt-1 hidden">Bairro é
+                                        obrigatório.</p>
                                 </div>
                                 <div>
                                     <label for="eventNumber"
@@ -131,6 +149,8 @@
                                            autocomplete="address-level3"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                            placeholder="Digite o Número" required value="{{ old('number') }}">
+                                    <p id="eventNumberError" class="text-red-500 text-xs mt-1 hidden">Número é
+                                        obrigatório.</p>
                                 </div>
                             </div>
                         </div>
@@ -149,6 +169,8 @@
                             <input id="datepicker-range-start" name="start_date" type="text" autocomplete="off"
                                    class="datepicker-custom bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                    placeholder="dd/mm/yyyy" value="{{ old('start_date') }}">
+                            <p id="startDateError" class="text-red-500 text-xs mt-1 hidden">Data de Início é
+                                obrigatório.</p>
                         </div>
                         <div>
                             <label for="datepicker-range-end"
@@ -157,6 +179,8 @@
                             <input id="datepicker-range-end" name="end_date" type="text" autocomplete="off"
                                    class="datepicker-custom bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                    placeholder="dd/mm/yyyy" value="{{ old('end_date') }}">
+                            <p id="endDateError" class="text-red-500 text-xs mt-1 hidden">Data de Término é
+                                obrigatório.</p>
                         </div>
                         <div>
                             <label for="start_time"
@@ -165,6 +189,8 @@
                             <input type="time" id="start_time" name="start_time" autocomplete="off"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                    min="08:00" max="18:00" required value="{{ old('start_time') }}">
+                            <p id="startTimeError" class="text-red-500 text-xs mt-1 hidden">Hora de Início é
+                                obrigatório.</p>
                         </div>
                         <div>
                             <label for="end_time" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Hora
@@ -172,6 +198,8 @@
                             <input type="time" id="end_time" name="end_time" autocomplete="off"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                    min="09:00" max="18:00" required value="{{ old('end_time') }}">
+                            <p id="endTimeError" class="text-red-500 text-xs mt-1 hidden">Hora de Término é
+                                obrigatório.</p>
                         </div>
                     </div>
 
@@ -183,6 +211,8 @@
                             <input type="text" name="title" id="eventTitle" autocomplete="off"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                    placeholder="Digite o Título do seu Evento" required value="{{ old('title') }}">
+                            <p id="eventTitleError" class="text-red-500 text-xs mt-1 hidden">Título do Evento é
+                                obrigatório.</p>
                         </div>
                         <div>
                             <label for="rental_item_id"
@@ -194,6 +224,7 @@
                                         value="{{$RentalItem->id}}" {{ old('rental_item_id') == $RentalItem->id ? 'selected' : '' }}>{{$RentalItem->name}}</option>
                                 @endforeach
                             </select>
+                            <p id="rentalItemError" class="text-red-500 text-xs mt-1 hidden">Espaço é obrigatório.</p>
                         </div>
                         <div class="col-span-3">
                             <label for="eventDescription"
@@ -202,6 +233,8 @@
                                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                       placeholder="Digite a descrição do evento"
                                       required>{{ old('description') }}</textarea>
+                            <p id="eventDescriptionError" class="text-red-500 text-xs mt-1 hidden">Descrição é
+                                obrigatória.</p>
                         </div>
                     </div>
                 </div>
