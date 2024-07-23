@@ -33,7 +33,9 @@ Route::middleware('auth')->group(function() {
     ]);
     Route::get('/pdf', [ReportsController::class, 'generatePdf'])->name('pdf.reports');
     Route::delete('/usuarios/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    Route::resource('reports', ReportsController::class);
+    Route::resource('relatorios', ReportsController::class)->names('reports')->parameters([
+        'relatorios' => 'report',
+    ]);
     Route::get('/reservas/search', [ReserveController::class, 'search'])->name('reservas.search');
 });
 

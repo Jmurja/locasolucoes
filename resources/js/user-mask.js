@@ -48,4 +48,137 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('edit-modal').addEventListener('show.bs.modal', function () {
         applyMasksToEditModal();
     });
+
+    // Função para limpar os campos de endereço
+    function limpa_formulário_cep() {
+        document.getElementById('rua').value = "";
+        document.getElementById('bairro').value = "";
+        document.getElementById('cidade').value = "";
+    }
+
+    // Callback para preencher os campos de endereço
+    window.meu_callback = function (conteudo) {
+        if (!("erro" in conteudo)) {
+            document.getElementById('rua').value = conteudo.logradouro;
+            document.getElementById('bairro').value = conteudo.bairro;
+            document.getElementById('cidade').value = conteudo.localidade;
+        } else {
+            limpa_formulário_cep();
+            alert("CEP não encontrado.");
+        }
+    }
+
+    // Função para buscar o CEP
+    window.pesquisacep = function (valor) {
+        var cep = valor.replace(/\D/g, '');
+
+        if (cep !== "") {
+            var validacep = /^[0-9]{8}$/;
+
+            if (validacep.test(cep)) {
+                document.getElementById('rua').value = "...";
+                document.getElementById('bairro').value = "...";
+                document.getElementById('cidade').value = "...";
+
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => meu_callback(data))
+                    .catch(error => {
+                        limpa_formulário_cep();
+                        alert("CEP não encontrado.");
+                    });
+            } else {
+                limpa_formulário_cep();
+                alert("Formato de CEP inválido.");
+            }
+        } else {
+            limpa_formulário_cep();
+        }
+    };
+
+    // Função para limpar os campos de CNPJ
+    function limpa_formulário_cnpj() {
+        document.getElementById('company').value = "";
+        document.getElementById('rua').value = "";
+        document.getElementById('bairro').value = "";
+        document.getElementById('cidade').value = "";
+        document.getElementById('cep').value = "";
+        document.getElementById('name').value = "";
+    }
+
+    // Callback para preencher os campos de CNPJ
+    window.meu_callback_cnpj = function (conteudo) {
+        if (!("errors" in conteudo)) {
+            document.getElementById('company').value = conteudo.razao_social;
+            document.getElementById('rua').value = conteudo.logradouro;
+            document.getElementById('bairro').value = conteudo.bairro;
+            document.getElementById('cidade').value = conteudo.municipio;
+            document.getElementById('cep').value = conteudo.cep.replace(/\D/g, '');
+
+            // Encontrar o nome do sócio-administrador
+            let socioAdministrador = "";
+            if (conteudo.qsa && conteudo.qsa.length > 0) {
+                const socio = conteudo.qsa.find(p => p.qual === "Sócio-Administrador");
+                socioAdministrador = socio ? socio.nome : "";
+            }
+            document.getElementById('name').value = socioAdministrador;
+        } else {
+            limpa_formulário_cnpj();
+            alert("CNPJ não encontrado.");
+        }
+    }
+
+    // Função para buscar o CNPJ
+    window.pesquisacnpj = function (valor) {
+        var cnpj = valor.replace(/\D/g, '');
+
+        if (cnpj !== "") {
+            var validacnpj = /^[0-9]{14}$/;
+
+            if (validacnpj.test(cnpj)) {
+                document.getElementById('company').value = "...";
+                document.getElementById('rua').value = "...";
+                document.getElementById('bairro').value = "...";
+                document.getElementById('cidade').value = "...";
+                document.getElementById('cep').value = "...";
+                document.getElementById('name').value = "...";
+
+                fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`)
+                    .then(response => response.json())
+                    .then(data => meu_callback_cnpj(data))
+                    .catch(error => {
+                        limpa_formulário_cnpj();
+                        alert("CNPJ não encontrado.");
+                    });
+            } else {
+                limpa_formulário_cnpj();
+                alert("Formato de CNPJ inválido.");
+            }
+        } else {
+            limpa_formulário_cnpj();
+        }
+    };
+
+    // Adiciona o listener ao campo de input de CEP para buscar os dados ao perder o foco
+    document.getElementById('cep').addEventListener('blur', function () {
+        pesquisacep(this.value);
+    });
+
+    // Adiciona o listener ao campo de input de CNPJ para buscar os dados ao perder o foco
+    document.getElementById('cpf_cnpj').addEventListener('blur', function () {
+        pesquisacnpj(this.value);
+    });
+
+    // Validação do formulário
+    document.getElementById('user-form').addEventListener('submit', function (event) {
+        const role = document.getElementById('role');
+        const roleError = document.getElementById('role-error');
+
+        if (role.value === 'Selecione a Categoria' || role.value === '') {
+            event.preventDefault(); // Impede o envio do formulário
+            roleError.classList.remove('hidden');
+        } else {
+            roleError.classList.add('hidden');
+        }
+    });
 });

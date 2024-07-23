@@ -1,8 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Usuários') }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Itens de Locação') }}
+            </h2>
+            <!-- Cadastrar modal -->
+            <button data-modal-target="create-user" data-modal-toggle="create-user"
+                    class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button">Criar Novo Usuário
+            </button>
+        </div>
     </x-slot>
 
     @error('errors')
@@ -143,15 +150,8 @@
             {{$users->links()}}
         </div>
 
-        <!-- Modal Create -->
-        <button data-modal-target="create-user" data-modal-toggle="create-user"
-                class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                type="button">Criar Novo Usuário
-        </button>
-
         @vite('resources/js/user.js')
         @vite('resources/js/user-mask.js')
-        @vite('resources/js/reserves-request.js')
         @include('users/modal/create-user')
         @include('users/modal/delete-modal')
         @include('users/modal/update-modal')

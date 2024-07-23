@@ -31,12 +31,14 @@
 .fc-toolbar .fc-button:hover {
     background-color: #2563eb; /* Darker blue */
     transform: translateY(-2px);
+
 }
 
 .fc-toolbar h2 {
     font-size: 24px;
     color: #fff;
     margin: 0;
+    padding-left: 15px;
 }
 
 /* Day Headers */

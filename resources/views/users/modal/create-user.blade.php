@@ -21,7 +21,7 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form action="{{ route('users.store') }}" method="post" class="p-4 md:p-5 space-y-6">
+            <form id="user-form" action="{{ route('users.store') }}" method="post" class="p-4 md:p-5 space-y-6">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="mb-4">
@@ -64,6 +64,8 @@
                             <option value="3">Tenant</option>
                             <option value="4">Visitor</option>
                         </select>
+                        <p id="role-error" class="mt-2 text-sm text-red-600 dark:text-red-500 hidden">Por favor,
+                            selecione uma categoria.</p>
                     </div>
                     <div class="mb-4">
                         <label for="cpf_cnpj" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CPF/CNPJ</label>

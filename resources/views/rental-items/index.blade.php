@@ -1,14 +1,23 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Itens de Locação') }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Itens de Locação') }}
+            </h2>
+            <!-- Cadastrar modal -->
+            <button data-modal-target="register-item" data-modal-toggle="register-item"
+                    class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button">
+                Cadastrar Item de Locação
+            </button>
+        </div>
     </x-slot>
 
     <!--------Pesquisar---------->
     <form class="max-w-lg mx-auto mt-10" method="GET" action="{{ route('rental-items.index') }}">
         <div class="relative w-full">
-            <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Pesquisar</label>
+            <label for="search"
+                   class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Pesquisar</label>
             <input type="search" id="search" name="search"
                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                    placeholder="Pesquisar por Nome, Preço, Status..." value="{{ request('search') }}" required/>
@@ -24,13 +33,15 @@
             <button type="button"
                     onclick="document.getElementById('search').value=''; this.form.submit();"
                     class="absolute inset-y-0 right-8 p-2 text-sm font-medium text-red-500 hover:text-red-700 focus:outline-none focus:ring-0">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                     xmlns="http://www.w3.org/2000/svg"
                      width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                           d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
                 </svg>
                 <span class="sr-only">Limpar</span>
             </button>
+
         </div>
     </form>
 
@@ -49,15 +60,6 @@
                     Preço por hora
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Preço por dia
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Preço por mês
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Status
-                </th>
-                <th scope="col" class="px-6 py-3">
                     Ações
                 </th>
             </tr>
@@ -73,15 +75,6 @@
                     </td>
                     <td class="px-6 py-4">
                         {{'R$ ' . $rentalItem->price_per_hour ?? 'N/A' }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{'R$ ' . $rentalItem->price_per_day ?? 'N/A' }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{'R$ ' . $rentalItem->price_per_month ?? 'N/A' }}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ $rentalItem->status->label()}}
                     </td>
 
                     <td class="flex items-center px-6 py-4 space-x-2">
@@ -114,12 +107,6 @@
             {{$rentalItems->links()}}
         </div>
 
-        <!-- Cadastrar modal -->
-        <button data-modal-target="register-item" data-modal-toggle="register-item"
-                class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                type="button">
-            Cadastrar Item de Locação
-        </button>
 
         @include('rental-items.modal.register-modal')
         @include('rental-items.modal.delete-modal')
