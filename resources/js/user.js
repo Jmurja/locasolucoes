@@ -248,6 +248,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function validateForm() {
+        let isValid = true;
+        const inputs = document.querySelectorAll('input[required], select[required]');
+        inputs.forEach(input => {
+            if (!input.value || input.value === 'Selecione a Categoria') {
+                isValid = false;
+                input.classList.add('border-red-500');
+            } else {
+                input.classList.remove('border-red-500');
+            }
+        });
+
+        if (!isValid) {
+            alert('Por favor, preencha todos os campos obrigatórios.');
+        }
+
+        return isValid;
+    }
+
+
     function applyMasksAndValidations() {
         const fieldsToValidate = [
             'name', 'email', 'phone', 'company', 'cpf_cnpj',

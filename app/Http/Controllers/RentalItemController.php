@@ -37,12 +37,20 @@ class RentalItemController extends Controller
     public function store(Request $request)
     {
         RentalItem::query()->create([
-            'user_id'           => $request->user_id,
-            'name'              => $request->name,
-            'description'       => $request->description,
-            'price_per_hour'    => preg_replace('/[^\d]/', '', str_replace(['.', ','], '', $request->price_per_hour)),
-            'price_per_day'     => preg_replace('/[^\d]/', '', str_replace(['.', ','], '', $request->price_per_day)),
-            'price_per_month'   => preg_replace('/[^\d]/', '', str_replace(['.', ','], '', $request->price_per_month)),
+            'user_id'        => $request->user_id,
+            'name'           => $request->name,
+            'description'    => $request->description,
+            'price_per_hour' => preg_replace(
+                '/[^\d]/',
+                '',
+                str_replace(['.', ','], '', $request->price_per_hour)
+            )                                                                                                      / 100,
+            'price_per_day'   => preg_replace('/[^\d]/', '', str_replace(['.', ','], '', $request->price_per_day)) / 100,
+            'price_per_month' => preg_replace(
+                '/[^\d]/',
+                '',
+                str_replace(['.', ','], '', $request->price_per_month)
+            ) / 100,
             'status'            => $request->status,
             'rental_item_notes' => $request->rental_item_notes,
         ]);

@@ -8,14 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('eventCity').value = "";
     }
 
-    // Função para limpar os campos de CNPJ
-    function limpa_formulário_cnpj() {
-        document.getElementById('eventResponsible').value = "";
-        document.getElementById('eventCompany').value = "";
-        document.getElementById('eventCep').value = "";
-        limpa_formulário_cep();
-    }
-
     // Callback para preencher os campos de endereço
     window.meu_callback = function (conteudo) {
         if (!("erro" in conteudo)) {
@@ -56,13 +48,32 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
+    // Função para limpar os campos de CNPJ
+    function limpa_formulário_cnpj() {
+        document.getElementById('eventCompany').value = "";
+        document.getElementById('eventStreet').value = "";
+        document.getElementById('eventNeighborhood').value = "";
+        document.getElementById('eventCity').value = "";
+        document.getElementById('eventCep').value = "";
+        document.getElementById('visitorName').value = "";
+    }
+
     // Callback para preencher os campos de CNPJ
-    window.callback_cnpj = function (conteudo) {
-        if (!("erro" in conteudo)) {
-            document.getElementById('eventResponsible').value = conteudo.qsa[0].nome;
-            document.getElementById('eventCompany').value = conteudo.nome;
+    window.meu_callback_cnpj = function (conteudo) {
+        if (!("errors" in conteudo)) {
+            document.getElementById('eventCompany').value = conteudo.razao_social;
+            document.getElementById('eventStreet').value = conteudo.logradouro;
+            document.getElementById('eventNeighborhood').value = conteudo.bairro;
+            document.getElementById('eventCity').value = conteudo.municipio;
             document.getElementById('eventCep').value = conteudo.cep.replace(/\D/g, '');
-            pesquisacep(conteudo.cep.replace(/\D/g, ''));
+
+            // Encontrar o nome do sócio-administrador
+            let socioAdministrador = "";
+            if (conteudo.qsa && conteudo.qsa.length > 0) {
+                const socio = conteudo.qsa.find(p => p.qual === "Sócio-Administrador");
+                socioAdministrador = socio ? socio.nome : "";
+            }
+            document.getElementById('visitorName').value = socioAdministrador;
         } else {
             limpa_formulário_cnpj();
             alert("CNPJ não encontrado.");
@@ -77,22 +88,19 @@ document.addEventListener('DOMContentLoaded', function () {
             var validacnpj = /^[0-9]{14}$/;
 
             if (validacnpj.test(cnpj)) {
-                document.getElementById('eventResponsible').value = "...";
                 document.getElementById('eventCompany').value = "...";
+                document.getElementById('eventStreet').value = "...";
+                document.getElementById('eventNeighborhood').value = "...";
+                document.getElementById('eventCity').value = "...";
                 document.getElementById('eventCep').value = "...";
-                limpa_formulário_cep();
+                document.getElementById('visitorName').value = "...";
 
-                fetch(`https://www.receitaws.com.br/v1/cnpj/${cnpj}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('CNPJ não encontrado.');
-                        }
-                        return response.json();
-                    })
-                    .then(data => callback_cnpj(data))
+                fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`)
+                    .then(response => response.json())
+                    .then(data => meu_callback_cnpj(data))
                     .catch(error => {
                         limpa_formulário_cnpj();
-                        alert(error.message);
+                        alert("CNPJ não encontrado.");
                     });
             } else {
                 limpa_formulário_cnpj();
@@ -102,6 +110,11 @@ document.addEventListener('DOMContentLoaded', function () {
             limpa_formulário_cnpj();
         }
     };
+
+    // Adiciona o listener ao campo de input de CEP para buscar os dados ao perder o foco
+    document.getElementById('eventCep').addEventListener('blur', function () {
+        pesquisacep(this.value);
+    });
 
     // Adiciona o listener ao campo de input de CNPJ para buscar os dados ao perder o foco
     document.getElementById('eventCpfCnpj').addEventListener('blur', function () {

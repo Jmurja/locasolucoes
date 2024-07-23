@@ -112,14 +112,16 @@ class ReserveController extends Controller
 
     public function json()
     {
-        $reserves = Reserve::all();
-        $events   = $reserves->map(function($reserve) {
+        $reserves = Reserve::with('rentalItem')->get();
+
+        $events = $reserves->map(function($reserve) {
             if (auth()->check()) {
                 $title = $reserve->title;
             } else {
-                $startDate = Carbon::parse($reserve->start_date)->format('H');
-                $endDate   = Carbon::parse($reserve->end_date)->format('H');
-                $title     = "Ocupado ({$startDate} - {$endDate})";
+                $rentalItemName = $reserve->rentalItem->name;
+                $startDate      = Carbon::parse($reserve->start_date)->format('H');
+                $endDate        = Carbon::parse($reserve->end_date)->format('H');
+                $title          = "{$rentalItemName} ({$startDate} - {$endDate})";
             }
 
             return [
