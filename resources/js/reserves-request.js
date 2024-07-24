@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('eventCity').value = conteudo.localidade;
         } else {
             limpa_formulário_cep();
-            alert("CEP não encontrado.");
         }
     }
 
@@ -37,11 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(data => meu_callback(data))
                     .catch(error => {
                         limpa_formulário_cep();
-                        alert("CEP não encontrado.");
                     });
             } else {
                 limpa_formulário_cep();
-                alert("Formato de CEP inválido.");
             }
         } else {
             limpa_formulário_cep();
@@ -76,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('visitorName').value = socioAdministrador;
         } else {
             limpa_formulário_cnpj();
-            alert("CNPJ não encontrado.");
         }
     }
 
@@ -100,11 +96,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(data => meu_callback_cnpj(data))
                     .catch(error => {
                         limpa_formulário_cnpj();
-                        alert("CNPJ não encontrado.");
                     });
             } else {
                 limpa_formulário_cnpj();
-                alert("Formato de CNPJ inválido.");
             }
         } else {
             limpa_formulário_cnpj();

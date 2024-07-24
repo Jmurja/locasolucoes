@@ -16,8 +16,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     type: 'dayGridMonth',
                     buttonText: 'Mês',
                 },
+                semana: {
+                    type: 'timeGridWeek',
+                    buttonText: 'Semana',
+                },
+                dia: {
+                    type: 'timeGridDay',
+                    buttonText: 'Dia',
+                }
+            },
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'mes,semana,dia'
             },
             initialView: 'mes',
+            hiddenDays: [0],
+            slotMinTime: '08:00:00',
+            slotMaxTime: '17:00:00',
             dateClick: function (info) {
                 if (modal) {
                     modal.classList.remove('hidden');

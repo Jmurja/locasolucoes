@@ -69,7 +69,7 @@ class ReserveController extends Controller
             ->first();
 
         if ($existingReserve) {
-            $conflictMessage = 'Já existe uma reserva no mesmo período: ' . $existingReserve->title
+            $conflictMessage = 'Já existe uma reserva no mesmo período: ' . $existingReserve->rentalItem
                 . ' de ' . Carbon::parse($existingReserve->start_date)->format('d/m/Y H:i')
                 . ' até ' . Carbon::parse($existingReserve->end_date)->format('d/m/Y H:i') . '.';
 
@@ -107,7 +107,10 @@ class ReserveController extends Controller
             'title'          => $request->title,
         ]);
 
-        return back();
+        return back()->with('success', 'Reserva criada com sucesso!')->with(
+            'warning',
+            'Warning alert! Change a few things up and try submitting again.'
+        );
     }
 
     public function json()
@@ -115,14 +118,10 @@ class ReserveController extends Controller
         $reserves = Reserve::with('rentalItem')->get();
 
         $events = $reserves->map(function($reserve) {
-            if (auth()->check()) {
-                $title = $reserve->title;
-            } else {
-                $rentalItemName = $reserve->rentalItem->name;
-                $startDate      = Carbon::parse($reserve->start_date)->format('H');
-                $endDate        = Carbon::parse($reserve->end_date)->format('H');
-                $title          = "{$rentalItemName} ({$startDate} - {$endDate})";
-            }
+            $rentalItemName = $reserve->rentalItem->name;
+            $startDate      = Carbon::parse($reserve->start_date)->format('H');
+            $endDate        = Carbon::parse($reserve->end_date)->format('H');
+            $title          = "{$rentalItemName} ({$startDate} - {$endDate})";
 
             return [
                 'id'            => $reserve->id,

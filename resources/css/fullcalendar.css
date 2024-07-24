@@ -1,11 +1,12 @@
-/* FullCalendar Container */
 .fc {
     background-color: #1e293b; /* slate-800 */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    max-width: 1200px;
+    max-width: 1500px; /* Increased max width to 1500px */
     margin: 20px auto;
     transition: all 0.3s ease;
+    height: 630px; /* Fixed height to 630px */
+    overflow: hidden; /* Prevent scrollbars */
 }
 
 /* Container to center the calendar */
@@ -31,7 +32,6 @@
 .fc-toolbar .fc-button:hover {
     background-color: #2563eb; /* Darker blue */
     transform: translateY(-2px);
-
 }
 
 .fc-toolbar h2 {
@@ -48,6 +48,7 @@
     padding: 10px 0;
     border: 1px solid #475569;
     text-align: center;
+    height: auto;
 }
 
 /* Day Headers Text Color */
@@ -61,6 +62,8 @@
     background-color: #1e293b; /* slate-800 */
     transition: background-color 0.3s ease;
     cursor: pointer;
+    height: calc((630px - 100px) / 6); /* Adjust height to fit within 630px, considering header and 6 weeks max */
+    box-sizing: border-box; /* Ensure padding/border do not affect height */
 }
 
 .fc-daygrid-day:hover {
@@ -104,6 +107,109 @@
 
 .fc-event .fc-event-time {
     font-size: 12px;
+}
+
+/* Popover */
+.fc-popover {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.fc-popover .fc-popover-header {
+    background-color: #334155; /* Slightly lighter than slate-800 */
+    color: #fff;
+    padding: 10px;
+    border-bottom: 1px solid #475569;
+}
+
+.fc-popover .fc-popover-body {
+    background-color: #1e293b; /* slate-800 */
+    padding: 10px;
+}
+
+.fc-popover .fc-event {
+    background-color: #3b82f6; /* Blue */
+    border: none;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* FullCalendar Weekly View Styles */
+.fc-timegrid {
+    background-color: #1e293b; /* slate-800 */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    height: 630px; /* Fixed height to 630px */
+    overflow: hidden; /* Prevent scrollbars */
+}
+
+/* Weekly Header */
+.fc-col-header {
+    background-color: #334155; /* Slightly lighter than slate-800 */
+    color: #fff;
+    border-bottom: 1px solid #475569;
+}
+
+.fc-col-header-cell {
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    height: auto;
+}
+
+/* Time Labels */
+.fc-timegrid-axis-cushion {
+    color: #ffffff; /* White */
+}
+
+/* Time Labels (Hours) */
+.fc-timegrid-slot-label-cushion {
+    color: #ffffff; /* White */
+}
+
+.fc-scrollgrid-shrink-cushion {
+    color: #ffffff; /* White */
+}
+
+/* Time Slots */
+.fc-timegrid-slot {
+    border-top: 1px solid #475569;
+}
+
+.fc-timegrid-slot:hover {
+    background-color: #2d3748; /* slate-700 */
+}
+
+/* Timegrid Event */
+.fc-timegrid-event {
+    background-color: #3b82f6; /* Blue */
+    border: none;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.fc-timegrid-event:hover {
+    transform: scale(1.05);
+    background-color: #2563eb; /* Darker blue */
+}
+
+.fc-timegrid-event .fc-event-title {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.fc-timegrid-event .fc-event-time {
+    font-size: 12px;
+}
+
+/* Now Indicator */
+.fc-now-indicator {
+    background-color: #3b82f6; /* Blue */
 }
 
 /* Popover */
