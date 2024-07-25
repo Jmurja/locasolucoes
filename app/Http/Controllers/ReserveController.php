@@ -52,7 +52,6 @@ class ReserveController extends Controller
         try {
             $FormatStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime)->format('Y-m-d H:i:s');
             $FormatEndDate   = Carbon::createFromFormat('d/m/Y H:i', $endDateTime)->format('Y-m-d H:i:s');
-            \Log::info('Datas formatadas:', ['start' => $FormatStartDate, 'end' => $FormatEndDate]);
         } catch (\Exception $e) {
             return back()->withErrors(['date_format' => 'O formato da data ou hora está incorreto.'])->withInput();
         }
@@ -76,25 +75,22 @@ class ReserveController extends Controller
             return back()->withErrors(['conflict' => $conflictMessage])->withInput();
         }
 
-        $user = User::where('cpf_cnpj', '=', $request->cpf_cnpj)->first();
+        $user = User::where('cpf_cnpj', $request->cpf_cnpj)->first();
 
         if (!$user) {
-            $role = $request->input('role', 'VISITANTE');
             $user = User::create([
-                'name'       => $request->name,
-                'email'      => $request->email,
-                'phone'      => $request->phone,
-                'mobile'     => $request->mobile,
-                'role'       => $role,
-                'cpf_cnpj'   => $request->cpf_cnpj,
-                'user_notes' => $request->user_notes,
-                'password'   => bcrypt($request->password),
-                'cep'        => $request->cep,
-                'rua'        => $request->rua,
-                'bairro'     => $request->bairro,
-                'cidade'     => $request->cidade,
-                'company'    => $request->company,
-                'number'     => $request->number,
+                'name'     => $request->name,
+                'email'    => $request->email,
+                'phone'    => $request->phone,
+                'role'     => 'visitor',
+                'cpf_cnpj' => $request->cpf_cnpj,
+                'cep'      => $request->cep,
+                'rua'      => $request->street,
+                'bairro'   => $request->neighborhood,
+                'cidade'   => $request->city,
+                'company'  => $request->company,
+                'number'   => $request->number,
+                'password' => bcrypt('defaultpassword'),
             ]);
         }
 
@@ -103,14 +99,11 @@ class ReserveController extends Controller
             'start_date'     => $FormatStartDate,
             'end_date'       => $FormatEndDate,
             'rental_item_id' => $request->rental_item_id,
-            'reserve_notes'  => $request->reserve_notes,
+            'reserve_notes'  => $request->description,
             'title'          => $request->title,
         ]);
 
-        return back()->with('success', 'Reserva criada com sucesso!')->with(
-            'warning',
-            'Warning alert! Change a few things up and try submitting again.'
-        );
+        return back()->with('success', 'Reserva Solicitada!');
     }
 
     public function json()

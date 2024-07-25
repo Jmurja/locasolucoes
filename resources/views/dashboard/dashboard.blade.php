@@ -9,8 +9,6 @@
             Seja bem-vindo, Você está logado como
             @if (auth()->user()->role == 'tenant')
                 <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Locatário</span>
-            @elseif (auth()->user()->role == 'visitor')
-                <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Visitante</span>
             @elseif (auth()->user()->role == 'admin')
                 <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Administrador</span>
             @else

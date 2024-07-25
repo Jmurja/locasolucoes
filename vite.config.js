@@ -21,6 +21,8 @@ export default defineConfig({
                 'resources/js/visitor-fullcalendar.js',
                 'resources/js/visitor-mask.js',
                 'resources/js/user-mask.js',
+                'resources/js/tenant-fullcalendar.js',
+                'resources/js/tenant-mask.js',
 
             ],
             refresh: true,

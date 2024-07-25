@@ -15,6 +15,9 @@ Route::resource('reservas', ReserveController::class)->names('reserves')->parame
     'reservas' => 'reserve',
 ]);
 
+Route::get('errors', function() {
+    return view('errors.503');
+});
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 
 Route::get('/dev/login', DevController::class)->name('dev.login');

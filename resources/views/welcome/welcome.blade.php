@@ -12,6 +12,32 @@
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css' rel='stylesheet'/>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
 </head>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const successAlert = document.getElementById('success-alert');
+        if (successAlert) {
+            successAlert.style.display = 'block';
+            setTimeout(() => {
+                successAlert.style.display = 'none';
+            }, 5000); // Esconde o alerta após 5 segundos
+        }
+    });
+</script>
+
+
+<style>
+    .alert-right {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 1050;
+        width: 300px;
+        display: none; /* Inicialmente escondido */
+    }
+</style>
+
+
 <body class="font-sans antialiased dark:bg-gray-900 dark:text-white/50">
 
 <div class="bg-slate-800 w-full h-16 flex items-center justify-center shadow-md">
@@ -41,25 +67,6 @@
     </div>
 @endif
 
-@if(session('success'))
-    <div
-        class="flex items-center p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300"
-        role="alert">
-        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-             fill="currentColor" viewBox="0 0 20 20">
-            <path
-                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-        </svg>
-        <span class="sr-only">Info</span>
-        <div>
-            <span class="font-medium">{{ session('success') }}</span>
-            @if(session('warning'))
-                <div class="mt-2">{{ session('warning') }}</div>
-            @endif
-        </div>
-    </div>
-@endif
-
 
 <div
     class="bg-gray-50 text-black/50 dark:bg-gray-900 dark:text-white/50 min-h-screen flex flex-col items-center justify-center relative">
@@ -71,11 +78,33 @@
             </div>
         </header>
 
+        @if(session('success'))
+            <div
+                id="success-alert"
+                class="alert-right p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300"
+                role="alert">
+                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                     fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 1 1 1 1v4h1a1 1 0 1 1 0 2Z"/>
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                    <span class="font-medium">{{ session('success') }}</span>
+                    @if(session('warning'))
+                        <div class="mt-2">{{ session('warning') }}</div>
+                    @endif
+                </div>
+            </div>
+        @endif
+
+
         <main class="mt-10 w-full">
             <div id='calendar'></div>
         </main>
     </div>
 </div>
+
 
 @vite('resources/js/visitor-fullcalendar.js')
 @vite('resources/js/reserves-request.js')
