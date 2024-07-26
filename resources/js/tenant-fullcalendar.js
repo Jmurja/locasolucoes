@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var eventEndInput = document.getElementById('eventEnd');
     var eventStartTimeInput = document.getElementById('start_time');
     var eventEndTimeInput = document.getElementById('end_time');
+    var tooltip = document.getElementById('tooltip');
 
     function formatDate(dateStr) {
         var date = new Date(dateStr);
@@ -16,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function adjustEndDate(dateStr) {
         var date = new Date(dateStr);
         const calendarView = calendar.view.type;
-        console.log('view type', calendar.view.type)
         if (calendarView === 'mes') {
             date.setDate(date.getDate() - 1);
         }
@@ -74,7 +74,40 @@ document.addEventListener('DOMContentLoaded', function () {
                     modal.classList.add('flex');
                 }
             },
-            events: '/reserves/json',
+            events: function (fetchInfo, successCallback, failureCallback) {
+                fetch('/reserves/json')
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        var events = data.map(function (event) {
+                            var eventStartDate = new Date(event.start);
+                            var eventEndDate = new Date(event.end);
+                            var today = new Date();
+                            today.setHours(0, 0, 0, 0);
+
+                            if (eventEndDate < today) {
+                                event.className = 'past-event';
+                            } else if (eventStartDate <= today && eventEndDate >= today) {
+                                event.className = 'today-event';
+                            }
+
+                            // Marque eventos atuais como verde
+                            var currentStart = new Date(event.start);
+                            var currentEnd = new Date(event.end);
+                            var now = new Date();
+                            if (currentStart <= now && currentEnd >= now) {
+                                event.className = 'current-event';
+                            }
+
+                            return event;
+                        });
+                        successCallback(events);
+                    })
+                    .catch(function (error) {
+                        failureCallback(error);
+                    });
+            },
             eventDrop: function (info) {
                 if (modal) {
                     eventStartInput.value = formatDate(info.event.startStr.split('T')[0]);
@@ -94,6 +127,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     modal.classList.remove('hidden');
                     modal.classList.add('flex');
                 }
+            },
+            eventMouseEnter: function (info) {
+                var tooltipContent = `Evento: ${info.event.title}<br>Início: ${formatDate(info.event.startStr)}<br>Fim: ${formatDate(info.event.endStr)}`;
+                tooltip.innerHTML = tooltipContent;
+                tooltip.classList.remove('hidden');
+                tooltip.classList.add('block');
+
+                var rect = info.el.getBoundingClientRect();
+                var tooltipRect = tooltip.getBoundingClientRect();
+                tooltip.style.left = `${rect.left + (rect.width / 2) - (tooltipRect.width / 2)}px`;
+                tooltip.style.top = `${rect.top - tooltipRect.height - 10}px`;
+            },
+            eventMouseLeave: function () {
+                tooltip.classList.add('hidden');
+                tooltip.classList.remove('block');
             }
         });
         calendar.render();

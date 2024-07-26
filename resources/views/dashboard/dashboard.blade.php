@@ -17,6 +17,31 @@
         </h1>
     </div>
 
+
+    <style>
+        #tooltip {
+            z-index: 1000;
+            pointer-events: none;
+            background-color: #1e293b; /* slate-800 */
+            color: #f8fafc; /* slate-50 */
+            padding: 8px 12px; /* Espaçamento interno */
+            border-radius: 4px; /* Bordas arredondadas */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
+            font-size: 14px; /* Tamanho da fonte */
+            opacity: 0.9; /* Opacidade */
+            transition: all 0.3s ease; /* Transição suave */
+        }
+
+        /* Para garantir que o tooltip fique escondido inicialmente */
+        .hidden {
+            display: none;
+        }
+    </style>
+
+
+    <div id="tooltip" class="hidden absolute bg-white text-black p-2 border rounded shadow-lg"></div>
+
+
     <div id='calendar'></div>
 
     @include('dashboard.modal.tenant-reserve-modal')

@@ -63,19 +63,6 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'phone'    => 'nullable|string|max:15',
-            'cpf_cnpj' => 'nullable|string|max:14',
-            'role'     => 'required|integer',
-            'company'  => 'nullable|string|max:255',
-            'cep'      => 'nullable|string|max:9',
-            'rua'      => 'nullable|string|max:255',
-            'bairro'   => 'nullable|string|max:255',
-            'cidade'   => 'nullable|string|max:255',
-        ]);
-
         $input             = $request->all();
         $input['phone']    = preg_replace('/\D/', '', $input['phone']);
         $input['cpf_cnpj'] = preg_replace('/\D/', '', $input['cpf_cnpj']);

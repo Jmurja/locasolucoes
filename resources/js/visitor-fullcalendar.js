@@ -57,7 +57,47 @@ document.addEventListener('DOMContentLoaded', function () {
                     endTimeInput.value = '18:00';
                 }
             },
-            events: '/reserves/json'
+            events: function (fetchInfo, successCallback, failureCallback) {
+                fetch('/reserves/json')
+                    .then(function (response) {
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        var events = data.map(function (event) {
+                            var eventStartDate = new Date(event.start);
+                            var eventEndDate = new Date(event.end);
+                            var today = new Date();
+                            today.setHours(0, 0, 0, 0);
+
+                            if (eventEndDate < today) {
+                                event.className = 'past-event';
+                            } else if (eventStartDate <= today && eventEndDate >= today) {
+                                event.className = 'today-event';
+                            }
+
+                            // Marque eventos atuais como verde
+                            var currentStart = new Date(event.start);
+                            var currentEnd = new Date(event.end);
+                            var now = new Date();
+                            if (currentStart <= now && currentEnd >= now) {
+                                event.className = 'current-event';
+                            }
+
+                            return event;
+                        });
+                        successCallback(events);
+                    })
+                    .catch(function (error) {
+                        failureCallback(error);
+                    });
+            },
+            eventMouseEnter: function (info) {
+                tippy(info.el, {
+                    content: `${info.event.title}<br>Início: ${formatDate(info.event.start)}<br>Fim: ${formatDate(info.event.end)}`,
+                    allowHTML: true,
+                    theme: 'light',
+                });
+            }
         });
 
         calendar.render();

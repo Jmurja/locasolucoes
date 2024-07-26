@@ -10,48 +10,57 @@
             margin: 0;
             padding: 20px;
             background-color: #fff;
+            color: #333;
         }
 
         h1 {
             text-align: center;
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 20px;
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 30px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
         }
 
         th, td {
-            padding: 10px;
-            border: 1px solid #000;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
             text-align: left;
         }
 
         th {
-            background-color: #333;
-            color: white;
+            background-color: #2c3e50;
+            color: #fff;
             font-weight: bold;
+            text-transform: uppercase;
         }
 
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: #f9f9f9;
         }
 
         tr:hover {
-            background-color: #ddd;
+            background-color: #e9e9e9;
         }
 
-        @page {
-            margin: 20px;
+        @media print {
+            body {
+                background-color: #fff;
+            }
+
+            @page {
+                margin: 20px;
+            }
         }
     </style>
 </head>
 <body>
-<h1>Relatórios</h1>
+<h1>Relatórios de Reservas</h1>
 <table>
     <thead>
     <tr>
