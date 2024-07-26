@@ -45,24 +45,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    // Função para limpar os campos de CNPJ
-    function limpa_formulário_cnpj() {
-        document.getElementById('eventCompany').value = "";
-        document.getElementById('eventStreet').value = "";
-        document.getElementById('eventNeighborhood').value = "";
-        document.getElementById('eventCity').value = "";
-        document.getElementById('eventCep').value = "";
-        document.getElementById('visitorName').value = "";
-    }
-
     // Callback para preencher os campos de CNPJ
     window.meu_callback_cnpj = function (conteudo) {
         if (!("errors" in conteudo)) {
-            document.getElementById('eventCompany').value = conteudo.razao_social;
-            document.getElementById('eventStreet').value = conteudo.logradouro;
-            document.getElementById('eventNeighborhood').value = conteudo.bairro;
-            document.getElementById('eventCity').value = conteudo.municipio;
-            document.getElementById('eventCep').value = conteudo.cep.replace(/\D/g, '');
+            document.getElementById('eventCompany').value = conteudo.razao_social || document.getElementById('eventCompany').value;
+            document.getElementById('eventStreet').value = conteudo.logradouro || document.getElementById('eventStreet').value;
+            document.getElementById('eventNeighborhood').value = conteudo.bairro || document.getElementById('eventNeighborhood').value;
+            document.getElementById('eventCity').value = conteudo.municipio || document.getElementById('eventCity').value;
+            document.getElementById('eventCep').value = conteudo.cep ? conteudo.cep.replace(/\D/g, '') : document.getElementById('eventCep').value;
 
             // Encontrar o nome do sócio-administrador
             let socioAdministrador = "";
@@ -70,9 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const socio = conteudo.qsa.find(p => p.qual === "Sócio-Administrador");
                 socioAdministrador = socio ? socio.nome : "";
             }
-            document.getElementById('visitorName').value = socioAdministrador;
-        } else {
-            limpa_formulário_cnpj();
+            document.getElementById('visitorName').value = socioAdministrador || document.getElementById('visitorName').value;
         }
     }
 
@@ -84,24 +72,20 @@ document.addEventListener('DOMContentLoaded', function () {
             var validacnpj = /^[0-9]{14}$/;
 
             if (validacnpj.test(cnpj)) {
-                document.getElementById('eventCompany').value = "...";
-                document.getElementById('eventStreet').value = "...";
-                document.getElementById('eventNeighborhood').value = "...";
-                document.getElementById('eventCity').value = "...";
-                document.getElementById('eventCep').value = "...";
-                document.getElementById('visitorName').value = "...";
+                document.getElementById('eventCompany').value = document.getElementById('eventCompany').value || "...";
+                document.getElementById('eventStreet').value = document.getElementById('eventStreet').value || "...";
+                document.getElementById('eventNeighborhood').value = document.getElementById('eventNeighborhood').value || "...";
+                document.getElementById('eventCity').value = document.getElementById('eventCity').value || "...";
+                document.getElementById('eventCep').value = document.getElementById('eventCep').value || "...";
+                document.getElementById('visitorName').value = document.getElementById('visitorName').value || "...";
 
                 fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`)
                     .then(response => response.json())
                     .then(data => meu_callback_cnpj(data))
                     .catch(error => {
-                        limpa_formulário_cnpj();
+                        console.error('Erro ao buscar CNPJ:', error);
                     });
-            } else {
-                limpa_formulário_cnpj();
             }
-        } else {
-            limpa_formulário_cnpj();
         }
     };
 

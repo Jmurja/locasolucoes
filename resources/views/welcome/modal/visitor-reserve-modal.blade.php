@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visitor Reserve</title>
-    <link rel="stylesheet" href="path/to/your/styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
-</head>
-<body>
-<!-- Main modal -->
 <div id="visitor-reserve" tabindex="-1" aria-hidden="true"
      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-7xl max-h-full">
@@ -38,28 +27,40 @@
                     <div class="space-y-6">
                         <!-- Dados do Visitante Section -->
                         <div class="space-y-3">
-                            <h4 class="text-md font-semibold text-gray-900 dark:text-white">Dados do Visitante</h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <div>
+                                <div class="input-field hidden">
                                     <label for="visitorName"
                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
                                     <input type="text" name="name" id="visitorName" autocomplete="name"
                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                           placeholder="Digite o nome do visitante" required value="{{ old('name') }}">
+                                           placeholder="Digite o nome do visitante" required
+                                           value="{{ old('name') }}">
                                     <p id="visitorNameError" class="text-red-500 text-xs mt-1 hidden">Nome é
                                         obrigatório.</p>
                                 </div>
-                                <div>
+                                <div class="space-y-2">
                                     <label for="visitorEmail"
-                                           class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                                    <input type="email" name="email" id="visitorEmail" autocomplete="email"
-                                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                           placeholder="Digite o email do visitante" required
-                                           value="{{ old('email') }}">
+                                           class="block text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                    <div class="relative">
+                                        <input type="email" name="email" id="visitorEmail" autocomplete="email"
+                                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 pr-10 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                               placeholder="Digite o email do visitante" required
+                                               value="{{ old('email') }}">
+                                        <button type="button" id="emailSearchIcon"
+                                                class="absolute right-2 top-1/2 transform -translate-y-1/2">
+                                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                                                      d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
                                     <p id="visitorEmailError" class="text-red-500 text-xs mt-1 hidden">Email é
                                         obrigatório.</p>
                                 </div>
-                                <div>
+
+                                <div class="input-field hidden">
                                     <label for="visitorPhone"
                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Telefone</label>
                                     <input type="tel" name="visitor_phone" id="visitorPhone" autocomplete="tel"
@@ -74,9 +75,8 @@
 
                         <!-- Dados da Empresa Section -->
                         <div class="space-y-3">
-                            <h4 class="text-md font-semibold text-gray-900 dark:text-white">Dados da Empresa</h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <div>
+                                <div class="input-field hidden">
                                     <label for="eventCompany"
                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Empresa</label>
                                     <input type="text" name="company" id="eventCompany" autocomplete="organization"
@@ -85,7 +85,7 @@
                                     <p id="eventCompanyError" class="text-red-500 text-xs mt-1 hidden">Empresa é
                                         obrigatório.</p>
                                 </div>
-                                <div>
+                                <div class="input-field hidden">
                                     <label for="eventCpfCnpj"
                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">CPF/CNPJ</label>
                                     <input type="text" name="cpf_cnpj" id="eventCpfCnpj" autocomplete="off"
@@ -102,9 +102,8 @@
                     <!-- Right side (Endereço) -->
                     <div class="space-y-6">
                         <div class="space-y-3">
-                            <h4 class="text-md font-semibold text-gray-900 dark:text-white">Endereço</h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <div>
+                                <div class="input-field hidden">
                                     <label for="eventCep"
                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">CEP</label>
                                     <input type="text" name="cep" id="eventCep" autocomplete="postal-code"
@@ -114,7 +113,7 @@
                                     <p id="eventCepError" class="text-red-500 text-xs mt-1 hidden">CEP é
                                         obrigatório.</p>
                                 </div>
-                                <div>
+                                <div class="input-field hidden">
                                     <label for="eventCity"
                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Cidade</label>
                                     <input type="text" name="city" id="eventCity" autocomplete="address-level2"
@@ -123,7 +122,7 @@
                                     <p id="eventCityError" class="text-red-500 text-xs mt-1 hidden">Cidade é
                                         obrigatório.</p>
                                 </div>
-                                <div>
+                                <div class="input-field hidden">
                                     <label for="eventStreet"
                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Rua</label>
                                     <input type="text" name="street" id="eventStreet" autocomplete="address-line1"
@@ -132,7 +131,7 @@
                                     <p id="eventStreetError" class="text-red-500 text-xs mt-1 hidden">Rua é
                                         obrigatório.</p>
                                 </div>
-                                <div>
+                                <div class="input-field hidden">
                                     <label for="eventNeighborhood"
                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Bairro</label>
                                     <input type="text" name="neighborhood" id="eventNeighborhood"
@@ -142,7 +141,7 @@
                                     <p id="eventNeighborhoodError" class="text-red-500 text-xs mt-1 hidden">Bairro é
                                         obrigatório.</p>
                                 </div>
-                                <div>
+                                <div class="input-field hidden">
                                     <label for="eventNumber"
                                            class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Número</label>
                                     <input type="text" name="number" id="eventNumber"
@@ -159,10 +158,9 @@
 
                 <!-- Bottom (Dados da Locação) -->
                 <div class="space-y-6">
-                    <h4 class="text-md font-semibold text-gray-900 dark:text-white">Dados da Locação</h4>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-                        <div>
+                        <div class="input-field hidden">
                             <label for="datepicker-range-start"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Data de
                                 Início</label>
@@ -172,7 +170,7 @@
                             <p id="startDateError" class="text-red-500 text-xs mt-1 hidden">Data de Início é
                                 obrigatório.</p>
                         </div>
-                        <div>
+                        <div class="input-field hidden">
                             <label for="datepicker-range-end"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Data de
                                 Término</label>
@@ -182,7 +180,7 @@
                             <p id="endDateError" class="text-red-500 text-xs mt-1 hidden">Data de Término é
                                 obrigatório.</p>
                         </div>
-                        <div>
+                        <div class="input-field hidden">
                             <label for="start_time"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Hora de
                                 Início</label>
@@ -192,7 +190,7 @@
                             <p id="startTimeError" class="text-red-500 text-xs mt-1 hidden">Hora de Início é
                                 obrigatório.</p>
                         </div>
-                        <div>
+                        <div class="input-field hidden">
                             <label for="end_time"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Hora de
                                 Término</label>
@@ -205,7 +203,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <div>
+                        <div class="input-field hidden">
                             <label for="eventTitle"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Título do
                                 Evento</label>
@@ -215,7 +213,7 @@
                             <p id="eventTitleError" class="text-red-500 text-xs mt-1 hidden">Título do Evento é
                                 obrigatório.</p>
                         </div>
-                        <div>
+                        <div class="input-field hidden">
                             <label for="rental_item_id"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Espaço</label>
                             <select id="rental_item_id" name="rental_item_id" autocomplete="off"
@@ -227,7 +225,7 @@
                             </select>
                             <p id="rentalItemError" class="text-red-500 text-xs mt-1 hidden">Espaço é obrigatório.</p>
                         </div>
-                        <div class="col-span-3">
+                        <div class="col-span-3 input-field hidden">
                             <label for="eventDescription"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Descrição</label>
                             <textarea name="description" id="eventDescription" autocomplete="off"
@@ -241,8 +239,8 @@
                 </div>
 
                 <div class="flex justify-end mt-4">
-                    <button type="submit"
-                            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <button id="submitReserveButton" type="submit"
+                            class="hidden text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         Solicitar Reserva
                     </button>
                 </div>
@@ -250,5 +248,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>

@@ -68,16 +68,30 @@ class ReserveController extends Controller
             ->first();
 
         if ($existingReserve) {
-            $conflictMessage = 'Já existe uma reserva no mesmo período: ' . $existingReserve->rentalItem
+            $conflictMessage = 'Já existe uma reserva no mesmo período: ' . $existingReserve->rentalItem->name
                 . ' de ' . Carbon::parse($existingReserve->start_date)->format('d/m/Y H:i')
                 . ' até ' . Carbon::parse($existingReserve->end_date)->format('d/m/Y H:i') . '.';
 
             return back()->withErrors(['conflict' => $conflictMessage])->withInput();
         }
 
-        $user = User::where('cpf_cnpj', $request->cpf_cnpj)->first();
+        $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
+        if ($user) {
+            // Atualiza os dados do usuário existente
+            $user->update([
+                'name'     => $request->name,
+                'phone'    => $request->phone,
+                'cpf_cnpj' => $request->cpf_cnpj,
+                'cep'      => $request->cep,
+                'rua'      => $request->street,
+                'bairro'   => $request->neighborhood,
+                'cidade'   => $request->city,
+                'company'  => $request->company,
+                'number'   => $request->number,
+            ]);
+        } else {
+            // Cria um novo usuário
             $user = User::create([
                 'name'     => $request->name,
                 'email'    => $request->email,

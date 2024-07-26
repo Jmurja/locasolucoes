@@ -32,10 +32,6 @@
             transition: all 0.3s ease; /* Transição suave */
         }
 
-        /* Para garantir que o tooltip fique escondido inicialmente */
-        .hidden {
-            display: none;
-        }
     </style>
 
 

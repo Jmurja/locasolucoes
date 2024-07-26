@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
     var modal = document.getElementById('visitor-reserve');
@@ -8,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var eventEndInput = document.getElementById('datepicker-range-end');
     var startTimeInput = document.getElementById('start_time'); // Campo de hora de início
     var endTimeInput = document.getElementById('end_time'); // Campo de hora de término
+    var emailInput = document.getElementById('visitorEmail'); // Campo de email
+    var emailSearchIcon = document.getElementById('emailSearchIcon'); // Ícone de pesquisa
+    var submitReserveButton = document.getElementById('submitReserveButton'); // Botão de Solicitar Reserva
     var currentEventDate = null;
 
     function formatDate(date) {
@@ -17,6 +22,41 @@ document.addEventListener('DOMContentLoaded', function () {
         var year = d.getFullYear();
         return `${day}/${month}/${year}`;
     }
+
+    function hideAllInputs() {
+        const inputs = document.querySelectorAll('#reserveForm .input-field');
+        inputs.forEach(input => input.classList.add('hidden'));
+        emailInput.parentElement.parentElement.classList.remove('hidden'); // Mostrar o campo de email e seu ícone
+    }
+
+    function showAllInputs() {
+        const inputs = document.querySelectorAll('#reserveForm .input-field');
+        inputs.forEach(input => input.classList.remove('hidden'));
+    }
+
+    function populateUserData(user) {
+        document.getElementById('visitorName').value = user.name;
+        document.getElementById('visitorPhone').value = user.phone;
+        document.getElementById('eventCompany').value = user.company;
+        document.getElementById('eventCpfCnpj').value = user.cpf_cnpj;
+        document.getElementById('eventCep').value = user.cep;
+        document.getElementById('eventCity').value = user.cidade;
+        document.getElementById('eventStreet').value = user.rua;
+        document.getElementById('eventNeighborhood').value = user.bairro;
+        document.getElementById('eventNumber').value = user.number;
+    }
+
+    emailSearchIcon.addEventListener('click', async function () {
+        const email = emailInput.value;
+        const {data} = await axios.get(
+            `/users/email/${email}`,
+        )
+        showAllInputs();
+        submitReserveButton.classList.remove('hidden'); // Mostrar o botão de Solicitar Reserva
+        if (data.exists) {
+            populateUserData(data.user);
+        }
+    });
 
     if (calendarEl) {
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -56,6 +96,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (endTimeInput) {
                     endTimeInput.value = '18:00';
                 }
+                hideAllInputs();
+                submitReserveButton.classList.add('hidden'); // Ocultar o botão de Solicitar Reserva
             },
             events: function (fetchInfo, successCallback, failureCallback) {
                 fetch('/reserves/json')
@@ -110,6 +152,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     modal.classList.add('hidden');
                     modal.classList.remove('flex');
                 }
+                hideAllInputs();
+                submitReserveButton.classList.add('hidden'); // Ocultar o botão de Solicitar Reserva
             });
         });
     }

@@ -54,6 +54,17 @@ class UserController extends Controller
         return back();
     }
 
+    public function checkEmail($email)
+    {
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            return response()->json(['exists' => true, 'user' => $user]);
+        }
+
+        return response()->json(['exists' => false]);
+    }
+
     public function destroy(User $user)
     {
         $user->delete();

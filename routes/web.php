@@ -14,6 +14,9 @@ Route::get('reserves/json', [ReserveController::class, 'json']);
 Route::resource('reservas', ReserveController::class)->names('reserves')->parameters([
     'reservas' => 'reserve',
 ]);
+// Adicione esta rota ao seu arquivo de rotas (web.php)
+
+Route::get('/users/email/{email}', [UserController::class, 'checkEmail']);
 
 Route::get('errors', function() {
     return view('errors.503');
