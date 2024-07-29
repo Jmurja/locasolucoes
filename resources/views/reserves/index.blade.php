@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div class="flex flex-col sm:flex-row justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4 sm:mb-0">
                 {{ __('Reservas') }}
             </h2>
             @can('simple-user')
@@ -61,26 +61,26 @@
         </div>
     @endif
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-8">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 sm:p-8">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
                     Responsável
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 hidden md:table-cell">
                     Título
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Espaço
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 hidden lg:table-cell">
                     Hora de Início
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 hidden lg:table-cell">
                     Hora do Fim
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 hidden xl:table-cell">
                     Status
                 </th>
                 @can('simple-user')
@@ -102,19 +102,19 @@
                         {{ $reserve->user->name ?? 'N/A'}}
                     </td>
 
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 hidden md:table-cell">
                         {{ $reserve->title ?? 'N/A'}}
                     </td>
                     <td class="px-6 py-4">
                         {{ $reserve->rentalitem->name ?? 'N/A'}}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 hidden lg:table-cell">
                         {{ $reserve->start_date}}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 hidden lg:table-cell">
                         {{ $reserve->end_date}}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 hidden xl:table-cell">
                         {{ $reserve->reserve_status ?? 'N/A'}}
                     </td>
                     <td class="flex items-center px-6 py-4 space-x-2">

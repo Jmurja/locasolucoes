@@ -44,7 +44,7 @@
                                     <div class="relative">
                                         <input type="email" name="email" id="visitorEmail" autocomplete="email"
                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2 pr-10 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                               placeholder="Digite o email do visitante" required
+                                               placeholder="Digite seu email" required
                                                value="{{ old('email') }}">
                                         <button type="button" id="emailSearchIcon"
                                                 class="absolute right-2 top-1/2 transform -translate-y-1/2">
@@ -184,22 +184,47 @@
                             <label for="start_time"
                                    class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Hora de
                                 Início</label>
-                            <input type="time" id="start_time" name="start_time" autocomplete="off"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                   min="08:00" max="18:00" required value="{{ old('start_time') }}">
+                            <select id="start_time" name="start_time"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    required>
+                                <option value="08:00">08:00</option>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                            </select>
                             <p id="startTimeError" class="text-red-500 text-xs mt-1 hidden">Hora de Início é
                                 obrigatório.</p>
                         </div>
+
                         <div class="input-field hidden">
-                            <label for="end_time"
-                                   class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Hora de
-                                Término</label>
-                            <input type="time" id="end_time" name="end_time" autocomplete="off"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                   min="09:00" max="18:00" required value="{{ old('end_time') }}">
+                            <label for="end_time" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Hora
+                                de Término</label>
+                            <select id="end_time" name="end_time"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    required>
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="19:00">19:00</option>
+                            </select>
                             <p id="endTimeError" class="text-red-500 text-xs mt-1 hidden">Hora de Término é
                                 obrigatório.</p>
                         </div>
+
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div class="flex flex-col sm:flex-row justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4 sm:mb-0">
                 {{ __('Itens de Locação') }}
             </h2>
             <!-- Cadastrar modal -->
@@ -59,7 +59,7 @@
         </div>
     </form>
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-8">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 sm:p-8">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -72,10 +72,10 @@
                 <th scope="col" class="px-6 py-3">
                     Categoria
                 </th>
-                <th scope="col" class="px-6 py-3">
-                    CPF/CPNJ
+                <th scope="col" class="px-6 py-3 hidden lg:table-cell">
+                    CPF/CNPJ
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 hidden md:table-cell">
                     Criado em
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -95,13 +95,13 @@
                     <td class="px-6 py-4">
                         {{ $user->role }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 hidden lg:table-cell">
                         {{ $user->cpf_cnpj }}
                     </td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 hidden md:table-cell">
                         {{ $user->created_at }}
                     </td>
-                    <td class="flex items-center px-6 py-4 space-x-2">
+                    <td class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 px-6 py-4">
                         <!-- View Modal -->
                         <button data-user-id="{{ $user->id }}"
                                 data-user-name="{{ $user->name }}"

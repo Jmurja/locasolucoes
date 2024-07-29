@@ -8,11 +8,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var eventTitleInput = document.getElementById('eventTitle');
     var eventStartInput = document.getElementById('datepicker-range-start');
     var eventEndInput = document.getElementById('datepicker-range-end');
-    var startTimeInput = document.getElementById('start_time'); // Campo de hora de início
-    var endTimeInput = document.getElementById('end_time'); // Campo de hora de término
-    var emailInput = document.getElementById('visitorEmail'); // Campo de email
-    var emailSearchIcon = document.getElementById('emailSearchIcon'); // Ícone de pesquisa
-    var submitReserveButton = document.getElementById('submitReserveButton'); // Botão de Solicitar Reserva
+    var startTimeInput = document.getElementById('start_time');
+    var endTimeInput = document.getElementById('end_time');
+    var emailInput = document.getElementById('visitorEmail');
+    var emailSearchIcon = document.getElementById('emailSearchIcon');
+    var submitReserveButton = document.getElementById('submitReserveButton');
     var currentEventDate = null;
 
     function formatDate(date) {
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function hideAllInputs() {
         const inputs = document.querySelectorAll('#reserveForm .input-field');
         inputs.forEach(input => input.classList.add('hidden'));
-        emailInput.parentElement.parentElement.classList.remove('hidden'); // Mostrar o campo de email e seu ícone
+        emailInput.parentElement.parentElement.classList.remove('hidden');
     }
 
     function showAllInputs() {
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
             `/users/email/${email}`,
         )
         showAllInputs();
-        submitReserveButton.classList.remove('hidden'); // Mostrar o botão de Solicitar Reserva
+        submitReserveButton.classList.remove('hidden');
         if (data.exists) {
             populateUserData(data.user);
         }
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
             hiddenDays: [0],
             initialView: 'mes',
             dateClick: function (info) {
-                currentEventDate = new Date(info.date); // Armazena a data clicada como um objeto Date
+                currentEventDate = new Date(info.date);
                 if (modal) {
                     modal.classList.remove('hidden');
                     modal.classList.add('flex');
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     endTimeInput.value = '18:00';
                 }
                 hideAllInputs();
-                submitReserveButton.classList.add('hidden'); // Ocultar o botão de Solicitar Reserva
+                submitReserveButton.classList.add('hidden');
             },
             events: function (fetchInfo, successCallback, failureCallback) {
                 fetch('/reserves/json')
@@ -117,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                 event.className = 'today-event';
                             }
 
-                            // Marque eventos atuais como verde
                             var currentStart = new Date(event.start);
                             var currentEnd = new Date(event.end);
                             var now = new Date();
@@ -153,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     modal.classList.remove('flex');
                 }
                 hideAllInputs();
-                submitReserveButton.classList.add('hidden'); // Ocultar o botão de Solicitar Reserva
+                submitReserveButton.classList.add('hidden');
             });
         });
     }

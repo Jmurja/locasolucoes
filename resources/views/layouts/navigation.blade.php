@@ -45,6 +45,18 @@
                             {{ __('Usuários') }}
                         </x-nav-link>
 
+                    @endcan
+                    <x-nav-link :href="route('reserves.index')" :active="request()->routeIs('reserves.index')">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                             viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 7 2 2 4-4m-5-9v4h4V3h-4Z"/>
+                        </svg>
+                        {{ __('Reservas') }}
+                    </x-nav-link>
+                    @can('simple-user')
                         <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.index')">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -60,16 +72,6 @@
                             {{ __('Relatórios') }}
                         </x-nav-link>
                     @endcan
-                    <x-nav-link :href="route('reserves.index')" :active="request()->routeIs('reserves.index')">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                             viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 7 2 2 4-4m-5-9v4h4V3h-4Z"/>
-                        </svg>
-                        {{ __('Reservas') }}
-                    </x-nav-link>
                 </div>
             </div>
             <!-- Settings Dropdown -->
@@ -137,6 +139,25 @@
                                    :active="request()->routeIs('rental-items.index')">
                 {{ __('Itens de Locação') }}
             </x-responsive-nav-link>
+
+            @can('simple-user')
+                <x-responsive-nav-link :href="route('rental-items.index')"
+                                       :active="request()->routeIs('rental-items.index')">
+                    {{ __(' Salas') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                    {{ __('Usuários') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('reports.index')" :active="request()->routeIs('reports.index')">
+                    {{ __('Relatórios') }}
+                </x-responsive-nav-link>
+            @endcan
+
+            <x-responsive-nav-link :href="route('reserves.index')" :active="request()->routeIs('reserves.index')">
+                {{ __('Reservas') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -150,14 +171,13 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
-
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
                                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                                                this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>

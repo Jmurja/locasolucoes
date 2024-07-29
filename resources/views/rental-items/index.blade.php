@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div class="flex flex-col sm:flex-row justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4 sm:mb-0">
                 {{ __('Itens de Locação') }}
             </h2>
             <!-- Cadastrar modal -->
@@ -41,19 +41,18 @@
                 </svg>
                 <span class="sr-only">Limpar</span>
             </button>
-
         </div>
     </form>
 
     <!--------Tabela---------->
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-8">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 sm:p-8">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
                     Nome
                 </th>
-                <th scope="col" class="px-6 py-3">
+                <th scope="col" class="px-6 py-3 hidden sm:table-cell">
                     Proprietário
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -70,14 +69,13 @@
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ $rentalItem->name }}
                     </th>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 hidden sm:table-cell">
                         {{ $rentalItem->user?->name ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4">
-                        {{'R$ ' . $rentalItem->price_per_hour ?? 'N/A' }}
+                        {{ 'R$ ' . $rentalItem->price_per_hour ?? 'N/A' }}
                     </td>
-
-                    <td class="flex items-center px-6 py-4 space-x-2">
+                    <td class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 px-6 py-4">
                         <!-- View Modal -->
                         <button data-modal-target="view-modal" data-modal-toggle="view-modal"
                                 class="cursor-pointer view-item-btn" data-id="{{ $rentalItem->id }}">
@@ -89,24 +87,20 @@
                                 data-id="{{ $rentalItem->id }}" type="button">
                             <x-icons.trash/>
                         </button>
-
                         <!-- Edit Modal -->
                         <button data-modal-target="edit-modal" data-modal-toggle="edit-modal"
                                 class="edit-item-btn font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                 data-id="{{ $rentalItem->id }}" type="button">
                             <x-icons.edit/>
                         </button>
-
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
-
         <div class="my-4">
-            {{$rentalItems->links()}}
+            {{ $rentalItems->links() }}
         </div>
-
 
         @include('rental-items.modal.register-modal')
         @include('rental-items.modal.delete-modal')
