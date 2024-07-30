@@ -119,12 +119,12 @@
                     </td>
                     <td class="flex items-center px-6 py-4 space-x-2">
                         @can('simple-user')
-                            <!-- View Modal -->
-                            <button data-reserve-id="{{ $reserve->id }}"
-                                    data-modal-target="view-modal" data-modal-toggle="view-modal"
-                                    class="cursor-pointer view-reserve-button">
+                            <!-- View Button -->
+                            <a href="{{ route('reserves.show', $reserve->id) }}"
+                               class="cursor-pointer view-reserve-button">
                                 <x-icons.eye/>
-                            </button>
+                            </a>
+
                         @endcan
                         <!-- Delete Modal -->
                         <button data-reserve-id="{{ $reserve->id }}"
@@ -158,7 +158,6 @@
     @include('reserves.modal.create-modal')
     @include('reserves.modal.update-modal')
     @include('reserves.modal.delete-modal')
-    @include('reserves.modal.view-modal')
     @vite('resources/js/reserves.js')
     @vite('resources/js/datepicker.js')
 </x-app-layout>

@@ -140,13 +140,9 @@ class ReserveController extends Controller
 
     public function show($id)
     {
-        $reserve = Reserve::with(['user', 'rentalitem'])->find($id);
+        $reserve = Reserve::with(['user', 'rentalitem'])->findOrFail($id);
 
-        if (!$reserve) {
-            return response()->json(['message' => 'Reserva não encontrada'], 404);
-        }
-
-        return response()->json($reserve);
+        return view('reserves.show', compact('reserve'));
     }
 
     public function destroy(Reserve $reserve)

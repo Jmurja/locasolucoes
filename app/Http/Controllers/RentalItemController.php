@@ -34,11 +34,6 @@ class RentalItemController extends Controller
         return view('rental-items.index', compact('rentalItems', 'landLordUsers', 'statuses'));
     }
 
-    public function show(RentalItem $rentalItem)
-    {
-        return view('rental-items.show', compact('rentalItem'));
-    }
-
     public function store(Request $request)
     {
         RentalItem::query()->create([
@@ -99,7 +94,7 @@ class RentalItemController extends Controller
 
     public function show(RentalItem $rentalItem)
     {
-        return response()->json($rentalItem);
+        return view('rental-items.show', compact('rentalItem'));
     }
 
     public function destroy(RentalItem $rental_item)
