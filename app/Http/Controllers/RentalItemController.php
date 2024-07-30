@@ -34,6 +34,11 @@ class RentalItemController extends Controller
         return view('rental-items.index', compact('rentalItems', 'landLordUsers', 'statuses'));
     }
 
+    public function show(RentalItem $rentalItem)
+    {
+        return view('rental-items.show', compact('rentalItem'));
+    }
+
     public function store(Request $request)
     {
         RentalItem::query()->create([

@@ -46,6 +46,11 @@ class ReserveController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'cpf_cnpj' => 'required|numeric',
+            // outras regras de validação conforme necessário
+        ]);
+
         $startDateTime = $request->input('start_date') . ' ' . $request->input('start_time');
         $endDateTime   = $request->input('end_date') . ' ' . $request->input('end_time');
 

@@ -96,30 +96,17 @@
                         {{ $user->role }}
                     </td>
                     <td class="px-6 py-4 hidden lg:table-cell">
-                        {{ $user->cpf_cnpj }}
+                        {{ $user->formatted_cpf_cnpj }}
+
                     </td>
                     <td class="px-6 py-4 hidden md:table-cell">
                         {{ $user->created_at }}
                     </td>
                     <td class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 px-6 py-4">
-                        <!-- View Modal -->
-                        <button data-user-id="{{ $user->id }}"
-                                data-user-name="{{ $user->name }}"
-                                data-user-email="{{ $user->email }}"
-                                data-user-phone="{{ $user->phone }}"
-                                data-user-cpf_cnpj="{{ $user->cpf_cnpj }}"
-                                data-user-cep="{{ $user->cep }}"
-                                data-user-rua="{{ $user->rua }}"
-                                data-user-bairro="{{ $user->bairro }}"
-                                data-user-cidade="{{ $user->cidade }}"
-                                data-user-role="{{ $user->role }}"
-                                data-user-created_at="{{ $user->created_at }}"
-                                data-user-updated_at="{{ $user->updated_at }}"
-                                data-modal-target="view-modal"
-                                data-modal-toggle="view-modal"
-                                class="cursor-pointer view-user-button">
+                        <!-- View Button -->
+                        <a href="{{ route('users.show', $user->id) }}" class="cursor-pointer view-user-button">
                             <x-icons.eye/>
-                        </button>
+                        </a>
 
                         <!-- Delete Modal -->
                         <button data-user-id="{{ $user->id }}"
@@ -155,6 +142,5 @@
         @include('users/modal/create-user')
         @include('users/modal/delete-modal')
         @include('users/modal/update-modal')
-        @include('users/modal/view-modal')
     </div>
 </x-app-layout>

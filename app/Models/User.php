@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+namespace App\Models;
+
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,11 +17,6 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -37,28 +34,19 @@ class User extends Authenticatable
         'company',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password'          => 'hashed',
-        ];
-    }
+    protected $appends = [
+        'formatted_cpf_cnpj',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password'          => 'hashed',
+    ];
 
     public function rentalItems(): HasMany
     {
@@ -68,5 +56,10 @@ class User extends Authenticatable
     public function reserves(): HasMany
     {
         return $this->hasMany(Reserve::class);
+    }
+
+    public function getFormattedCpfCnpjAttribute()
+    {
+        return formatCpfCnpj($this->cpf_cnpj);
     }
 }

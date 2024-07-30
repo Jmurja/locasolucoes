@@ -24,6 +24,12 @@ class RentalItem extends Model
         'rental_item_notes',
     ];
 
+    protected $appends = [
+        'price_per_hour_formatted',
+        'price_per_day_formatted',
+        'price_per_month_formatted',
+    ];
+
     protected function casts(): array
     {
         return [
@@ -39,5 +45,20 @@ class RentalItem extends Model
     public function reserves(): BelongsTo
     {
         return $this->belongsTo(Reserve::class);
+    }
+
+    public function getPricePerHourFormattedAttribute(): string
+    {
+        return number_format($this->price_per_hour, 2);
+    }
+
+    public function getPricePerDayFormattedAttribute(): string
+    {
+        return number_format($this->price_per_day, 2);
+    }
+
+    public function getPricePerMonthFormattedAttribute(): string
+    {
+        return number_format($this->price_per_month, 2);
     }
 }

@@ -76,11 +76,12 @@
                         {{ 'R$ ' . $rentalItem->price_per_hour ?? 'N/A' }}
                     </td>
                     <td class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 px-6 py-4">
-                        <!-- View Modal -->
-                        <button data-modal-target="view-modal" data-modal-toggle="view-modal"
-                                class="cursor-pointer view-item-btn" data-id="{{ $rentalItem->id }}">
+                        <!-- View Button -->
+                        <a href="{{ route('rental-items.show', $rentalItem->id) }}"
+                           class="cursor-pointer view-item-button">
                             <x-icons.eye/>
-                        </button>
+                        </a>
+
                         <!-- Delete Modal -->
                         <button data-modal-target="delete-modal" data-modal-toggle="delete-modal"
                                 class="delete-item-btn block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
@@ -104,7 +105,6 @@
 
         @include('rental-items.modal.register-modal')
         @include('rental-items.modal.delete-modal')
-        @include('rental-items.modal.view-modal')
         @include('rental-items.modal.update-modal')
         @vite('resources/js/rental-items.js')
     </div>
