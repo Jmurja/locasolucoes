@@ -41,6 +41,8 @@ class User extends Authenticatable
 
     protected $appends = [
         'formatted_cpf_cnpj',
+        'formatted_cep',
+        'formatted_phone',
     ];
 
     protected $casts = [
@@ -58,8 +60,18 @@ class User extends Authenticatable
         return $this->hasMany(Reserve::class);
     }
 
+    public function getFormattedCepAttribute()
+    {
+        return formatCep($this->cep);
+    }
+
     public function getFormattedCpfCnpjAttribute()
     {
         return formatCpfCnpj($this->cpf_cnpj);
+    }
+
+    public function getFormattedPhoneAttribute()
+    {
+        return formatPhone($this->phone);
     }
 }

@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (calendarEl) {
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            contentHeight: 500,
+            contentHeight: 'auto',
             locale: 'pt-br',
             selectable: true,
             selectMirror: true,

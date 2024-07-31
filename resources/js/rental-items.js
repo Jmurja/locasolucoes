@@ -95,11 +95,25 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('edit_user_id').value = data.user_id;
             document.getElementById('edit_name').value = data.name;
             document.getElementById('edit_description').value = data.description;
-            document.getElementById('edit_price_per_hour').value = data.price_per_hour;
-            document.getElementById('edit_price_per_day').value = data.price_per_day;
-            document.getElementById('edit_price_per_month').value = data.price_per_month;
+            document.getElementById('edit_price_per_hour').value = SimpleMaskMoney.formatToCurrency(data.price_per_hour, optionsUSD);
+            document.getElementById('edit_price_per_day').value = SimpleMaskMoney.formatToCurrency(data.price_per_day, optionsUSD);
+            document.getElementById('edit_price_per_month').value = SimpleMaskMoney.formatToCurrency(data.price_per_month, optionsUSD);
             document.getElementById('edit_status').value = data.status;
             document.getElementById('edit_rental_item_notes').value = data.rental_item_notes;
+
+            // Limpar pré-visualizações anteriores
+            const imagePreviewsContainer = document.getElementById('image-previews');
+            imagePreviewsContainer.innerHTML = '';
+
+            // Adicionar pré-visualizações das imagens existentes
+            if (data.images) {
+                data.images.forEach(imagePath => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `/storage/${imagePath}`;
+                    imgElement.classList.add('w-full', 'h-auto', 'rounded-lg');
+                    imagePreviewsContainer.appendChild(imgElement);
+                });
+            }
 
             const priceFieldsUpdate = [
                 document.getElementById('edit_price_per_hour'),
@@ -116,6 +130,19 @@ document.addEventListener('DOMContentLoaded', function () {
             editModal.classList.remove('hidden');
             editModal.setAttribute('aria-hidden', 'false');
             editModal.setAttribute('role', 'dialog');
+        });
+    });
+
+    document.getElementById('multiple_files').addEventListener('change', function (event) {
+        const files = event.target.files;
+        const imagePreviewsContainer = document.getElementById('image-previews');
+        imagePreviewsContainer.innerHTML = ''; // Limpar pré-visualizações anteriores
+
+        Array.from(files).forEach(file => {
+            const imgElement = document.createElement('img');
+            imgElement.src = URL.createObjectURL(file);
+            imgElement.classList.add('w-full', 'h-auto', 'rounded-lg');
+            imagePreviewsContainer.appendChild(imgElement);
         });
     });
 

@@ -26,7 +26,7 @@ class UserFactory extends Factory
         return [
             'name'              => fake()->name(),
             'email'             => fake()->unique()->safeEmail(),
-            'phone'             => fake()->phoneNumber(),
+            'phone'             => fake()->unique()->bothify('###########'),
             'mobile'            => fake()->phoneNumber(),
             'role'              => fake()->randomElement(['admin', 'landlord', 'tenant', 'visitor']),
             'cpf_cnpj'          => fake()->unique()->bothify('###########'),
@@ -37,7 +37,7 @@ class UserFactory extends Factory
             'created_at'        => now(),
             'updated_at'        => now(),
             'deleted_at'        => null,
-            'cep'               => fake()->bothify('##########'),
+            'cep'               => fake()->bothify('########'),
             'rua'               => fake()->streetAddress(),
             'bairro'            => fake()->streetName(),
             'cidade'            => fake()->city(),

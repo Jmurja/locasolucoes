@@ -17,3 +17,33 @@ if (!function_exists('formatCpfCnpj')) {
         return $cpf_cnpj;
     }
 }
+
+if (!function_exists('formatCep')) {
+    function formatCep($value): string
+    {
+        $cep = preg_replace('/\D/', '', $value);
+
+        if (strlen($cep) == 8) {
+            return preg_replace('/(\d{5})(\d{3})/', '$1-$2', $cep);
+        }
+
+        return $cep;
+    }
+}
+
+if (!function_exists('formatPhone')) {
+    function formatPhone($value): string
+    {
+        $phone = preg_replace('/\D/', '', $value);
+
+        if (strlen($phone) == 10) {
+            return preg_replace('/(\d{2})(\d{4})(\d{4})/', '($1) $2-$3', $phone);
+        }
+
+        if (strlen($phone) == 11) {
+            return preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $phone);
+        }
+
+        return $phone;
+    }
+}

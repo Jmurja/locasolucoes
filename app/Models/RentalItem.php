@@ -6,6 +6,7 @@ use App\Enum\RentalItemStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RentalItem extends Model
@@ -45,6 +46,11 @@ class RentalItem extends Model
     public function reserves(): BelongsTo
     {
         return $this->belongsTo(Reserve::class);
+    }
+
+    public function uploads(): HasMany
+    {
+        return $this->hasMany(Upload::class);
     }
 
     public function getPricePerHourFormattedAttribute(): string

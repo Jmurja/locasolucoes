@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enum\RentalItemStatus;
 use App\Models\RentalItem;
+use App\Models\Upload;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class RentalItemController extends Controller
 {
@@ -36,7 +38,7 @@ class RentalItemController extends Controller
 
     public function store(Request $request)
     {
-        RentalItem::query()->create([
+        $rentalItem = RentalItem::query()->create([
             'user_id'        => $request->user_id,
             'name'           => $request->name,
             'description'    => $request->description,
@@ -54,6 +56,17 @@ class RentalItemController extends Controller
             'status'            => $request->status,
             'rental_item_notes' => $request->rental_item_notes,
         ]);
+
+        if ($request->hasFile('rental_item_image')) {
+            $uploadedFile = $request->file('rental_item_image');
+            $path         = $uploadedFile->store('uploads');
+
+            Upload::query()->create([
+                'rental_item_id' => $rentalItem->id,
+                'file_name'      => $uploadedFile->getClientOriginalName(),
+                'file_path'      => $path,
+            ]);
+        }
 
         return back();
     }
@@ -75,31 +88,53 @@ class RentalItemController extends Controller
             '/[^\d]/',
             '',
             str_replace(['.', ','], '', $updatedData['price_per_hour'])
-        );
+        ) / 100;
         $updatedData['price_per_day'] = preg_replace(
             '/[^\d]/',
             '',
             str_replace(['.', ','], '', $updatedData['price_per_day'])
-        );
+        ) / 100;
         $updatedData['price_per_month'] = preg_replace(
             '/[^\d]/',
             '',
             str_replace(['.', ','], '', $updatedData['price_per_month'])
-        );
+        ) / 100;
 
         $rentalItem->update($updatedData);
+
+        // Atualizar a imagem, se houver um novo upload
+        if ($request->hasFile('rental_item_images')) {
+            // Remover a(s) imagem(ns) antiga(s), se houver
+            $existingUploads = Upload::query()->where('rental_item_id', $rentalItem->id)->get();
+
+            foreach ($existingUploads as $existingUpload) {
+                Storage::delete($existingUpload->file_path);
+                $existingUpload->delete();
+            }
+
+            // Armazenar a(s) nova(s) imagem(ns)
+            foreach ($request->file('rental_item_images') as $uploadedFile) {
+                $path = $uploadedFile->store('uploads');
+
+                Upload::query()->create([
+                    'rental_item_id' => $rentalItem->id,
+                    'file_name'      => $uploadedFile->getClientOriginalName(),
+                    'file_path'      => $path,
+                ]);
+            }
+        }
 
         return redirect()->route('rental-items.index');
     }
 
     public function show(RentalItem $rentalItem)
     {
-        return view('rental-items.show', compact('rentalItem'));
+        return response()->json($rentalItem);
     }
 
-    public function destroy(RentalItem $rental_item)
+    public function destroy(RentalItem $rentalItem)
     {
-        $rental_item->delete();
+        $rentalItem->delete();
 
         return redirect()->route('rental-items.index');
     }

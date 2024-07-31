@@ -13,18 +13,6 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
 </head>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const successAlert = document.getElementById('success-alert');
-        if (successAlert) {
-            successAlert.style.display = 'block';
-            setTimeout(() => {
-                successAlert.style.display = 'none';
-            }, 5000); // Esconde o alerta após 5 segundos
-        }
-    });
-</script>
-
 
 <body class="font-sans antialiased dark:bg-gray-900 dark:text-white/50">
 
@@ -44,7 +32,6 @@
     </form>
 </div>
 
-<!-- Mensagens de Erro -->
 @if ($errors->any())
     <div
         class="max-w-lg mx-auto mt-4 p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
@@ -55,21 +42,22 @@
     </div>
 @endif
 
-
 <div
     class="bg-gray-50 text-black/50 dark:bg-gray-900 dark:text-white/50 min-h-screen flex flex-col items-center justify-center relative">
     <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl z-10">
-        <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
-            <img src="{!! asset('digiplace.png') !!}" alt="Logo" class="w-60 justify-center flex">
+        <header class="grid grid-cols-3 items-center gap-2 py-10">
+            <img src="{!! asset('digiplace.png') !!}" alt="Logo" class="w-60 justify-self-start">
             <div class="flex lg:justify-center lg:col-start-2">
-                <!-- Add any additional header content here -->
             </div>
+            <button id="toggleDrawer" class="px-4 py-2 text-white bg-blue-600 rounded-lg justify-self-end">Mostrar
+                Catálogo
+            </button>
         </header>
 
         @if(session('success'))
             <div id="alert-additional-content-3"
                  class="p-4 mb-4 absolute z-50 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
-                 role="alert" style="background-color: rgba(34, 40, 49, 0.8);"> <!-- Ajuste aqui para o fundo escuro -->
+                 role="alert" style="background-color: rgba(34, 40, 49, 0.8);">
                 <div class="flex items-center">
                     <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                          fill="currentColor" viewBox="0 0 20 20">
@@ -94,21 +82,46 @@
             </div>
         @endif
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const alert = document.querySelector('#alert-additional-content-3');
-                const closeButton = alert.querySelector('[data-dismiss-target]');
+        <div id="overlay" class="fixed inset-0 bg-black opacity-50 z-30 hidden"></div>
 
-                closeButton.addEventListener('click', function () {
-                    alert.style.display = 'none';
-                });
-            });
-        </script>
+        <div id="drawer-bottom-example"
+             class="fixed bottom-0 left-0 right-0 z-40 w-full p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 translate-y-full"
+             tabindex="-1" aria-labelledby="drawer-bottom-label">
 
-        <main class="mt-10 w-full">
-            <div id='calendar'></div>
-        </main>
+            <button type="button" data-drawer-hide="drawer-bottom-example" aria-controls="drawer-bottom-example"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close menu</span>
+            </button>
+
+            <div class="flex flex-wrap gap-4">
+                @foreach($RentalItems as $RentalItem)
+                    @foreach($RentalItem->uploads as $upload)
+                        <figure
+                            class="relative max-w-xs transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                            <a href="#">
+                                <img class="rounded-lg w-full h-auto object-cover" src="{{asset($upload->file_path)}}"
+                                     alt="Imagem do item de aluguel">
+                            </a>
+                            <figcaption
+                                class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 px-4 py-2 text-lg text-white">
+                                <p>{{ $RentalItem->name }}: {{ $RentalItem->description }}</p>
+                                <p>R${{ $RentalItem->price_per_hour }}</p>
+                            </figcaption>
+                        </figure>
+                    @endforeach
+                @endforeach
+            </div>
+        </div>
     </div>
+
+    <main class="mt-10 w-full">
+        <div id='calendar'></div>
+    </main>
 </div>
 
 
@@ -116,6 +129,8 @@
 @vite('resources/js/reserves-request.js')
 @vite('resources/js/visitor-mask.js')
 @vite('resources/js/datepicker.js')
+@vite('resources/js/drawer.js')
+@vite('resources/js/welcome.js')
 @include('welcome.modal.visitor-reserve-modal')
 
 </body>

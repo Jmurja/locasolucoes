@@ -135,11 +135,6 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('rental-items.index')"
-                                   :active="request()->routeIs('rental-items.index')">
-                {{ __('Itens de Locação') }}
-            </x-responsive-nav-link>
-
             @can('simple-user')
                 <x-responsive-nav-link :href="route('rental-items.index')"
                                        :active="request()->routeIs('rental-items.index')">

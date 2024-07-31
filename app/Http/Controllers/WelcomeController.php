@@ -10,7 +10,8 @@ class WelcomeController extends Controller
     public function index()
     {
         $RentalItems = RentalItem::all();
-        $users       = User::all();
+        $RentalItems->load('uploads');
+        $users = User::all();
 
         return view('welcome.welcome', compact('RentalItems', 'users'));
     }
