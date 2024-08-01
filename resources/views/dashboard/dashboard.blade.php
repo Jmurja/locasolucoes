@@ -13,9 +13,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js'></script>
 </head>
 
-
 <body class="font-sans antialiased dark:bg-gray-900 dark:text-white/50">
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -38,90 +36,6 @@
         </button>
     </div>
 
-
-    <style>
-        #tooltip {
-            z-index: 1000;
-            pointer-events: none;
-            background-color: #1e293b; /* slate-800 */
-            color: #f8fafc; /* slate-50 */
-            padding: 8px 12px; /* Espaçamento interno */
-            border-radius: 4px; /* Bordas arredondadas */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
-            font-size: 14px; /* Tamanho da fonte */
-            opacity: 0.9; /* Opacidade */
-            transition: all 0.3s ease; /* Transição suave */
-        }
-
-        #overlay {
-            transition: opacity 0.3s ease;
-        }
-
-        #w-full.max-w-md {
-            margin-right: 20px; /* Espaço entre a div e o calendário */
-        }
-
-        .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: stretch; /* Garantir que ambos tenham a mesma altura */
-            width: 100%;
-            max-width: 1800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: inherit; /* Mesma cor do background */
-        }
-
-        .info-box {
-            background-color: #2d3748; /* Cor de fundo desejada */
-            flex: 0 0 30%; /* 30% da largura */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        #calendar {
-            flex: 0 0 70%; /* 70% da largura */
-            background-color: #1e293b;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-
-        /* Manter as propriedades específicas do FullCalendar */
-        .fc {
-            height: 630px;
-        }
-
-        @media (max-width: 1200px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .info-box, #calendar {
-                flex: 0 0 auto;
-                width: 100%;
-                margin-bottom: 20px;
-            }
-        }
-
-        @media (max-width: 1200px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .info-box, #calendar {
-                flex: 0 0 auto;
-                width: 100%;
-                margin-bottom: 20px;
-            }
-        }
-
-
-    </style>
-
-    <body>
-
     <div id="overlay" class="fixed inset-0 bg-black opacity-50 z-30 hidden"></div>
 
     <div id="drawer-bottom-example"
@@ -140,11 +54,28 @@
 
         <div class="flex flex-wrap gap-4">
             @foreach($RentalItems as $RentalItem)
+                @if(empty($RentalItem->uploads))
+                    <figure
+                        class="relative max-w-xs transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                        <a href="#">
+                            <img class="rounded-lg w-full h-auto object-cover"
+                                 src="{{ asset('digiplace.png')}} "
+                                 alt="Imagem do item de aluguel">
+                        </a>
+                        <figcaption
+                            class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 px-4 py-2 text-lg text-white">
+                            <p>{{ $RentalItem->name }}: {{ $RentalItem->description }}</p>
+                            <p>R${{ $RentalItem->price_per_hour }}</p>
+                        </figcaption>
+                    </figure>
+                @endif
+
                 @foreach($RentalItem->uploads as $upload)
                     <figure
                         class="relative max-w-xs transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
                         <a href="#">
-                            <img class="rounded-lg w-full h-auto object-cover" src="{{asset($upload->file_path)}}"
+                            <img class="rounded-lg w-full h-auto object-cover"
+                                 src="{{asset($upload->file_path) ?? asset('digiplace.png')}} "
                                  alt="Imagem do item de aluguel">
                         </a>
                         <figcaption
@@ -158,22 +89,38 @@
         </div>
     </div>
 
-
     <div id="tooltip" class="hidden absolute bg-white text-black p-2 border rounded shadow-lg"></div>
-
 
     <div class="container">
         <div
-            class="info-box w-full max-w-md p-4 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            class=" w-full max-w-md p-4 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
             <div class="flex items-center justify-between mb-4">
-                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Latest Customers</h5>
+                <div class="flex items-center space-x-2">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+
+                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Observações</h5>
+                </div>
+            </div>
+            <div class="text-xl leading-none text-gray-900 dark:text-white">
+                <h2 class="mb-2 p-2">Reservas dos Próximos 7 Dias</h2>
+                @foreach($upcomingReserves as $reserve)
+                    <div class="p-3 mb-4 radius-2xl bg-gray-900 rounded-2xl z-20">
+                        <h3>{{ $reserve->title }}</h3>
+                        <h3>{{ $reserve->start_date }}</h3>
+                    </div>
+                @endforeach
             </div>
         </div>
+
         <div id="calendar"></div>
     </div>
-
-
     @include('dashboard.modal.tenant-reserve-modal')
+    @vite('resources/css/dashboard.css')
+
     @vite('resources/js/datepicker.js')
     @vite('resources/js/drawer.js')
     @vite('resources/js/tenant-fullcalendar.js')

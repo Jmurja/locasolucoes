@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+@php use function PHPUnit\Framework\isEmpty; @endphp
+    <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -100,11 +101,28 @@
 
             <div class="flex flex-wrap gap-4">
                 @foreach($RentalItems as $RentalItem)
+                    @if(empty($RentalItem->uploads))
+                        <figure
+                            class="relative max-w-xs transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                            <a href="#">
+                                <img class="rounded-lg w-full h-auto object-cover"
+                                     src="{{ asset('digiplace.png')}} "
+                                     alt="Imagem do item de aluguel">
+                            </a>
+                            <figcaption
+                                class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 px-4 py-2 text-lg text-white">
+                                <p>{{ $RentalItem->name }}: {{ $RentalItem->description }}</p>
+                                <p>R${{ $RentalItem->price_per_hour }}</p>
+                            </figcaption>
+                        </figure>
+                    @endif
+
                     @foreach($RentalItem->uploads as $upload)
                         <figure
                             class="relative max-w-xs transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
                             <a href="#">
-                                <img class="rounded-lg w-full h-auto object-cover" src="{{asset($upload->file_path)}}"
+                                <img class="rounded-lg w-full h-auto object-cover"
+                                     src="{{asset($upload->file_path) ?? asset('digiplace.png')}} "
                                      alt="Imagem do item de aluguel">
                             </a>
                             <figcaption

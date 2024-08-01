@@ -129,7 +129,7 @@ class RentalItemController extends Controller
 
     public function show(RentalItem $rentalItem)
     {
-        return response()->json($rentalItem);
+        return view('rental-items.show', compact('rentalItem'));
     }
 
     public function destroy(RentalItem $rentalItem)
