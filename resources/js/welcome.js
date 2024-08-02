@@ -19,6 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
         successAlert.style.display = 'block';
         setTimeout(() => {
             successAlert.style.display = 'none';
-        }, 5000); // Esconde o alerta após 5 segundos
+        }, 5000);
     }
 });

@@ -92,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                 event.className = 'today-event';
                             }
 
-                            // Marque eventos atuais como verde
                             var currentStart = new Date(event.start);
                             var currentEnd = new Date(event.end);
                             var now = new Date();

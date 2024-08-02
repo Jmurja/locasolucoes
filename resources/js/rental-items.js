@@ -1,22 +1,16 @@
 import SimpleMaskMoney from 'simple-mask-money';
 
-const optionsUSD = {
-    negativeSignAfter: false,
-    prefix: 'R$',
-    suffix: '',
-    fixed: true,
-    fractionDigits: 2,
-    decimalSeparator: ',',
-    thousandsSeparator: '.',
-    cursor: 'end'
-};
-
 document.addEventListener('DOMContentLoaded', function () {
-    const priceFieldsCreate = [
-        document.getElementById('price_per_hour'),
-        document.getElementById('price_per_day'),
-        document.getElementById('price_per_month')
-    ];
+    const optionsUSD = {
+        negativeSignAfter: false,
+        prefix: 'R$',
+        suffix: '',
+        fixed: true,
+        fractionDigits: 2,
+        decimalSeparator: ',',
+        thousandsSeparator: '.',
+        cursor: 'end'
+    };
 
     function applyMaskToFields(fields) {
         fields.forEach(field => {
@@ -44,21 +38,33 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function addValidationListeners() {
-        document.getElementById('edit_name').addEventListener('input', validateFields);
-        document.getElementById('edit_name').addEventListener('blur', validateFields);
+        const nameField = document.getElementById('edit_name');
+        const descriptionField = document.getElementById('edit_description');
 
-        document.getElementById('edit_description').addEventListener('input', validateFields);
-        document.getElementById('edit_description').addEventListener('blur', validateFields);
+        if (nameField) {
+            nameField.addEventListener('input', validateFields);
+            nameField.addEventListener('blur', validateFields);
+        }
+
+        if (descriptionField) {
+            descriptionField.addEventListener('input', validateFields);
+            descriptionField.addEventListener('blur', validateFields);
+        }
 
         const priceFields = [
             document.getElementById('edit_price_per_hour'),
             document.getElementById('edit_price_per_day'),
-            document.getElementById('edit_price_per_month')
+            document.getElementById('edit_price_per_month'),
+            document.getElementById('price_per_hour'),
+            document.getElementById('price_per_day'),
+            document.getElementById('price_per_month')
         ];
 
         priceFields.forEach(field => {
-            field.addEventListener('input', validateFields);
-            field.addEventListener('blur', validateFields);
+            if (field) {
+                field.addEventListener('input', validateFields);
+                field.addEventListener('blur', validateFields);
+            }
         });
     }
 
@@ -82,8 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.style.justifyContent = 'center';
         });
     }
-
-    applyMaskToFields(priceFieldsCreate);
 
     document.querySelectorAll('.edit-item-btn').forEach(button => {
         button.addEventListener('click', async () => {
@@ -212,4 +216,15 @@ document.addEventListener('DOMContentLoaded', function () {
             viewModal.removeAttribute('role');
         });
     });
+
+    // Aplicação de máscara nos campos do formulário de criação
+    const priceFieldsCreate = [
+        document.getElementById('price_per_hour'),
+        document.getElementById('price_per_day'),
+        document.getElementById('price_per_month')
+    ];
+
+    applyMaskToFields(priceFieldsCreate);
+    addValidationListeners();
+    setupFormSubmission('create-form', priceFieldsCreate);
 });

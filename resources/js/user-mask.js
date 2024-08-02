@@ -49,14 +49,12 @@ document.addEventListener('DOMContentLoaded', function () {
         applyMasksToEditModal();
     });
 
-    // Função para limpar os campos de endereço
     function limpa_formulário_cep() {
         document.getElementById('rua').value = "";
         document.getElementById('bairro').value = "";
         document.getElementById('cidade').value = "";
     }
 
-    // Callback para preencher os campos de endereço
     window.meu_callback = function (conteudo) {
         if (!("erro" in conteudo)) {
             document.getElementById('rua').value = conteudo.logradouro;
@@ -68,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Função para buscar o CEP
     window.pesquisacep = function (valor) {
         var cep = valor.replace(/\D/g, '');
 
@@ -96,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    // Função para limpar os campos de CNPJ
     function limpa_formulário_cnpj() {
         document.getElementById('company').value = "";
         document.getElementById('rua').value = "";
@@ -106,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('name').value = "";
     }
 
-    // Callback para preencher os campos de CNPJ
     window.meu_callback_cnpj = function (conteudo) {
         if (!("errors" in conteudo)) {
             document.getElementById('company').value = conteudo.razao_social;
@@ -115,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('cidade').value = conteudo.municipio;
             document.getElementById('cep').value = conteudo.cep.replace(/\D/g, '');
 
-            // Encontrar o nome do sócio-administrador
             let socioAdministrador = "";
             if (conteudo.qsa && conteudo.qsa.length > 0) {
                 const socio = conteudo.qsa.find(p => p.qual === "Sócio-Administrador");
@@ -128,7 +122,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Função para buscar o CNPJ
     window.pesquisacnpj = function (valor) {
         var cnpj = valor.replace(/\D/g, '');
 
@@ -159,23 +152,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    // Adiciona o listener ao campo de input de CEP para buscar os dados ao perder o foco
     document.getElementById('cep').addEventListener('blur', function () {
         pesquisacep(this.value);
     });
 
-    // Adiciona o listener ao campo de input de CNPJ para buscar os dados ao perder o foco
     document.getElementById('cpf_cnpj').addEventListener('blur', function () {
         pesquisacnpj(this.value);
     });
 
-    // Validação do formulário
     document.getElementById('user-form').addEventListener('submit', function (event) {
         const role = document.getElementById('role');
         const roleError = document.getElementById('role-error');
 
         if (role.value === 'Selecione a Categoria' || role.value === '') {
-            event.preventDefault(); // Impede o envio do formulário
+            event.preventDefault();
             roleError.classList.remove('hidden');
         } else {
             roleError.classList.add('hidden');

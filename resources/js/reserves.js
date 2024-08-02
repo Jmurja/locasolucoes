@@ -87,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
         userSelect.dispatchEvent(event);
     }
 
-    // Funções para formatar data e hora
     function formatDate(dateTime) {
         const date = new Date(dateTime);
         if (isNaN(date)) return 'N/A';
@@ -105,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return `${hours}:${minutes}`;
     }
 
-    // Fechar modal ao clicar no botão de fechar
     const closeModalButtons = document.querySelectorAll('[data-modal-toggle="view-modal"], [data-modal-toggle="edit-modal"], [data-modal-toggle="delete-modal"]');
     closeModalButtons.forEach(button => {
         button.addEventListener('click', function () {
@@ -127,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 1000);
     }
 
-    // Validação em tempo real
     const fieldsToValidate = ['title', 'start_date', 'end_date', 'start_time', 'end_time'];
 
     fieldsToValidate.forEach(fieldId => {

@@ -28,8 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('edit-rua').value = userRua;
         document.getElementById('edit-bairro').value = userBairro;
         document.getElementById('edit-cidade').value = userCidade;
-        document.getElementById('edit-role').value = userRole;  // Adicionado para pré-selecionar o role
-
+        document.getElementById('edit-role').value = userRole;
         const form = document.getElementById('edit-user-form');
         form.action = `/usuarios/${userId}`;
 

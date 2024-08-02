@@ -17,7 +17,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
 
-    <!--------Pesquisar---------->
     <form class="max-w-lg mx-auto mt-10" method="GET" action="{{ route('reserves.index') }}">
         <div class="relative w-full">
             <label for="search"
@@ -50,7 +49,6 @@
         </div>
     </form>
 
-    <!-- Mensagens de Erro -->
     @if ($errors->any())
         <div
             class="max-w-lg mx-auto mt-4 p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
