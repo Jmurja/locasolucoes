@@ -102,6 +102,7 @@ class ReserveController extends Controller
             'reserve_notes'  => $request->reserve_notes,
             'title'          => $request->title,
             'reserve_status' => $request->reserve_status,
+
         ]);
 
         return back()->with('success', 'Reserva Solicitada!');

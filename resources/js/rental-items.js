@@ -1,7 +1,7 @@
 import SimpleMaskMoney from 'simple-mask-money';
-import {document} from "postcss";
 
 document.addEventListener('DOMContentLoaded', function () {
+    // Suas opções para a máscara de dinheiro
     const optionsUSD = {
         negativeSignAfter: false,
         prefix: 'R$',
@@ -93,47 +93,55 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.edit-item-btn').forEach(button => {
         button.addEventListener('click', async () => {
             const itemId = button.getAttribute('data-id');
-            const response = await fetch(`api/itens-locacao/${itemId}`);
+            try {
+                const response = await fetch(`/api/itens-locacao/${itemId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
 
-            const data = await response.json();
+                const data = await response.json();
+                console.log(data); // Log dos dados para depuração
 
-            document.getElementById('edit-form').action = `/itens-locacao/${itemId}`;
-            document.getElementById('edit_user_id').value = data.user_id;
-            document.getElementById('edit_name').value = data.name;
-            document.getElementById('edit_description').value = data.description;
-            document.getElementById('edit_price_per_hour').value = SimpleMaskMoney.formatToCurrency(data.price_per_hour, optionsUSD);
-            document.getElementById('edit_price_per_day').value = SimpleMaskMoney.formatToCurrency(data.price_per_day, optionsUSD);
-            document.getElementById('edit_price_per_month').value = SimpleMaskMoney.formatToCurrency(data.price_per_month, optionsUSD);
-            document.getElementById('edit_status').value = data.status;
-            document.getElementById('edit_rental_item_notes').value = data.rental_item_notes;
+                document.getElementById('edit-form').action = `/itens-locacao/${itemId}`;
+                document.getElementById('edit_user_id').value = data.user_id;
+                document.getElementById('edit_name').value = data.name;
+                document.getElementById('edit_description').value = data.description;
+                document.getElementById('edit_price_per_hour').value = SimpleMaskMoney.formatToCurrency(data.price_per_hour, optionsUSD);
+                document.getElementById('edit_price_per_day').value = SimpleMaskMoney.formatToCurrency(data.price_per_day, optionsUSD);
+                document.getElementById('edit_price_per_month').value = SimpleMaskMoney.formatToCurrency(data.price_per_month, optionsUSD);
+                document.getElementById('edit_status').value = data.status;
+                document.getElementById('edit_rental_item_notes').value = data.rental_item_notes;
 
-            const imagePreviewsContainer = document.getElementById('image-previews');
-            imagePreviewsContainer.innerHTML = '';
+                const imagePreviewsContainer = document.getElementById('image-previews');
+                imagePreviewsContainer.innerHTML = '';
 
-            if (data.images) {
-                data.images.forEach(imagePath => {
-                    const imgElement = document.createElement('img');
-                    imgElement.src = `/storage/${imagePath}`;
-                    imgElement.classList.add('w-full', 'h-auto', 'rounded-lg');
-                    imagePreviewsContainer.appendChild(imgElement);
-                });
+                if (data.images) {
+                    data.images.forEach(imagePath => {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = `/storage/${imagePath}`;
+                        imgElement.classList.add('w-full', 'h-auto', 'rounded-lg');
+                        imagePreviewsContainer.appendChild(imgElement);
+                    });
+                }
+
+                const priceFieldsUpdate = [
+                    document.getElementById('edit_price_per_hour'),
+                    document.getElementById('edit_price_per_day'),
+                    document.getElementById('edit_price_per_month')
+                ];
+
+                applyMaskToFields(priceFieldsUpdate);
+                addValidationListeners();
+                setupFormSubmission('edit-form', priceFieldsUpdate);
+
+                const editModal = document.getElementById('edit-modal');
+                centerModals();
+                editModal.classList.remove('hidden');
+                editModal.setAttribute('aria-hidden', 'false');
+                editModal.setAttribute('role', 'dialog');
+            } catch (error) {
+                console.error('Erro ao buscar dados do item de locação:', error);
             }
-
-            const priceFieldsUpdate = [
-                document.getElementById('edit_price_per_hour'),
-                document.getElementById('edit_price_per_day'),
-                document.getElementById('edit_price_per_month')
-            ];
-
-            applyMaskToFields(priceFieldsUpdate);
-            addValidationListeners();
-            setupFormSubmission('edit-form', priceFieldsUpdate);
-
-            const editModal = document.getElementById('edit-modal');
-            centerModals();
-            editModal.classList.remove('hidden');
-            editModal.setAttribute('aria-hidden', 'false');
-            editModal.setAttribute('role', 'dialog');
         });
     });
 
@@ -204,6 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fetchAndPopulateViewModal(itemId);
         });
     });
+
     document.querySelectorAll('[data-modal-toggle="view-modal"]').forEach(button => {
         button.addEventListener('click', () => {
             const viewModal = document.getElementById('view-modal');
