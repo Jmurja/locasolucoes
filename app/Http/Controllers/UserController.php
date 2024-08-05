@@ -79,6 +79,11 @@ class UserController extends Controller
         return view('users.show', compact('user'));
     }
 
+    public function getUserData($id)
+    {
+        return User::findOrFail($id);
+    }
+
     public function update(Request $request, User $user)
     {
         $input             = $request->all();

@@ -15,7 +15,6 @@ Route::resource('reservas', ReserveController::class)->names('reserves')->parame
     'reservas' => 'reserve',
 ]);
 Route::get('/users/email/{email}', [UserController::class, 'checkEmail']);
-
 Route::get('errors', function() {
     return view('errors.503');
 });
@@ -29,14 +28,17 @@ Route::middleware('auth')->group(function() {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/api/itens-locacao/{rentalItem}', [RentalItemController::class, 'getRentalItemData']);
     Route::resource('itens-locacao', RentalItemController::class)->names('rental-items')->parameters([
         'itens-locacao' => 'rental-item',
     ]);
+    Route::get('api/reservas/{reserve}', [ReserveController::class, 'getReserveData']);
+    Route::get('/api/usuarios/{user}', [UserController::class, 'getUserData']);
     Route::resource('usuarios', UserController::class)->names('users')->parameters([
         'usuarios' => 'user',
     ]);
-    Route::get('/pdf', [ReportsController::class, 'generatePdf'])->name('pdf.reports');
-    Route::delete('/usuarios/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/pdf', [ReportsController::class, 'generatePdf']);
+    Route::delete('/usuarios/{user}', [UserController::class, 'destroy']);
     Route::resource('relatorios', ReportsController::class)->names('reports')->parameters([
         'relatorios' => 'report',
     ]);

@@ -6,13 +6,15 @@ document.addEventListener('DOMContentLoaded', function () {
     editButtons.forEach(button => {
         button.addEventListener('click', async function () {
             const reserveId = this.getAttribute('data-reserve-id');
+            console.log('Reserve ID:', reserveId);
 
             try {
-                const response = await fetch(`/reservas/${reserveId}`);
+                const response = await fetch(`api/reservas/${reserveId}`);
                 if (!response.ok) {
                     throw new Error('Erro ao buscar dados da reserva');
                 }
                 const reserve = await response.json();
+                console.log('Reserve Data:', reserve);
 
                 if (editModal) {
                     editModal.querySelector('select[name="user_id"]').value = reserve.user_id || '';
@@ -20,9 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     editModal.querySelector('select[name="rental_item_id"]').value = reserve.rental_item_id || '';
                     editModal.querySelector('input[name="start_date"]').value = formatDate(reserve.start_date) || '';
                     editModal.querySelector('input[name="end_date"]').value = formatDate(reserve.end_date) || '';
-                    editModal.querySelector('input[name="start_time"]').value = formatTime(reserve.start_date) || '';
-                    editModal.querySelector('input[name="end_time"]').value = formatTime(reserve.end_date) || '';
+                    editModal.querySelector('select[name="start_time"]').value = formatTime(reserve.start_date) || '';
+                    editModal.querySelector('select[name="end_time"]').value = formatTime(reserve.end_date) || '';
                     editModal.querySelector('input[name="reserve_notes"]').value = reserve.reserve_notes || '';
+                    editModal.querySelector('select[name="reserve_status"]').value = reserve.reserve_status || '';
 
                     editForm.action = `/reservas/${reserveId}`;
                     editModal.classList.remove('hidden');
@@ -89,16 +92,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function formatDate(dateTime) {
         const date = new Date(dateTime);
-        if (isNaN(date)) return 'N/A';
+        if (isNaN(date)) return '';
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
+        return `${year}-${month}-${day}`;
     }
 
     function formatTime(dateTime) {
         const date = new Date(dateTime);
-        if (isNaN(date)) return 'N/A';
+        if (isNaN(date)) return '';
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
         return `${hours}:${minutes}`;
@@ -121,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
             conflictMessage.style.opacity = 0;
             setTimeout(() => {
                 conflictMessage.remove();
-            }, 100);
+            }, 1000);
         }, 1000);
     }
 

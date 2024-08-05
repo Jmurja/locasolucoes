@@ -36,14 +36,14 @@
                         </select>
                     </div>
                     <div class="mb-4">
-                        <label for="title"
+                        <label for="update_title"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Título</label>
                         <input type="text" name="title" id="update_title"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                required>
                     </div>
                     <div class="mb-4">
-                        <label for="rental_item_id"
+                        <label for="update_rental_item_id"
                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Espaço</label>
                         <select id="update_rental_item_id" name="rental_item_id"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -109,6 +109,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="mb-4">
+                    <label for="update_reserve_status"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status da
+                        Reserva</label>
+                    <select id="update_reserve_status" name="reserve_status"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <option value="ocupado">Ocupado</option>
+                        <option value="reservado">Reservado</option>
+                        <option value="disponivel">Disponível</option>
+                    </select>
+                </div>
+
                 <div class="mb-4">
                     <label for="update_reserve_notes"
                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observações</label>

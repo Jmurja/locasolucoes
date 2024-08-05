@@ -102,9 +102,7 @@ class RentalItemController extends Controller
 
         $rentalItem->update($updatedData);
 
-        // Atualizar a imagem, se houver um novo upload
         if ($request->hasFile('rental_item_images')) {
-            // Remover a(s) imagem(ns) antiga(s), se houver
             $existingUploads = Upload::query()->where('rental_item_id', $rentalItem->id)->get();
 
             foreach ($existingUploads as $existingUpload) {
@@ -112,7 +110,6 @@ class RentalItemController extends Controller
                 $existingUpload->delete();
             }
 
-            // Armazenar a(s) nova(s) imagem(ns)
             foreach ($request->file('rental_item_images') as $uploadedFile) {
                 $path = $uploadedFile->store('uploads');
 
@@ -127,9 +124,22 @@ class RentalItemController extends Controller
         return redirect()->route('rental-items.index');
     }
 
+    public function deleteImage(Upload $upload)
+    {
+        Storage::delete($upload->file_path);
+        $upload->delete();
+
+        return back();
+    }
+
     public function show(RentalItem $rentalItem)
     {
-        return response()->json($rentalItem);
+        return view('rental-items.show', compact('rentalItem'));
+    }
+
+    public function getRentalItemData(RentalItem $rentalItem)
+    {
+        return $rentalItem;
     }
 
     public function destroy(RentalItem $rentalItem)

@@ -125,6 +125,16 @@
                            required>
                 </div>
                 <div class="mb-4">
+                    <label for="reserve_status" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status
+                        da Reserva</label>
+                    <select id="reserve_status" name="reserve_status"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <option value="ocupado">Ocupado</option>
+                        <option value="reservado">Reservado</option>
+                        <option value="disponivel">Disponível</option>
+                    </select>
+                </div>
+                <div class="mb-4">
                     <label for="reserve_notes" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Observações</label>
                     <textarea name="reserve_notes" id="reserve_notes"
                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"

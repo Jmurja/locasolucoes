@@ -22,6 +22,7 @@
             <form id="reserveForm" action="{{ route('reserves.store') }}" method="post" class="p-4 space-y-4">
                 @csrf
                 <input type="hidden" name="role" value="visitor">
+                <input type="hidden" name="reserve_status" value="reservado">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Left side (Dados do Visitante + Empresa) -->
                     <div class="space-y-6">

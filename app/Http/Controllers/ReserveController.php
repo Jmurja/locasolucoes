@@ -99,8 +99,9 @@ class ReserveController extends Controller
             'start_date'     => $FormatStartDate,
             'end_date'       => $FormatEndDate,
             'rental_item_id' => $request->rental_item_id,
-            'reserve_notes'  => $request->description,
+            'reserve_notes'  => $request->reserve_notes,
             'title'          => $request->title,
+            'reserve_status' => $request->reserve_status,
         ]);
 
         return back()->with('success', 'Reserva Solicitada!');
@@ -138,6 +139,11 @@ class ReserveController extends Controller
         $reserve = Reserve::with(['user', 'rentalitem'])->findOrFail($id);
 
         return view('reserves.show', compact('reserve'));
+    }
+
+    public function getReserveData($id)
+    {
+        return Reserve::with(['rentalItem', 'user'])->findOrFail($id);
     }
 
     public function destroy(Reserve $reserve)
@@ -182,6 +188,7 @@ class ReserveController extends Controller
             'rental_item_id' => $request->rental_item_id,
             'reserve_notes'  => $request->reserve_notes,
             'title'          => $request->title,
+            'reserve_status' => $request->reserve_status, // Adiciona o status da reserva
         ]);
 
         return back()->with('success', 'Reserva atualizada com sucesso.');

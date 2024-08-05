@@ -1,4 +1,5 @@
 import SimpleMaskMoney from 'simple-mask-money';
+import {document} from "postcss";
 
 document.addEventListener('DOMContentLoaded', function () {
     const optionsUSD = {
@@ -92,7 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.edit-item-btn').forEach(button => {
         button.addEventListener('click', async () => {
             const itemId = button.getAttribute('data-id');
-            const response = await fetch(`/itens-locacao/${itemId}`);
+            const response = await fetch(`api/itens-locacao/${itemId}`);
+
             const data = await response.json();
 
             document.getElementById('edit-form').action = `/itens-locacao/${itemId}`;
@@ -105,11 +107,9 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('edit_status').value = data.status;
             document.getElementById('edit_rental_item_notes').value = data.rental_item_notes;
 
-            // Limpar pré-visualizações anteriores
             const imagePreviewsContainer = document.getElementById('image-previews');
             imagePreviewsContainer.innerHTML = '';
 
-            // Adicionar pré-visualizações das imagens existentes
             if (data.images) {
                 data.images.forEach(imagePath => {
                     const imgElement = document.createElement('img');
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setupFormSubmission('edit-form', priceFieldsUpdate);
 
             const editModal = document.getElementById('edit-modal');
-            centerModals(); // Centraliza o modal
+            centerModals();
             editModal.classList.remove('hidden');
             editModal.setAttribute('aria-hidden', 'false');
             editModal.setAttribute('role', 'dialog');
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('multiple_files').addEventListener('change', function (event) {
         const files = event.target.files;
         const imagePreviewsContainer = document.getElementById('image-previews');
-        imagePreviewsContainer.innerHTML = ''; // Limpar pré-visualizações anteriores
+        imagePreviewsContainer.innerHTML = '';
 
         Array.from(files).forEach(file => {
             const imgElement = document.createElement('img');
@@ -180,7 +180,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Função para buscar e preencher os dados no modal de visualização
     async function fetchAndPopulateViewModal(itemId) {
         const response = await fetch(`/itens-locacao/${itemId}`);
         const data = await response.json();
@@ -199,15 +198,12 @@ document.addEventListener('DOMContentLoaded', function () {
         modal.setAttribute('role', 'dialog');
     }
 
-    // Event listener para botões que abrem o modal de visualização
     document.querySelectorAll('.view-item-btn').forEach(button => {
         button.addEventListener('click', () => {
             const itemId = button.getAttribute('data-id');
             fetchAndPopulateViewModal(itemId);
         });
     });
-
-    // Event listener para o botão de fechar o modal
     document.querySelectorAll('[data-modal-toggle="view-modal"]').forEach(button => {
         button.addEventListener('click', () => {
             const viewModal = document.getElementById('view-modal');
@@ -217,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Aplicação de máscara nos campos do formulário de criação
     const priceFieldsCreate = [
         document.getElementById('price_per_hour'),
         document.getElementById('price_per_day'),
