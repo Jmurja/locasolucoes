@@ -81,7 +81,7 @@
                         <figcaption
                             class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 px-4 py-2 text-lg text-white">
                             <p>{{ $RentalItem->name }}: {{ $RentalItem->description }}</p>
-                            <p>R${{ $RentalItem->price_per_hour }}</p>
+                            <p>R${{ $RentalItem->price_per_hour }} Por hora</p>
                         </figcaption>
                     </figure>
                 @endforeach

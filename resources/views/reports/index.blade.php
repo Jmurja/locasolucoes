@@ -19,9 +19,10 @@
             @csrf
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div id="date-range-picker"
-                     class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 col-span-2">
-                    <div class="relative w-full">
+                <div>
+                    <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data de
+                        Início</label>
+                    <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -33,7 +34,12 @@
                                class="datepicker-custom bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full pl-10 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                placeholder="Selecione a data de início">
                     </div>
-                    <div class="relative w-full">
+                </div>
+
+                <div>
+                    <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data de
+                        Término</label>
+                    <div class="relative">
                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -72,7 +78,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <button type="submit"
                         class="w-full sm:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition ease-in-out duration-150">
                     Salvar

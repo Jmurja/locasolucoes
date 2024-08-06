@@ -23,7 +23,7 @@
                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Você
                     deseja
                     deletar este item?</h3>
-                <form action="{{route('rental-items.destroy', $rentalItem->id )}}" method="post"
+                <form action="{{route('rental-items.destroy', $rentalItem->id ?? '0')}}" method="post"
                       class="flex items-center justify-center space-x-3">
                     @csrf
                     @method('DELETE')

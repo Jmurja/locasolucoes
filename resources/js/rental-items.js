@@ -1,7 +1,6 @@
 import SimpleMaskMoney from 'simple-mask-money';
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Suas opções para a máscara de dinheiro
     const optionsUSD = {
         negativeSignAfter: false,
         prefix: 'R$',
@@ -112,13 +111,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('edit_status').value = data.status;
                 document.getElementById('edit_rental_item_notes').value = data.rental_item_notes;
 
-                const imagePreviewsContainer = document.getElementById('image-previews');
+                const imagePreviewsContainer = document.getElementById('edit-image-previews');
                 imagePreviewsContainer.innerHTML = '';
 
-                if (data.images) {
-                    data.images.forEach(imagePath => {
+                console.log('Uploads:', data.uploads);
+                if (data.uploads) {
+                    data.uploads.forEach(upload => {
                         const imgElement = document.createElement('img');
-                        imgElement.src = `/storage/${imagePath}`;
+                        imgElement.src = `/storage/${upload.file_path}`;
                         imgElement.classList.add('w-full', 'h-auto', 'rounded-lg');
                         imagePreviewsContainer.appendChild(imgElement);
                     });
@@ -151,10 +151,14 @@ document.addEventListener('DOMContentLoaded', function () {
         imagePreviewsContainer.innerHTML = '';
 
         Array.from(files).forEach(file => {
-            const imgElement = document.createElement('img');
-            imgElement.src = URL.createObjectURL(file);
-            imgElement.classList.add('w-full', 'h-auto', 'rounded-lg');
-            imagePreviewsContainer.appendChild(imgElement);
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                imgElement.classList.add('w-full', 'h-auto', 'rounded-lg');
+                imagePreviewsContainer.appendChild(imgElement);
+            };
+            reader.readAsDataURL(file);
         });
     });
 

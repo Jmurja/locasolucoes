@@ -29,7 +29,8 @@ class RentalItemController extends Controller
             });
         }
 
-        $rentalItems   = $query->orderBy('created_at', 'desc')->paginate(7);
+        $rentalItems = $query->orderBy('created_at', 'desc')->paginate(7);
+        $rentalItems->load(['uploads']);
         $landLordUsers = User::query()->where('role', 'landlord')->get();
         $statuses      = RentalItemStatus::options();
 
@@ -139,6 +140,8 @@ class RentalItemController extends Controller
 
     public function getRentalItemData(RentalItem $rentalItem)
     {
+        $rentalItem->load('uploads');
+
         return $rentalItem;
     }
 

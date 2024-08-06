@@ -24,6 +24,7 @@
             <form action="{{ route('reserves.store') }}" method="post" class="p-6 space-y-6">
                 @csrf
                 <input type="hidden" name="cpf_cnpj" value="{{ auth()->user()->cpf_cnpj }}">
+                <input type="hidden" name="reserve_status" value="reservado">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
