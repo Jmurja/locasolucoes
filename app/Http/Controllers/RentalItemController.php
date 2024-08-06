@@ -125,12 +125,14 @@ class RentalItemController extends Controller
         return redirect()->route('rental-items.index');
     }
 
-    public function deleteImage(Upload $upload)
+    public function deleteImage(RentalItem $rentalItem)
     {
-        Storage::delete($upload->file_path);
+        $rentalItem->load('uploads');
+        $upload = $rentalItem->uploads()->first();
         $upload->delete();
+        Storage::delete($upload->file_path);
 
-        return back();
+        return response()->json(['success' => true]);
     }
 
     public function show(RentalItem $rentalItem)

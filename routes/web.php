@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
+// Public Routes
 Route::get('reserves/json', [ReserveController::class, 'json']);
 Route::resource('reservas', ReserveController::class)->names('reserves')->parameters([
     'reservas' => 'reserve',
@@ -20,6 +21,7 @@ Route::get('errors', function() {
 });
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 
+// Auth Routes
 Route::get('/dev/login', DevController::class)->name('dev.login');
 Route::resource('/dashboard', DashboardController::class)->only('index')->names('dashboard')->middleware([
     'auth', 'verified',
@@ -28,7 +30,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/api/itens-locacao/{itemId}', [RentalItemController::class, 'getRentalItemData']);
+    Route::get('/api/itens-locacao/{rentalItem}', [RentalItemController::class, 'getRentalItemData']);
+    Route::delete('/api/delete-image/{rentalItem}', [RentalItemController::class, 'deleteImage'])->name('delete.image');
     Route::resource('itens-locacao', RentalItemController::class)->names('rental-items')->parameters([
         'itens-locacao' => 'rental-item',
     ]);

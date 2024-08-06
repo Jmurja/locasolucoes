@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function convertFieldsToNumber(fields) {
         fields.forEach(field => {
-            field.value = SimpleMaskMoney.formatToNumber(field.value);
+            field.value = SimpleMaskMoney.formatToNumber(field.value).toFixed(2);
         });
     }
 
@@ -91,17 +91,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.edit-item-btn').forEach(button => {
         button.addEventListener('click', async () => {
-            const itemId = button.getAttribute('data-id');
+            const rentalItem = button.getAttribute('data-id');
             try {
-                const response = await fetch(`/api/itens-locacao/${itemId}`);
+                const response = await fetch(`/api/itens-locacao/${rentalItem}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
                 const data = await response.json();
-                console.log(data); // Log dos dados para depuração
+                console.log('data', data)
 
-                document.getElementById('edit-form').action = `/itens-locacao/${itemId}`;
+                document.getElementById('edit-form').action = `/itens-locacao/${rentalItem}`;
                 document.getElementById('edit_user_id').value = data.user_id;
                 document.getElementById('edit_name').value = data.name;
                 document.getElementById('edit_description').value = data.description;
@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('edit_price_per_month').value = SimpleMaskMoney.formatToCurrency(data.price_per_month, optionsUSD);
                 document.getElementById('edit_status').value = data.status;
                 document.getElementById('edit_rental_item_notes').value = data.rental_item_notes;
+
 
                 const imagePreviewsContainer = document.getElementById('edit-image-previews');
                 imagePreviewsContainer.innerHTML = '';
@@ -123,6 +124,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         imagePreviewsContainer.appendChild(imgElement);
                     });
                 }
+
+                const deleteBtn = document.querySelector('.delete-button')
+                deleteBtn.addEventListener('click', async () => {
+                    const rentalItem = deleteBtn.getAttribute('data-rentalItem-id');
+                    await axios.delete(`/api/delete-image/${rentalItem}`).then((r) => r)
+
+                })
 
                 const priceFieldsUpdate = [
                     document.getElementById('edit_price_per_hour'),
@@ -228,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const priceFieldsCreate = [
         document.getElementById('price_per_hour'),
-        document.getElementById('price_per_day'),
+        document.getId('price_per_day'),
         document.getElementById('price_per_month')
     ];
 
