@@ -111,5 +111,6 @@
         @include('rental-items.modal.delete-modal')
         @include('rental-items.modal.update-modal')
         @vite('resources/js/rental-items.js')
+        @vite('resources/js/rentalitem-mask.js' )
     </div>
 </x-app-layout>

@@ -14,7 +14,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
-                <dl class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-gray-900 dark:text-white">
+                <dl class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-gray-900 dark:text-white">
                     <div class="flex flex-col">
                         <dt class="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">Nome</dt>
                         <dd class="text-lg font-semibold break-words">{{ $rentalItem->name }}</dd>
@@ -43,6 +43,26 @@
                         <dt class="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">Observações</dt>
                         <dd class="text-lg font-semibold break-words">{{ $rentalItem->rental_item_notes }}</dd>
                     </div>
+
+                    @if ($rentalItem->uploads->isNotEmpty())
+                        <div class="col-span-1 md:col-span-2 lg:col-span-3">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                @foreach ($rentalItem->uploads as $upload)
+                                    <figure class="flex flex-col items-center">
+                                        <img class="h-auto max-w-full rounded-lg"
+                                             src="{{ Storage::url($upload->file_path) }}"
+                                             alt="image description">
+                                        <figcaption class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">
+                                            {{ $upload->file_name }}
+                                        </figcaption>
+                                    </figure>
+                                @endforeach
+                            </div>
+                        </div>
+                    @else
+                        <p class="text-lg font-semibold text-gray-500 dark:text-gray-400 col-span-1 md:col-span-2 lg:col-span-3">
+                            Nenhuma imagem disponível</p>
+                    @endif
                 </dl>
             </div>
         </div>

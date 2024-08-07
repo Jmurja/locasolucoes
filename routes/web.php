@@ -11,6 +11,7 @@ use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes
+Route::get('/pdf/reports', [ReportsController::class, 'generatePdf'])->name('pdf.reports');
 Route::get('reserves/json', [ReserveController::class, 'json']);
 Route::resource('reservas', ReserveController::class)->names('reserves')->parameters([
     'reservas' => 'reserve',
@@ -25,6 +26,9 @@ Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
 Route::get('/dev/login', DevController::class)->name('dev.login');
 Route::resource('/dashboard', DashboardController::class)->only('index')->names('dashboard')->middleware([
     'auth', 'verified',
+]);
+Route::resource('relatorios', ReportsController::class)->names('reports')->parameters([
+    'relatorios' => 'report',
 ]);
 Route::middleware('auth')->group(function() {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -42,9 +46,6 @@ Route::middleware('auth')->group(function() {
     ]);
     Route::get('/pdf', [ReportsController::class, 'generatePdf']);
     Route::delete('/usuarios/{user}', [UserController::class, 'destroy']);
-    Route::resource('relatorios', ReportsController::class)->names('reports')->parameters([
-        'relatorios' => 'report',
-    ]);
     Route::get('/reservas/search', [ReserveController::class, 'search'])->name('reservas.search');
 });
 

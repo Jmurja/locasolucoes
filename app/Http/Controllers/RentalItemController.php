@@ -137,6 +137,8 @@ class RentalItemController extends Controller
 
     public function show(RentalItem $rentalItem)
     {
+        $rentalItem->load('uploads');
+
         return view('rental-items.show', compact('rentalItem'));
     }
 
