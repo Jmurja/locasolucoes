@@ -33,16 +33,6 @@
     </form>
 </div>
 
-@if ($errors->any())
-    <div
-        class="max-w-lg mx-auto mt-4 p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-        role="alert">
-        @foreach ($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
-    </div>
-@endif
-
 <div
     class="bg-gray-50 text-black/50 dark:bg-gray-900 dark:text-white/50 min-h-screen flex flex-col items-center justify-center relative">
     <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl z-10">
@@ -54,6 +44,22 @@
                 Catálogo
             </button>
         </header>
+        @if ($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Erro!</strong>
+                <span class="block sm:inline">
+            @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+        </span>
+                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+            <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 20 20"><title>Close</title><path
+                    d="M14.348 5.652a.5.5 0 00-.706 0L10 9.293 6.354 5.647a.5.5 0 10-.708.708L9.293 10l-3.647 3.646a.5.5 0 10.708.708L10 10.707l3.646 3.647a.5.5 0 00.708-.708L10.707 10l3.647-3.646a.5.5 0 000-.702z"/></svg>
+        </span>
+            </div>
+        @endif
+
 
         @if(session('success'))
             <div id="alert-additional-content-3"

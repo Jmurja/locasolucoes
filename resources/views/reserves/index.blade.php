@@ -17,6 +17,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
 
+    <!-- Search Form -->
+    <!-- Search Form -->
     <form class="max-w-lg mx-auto mt-10" method="GET" action="{{ route('reserves.index') }}">
         <div class="relative w-full">
             <label for="search"
@@ -25,29 +27,31 @@
                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                    placeholder="Pesquisar por Responsável, Usuário, Espaço, Data..." value="{{ request('search') }}"
                    required/>
-            <button type="submit"
-                    class="absolute inset-y-0 right-0 p-2 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                     viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                </svg>
-                <span class="sr-only">Pesquisar</span>
-            </button>
-            <button type="button"
-                    onclick="document.getElementById('search').value=''; this.form.submit();"
-                    class="absolute inset-y-0 right-8 p-2 text-sm font-medium hover:text-red-700 focus:outline-none focus:ring-0">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                     xmlns="http://www.w3.org/2000/svg"
-                     width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
-                </svg>
-
-                <span class="sr-only">Limpar</span>
-            </button>
+            <div class="absolute inset-y-0 right-0 flex items-center space-x-1">
+                <button type="button"
+                        onclick="document.getElementById('search').value=''; this.form.submit();"
+                        class="p-2 text-sm font-medium hover:text-red-700 focus:outline-none focus:ring-0">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                         xmlns="http://www.w3.org/2000/svg"
+                         width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
+                    </svg>
+                    <span class="sr-only">Limpar</span>
+                </button>
+                <button type="submit"
+                        class="p-2 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                    <span class="sr-only">Pesquisar</span>
+                </button>
+            </div>
         </div>
     </form>
+
 
     @if ($errors->any())
         <div

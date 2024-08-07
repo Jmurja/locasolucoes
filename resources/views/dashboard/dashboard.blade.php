@@ -37,7 +37,15 @@
     </div>
 
     <div id="overlay" class="fixed inset-0 bg-black opacity-50 z-30 hidden"></div>
-
+    @if ($errors->any())
+        <div
+            class="max-w-lg mx-auto mt-4 p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+            role="alert">
+            @foreach ($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
     <div id="drawer-bottom-example"
          class="fixed bottom-0 left-0 right-0 z-40 w-full p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 translate-y-full"
          tabindex="-1" aria-labelledby="drawer-bottom-label">

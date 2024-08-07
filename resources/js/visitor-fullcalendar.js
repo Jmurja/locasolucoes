@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', function () {
         return `${day}/${month}/${year}`;
     }
 
+    function formatTime(date) {
+        var hours = String(date.getHours()).padStart(2, '0');
+        var minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
     function hideAllInputs() {
         const inputs = document.querySelectorAll('#reserveForm .input-field');
         inputs.forEach(input => input.classList.add('hidden'));
@@ -48,9 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     emailSearchIcon.addEventListener('click', async function () {
         const email = emailInput.value;
-        const {data} = await axios.get(
-            `/users/email/${email}`,
-        )
+        const {data} = await axios.get(`/users/email/${email}`);
         showAllInputs();
         submitReserveButton.classList.remove('hidden');
         if (data.exists) {
@@ -66,14 +70,26 @@ document.addEventListener('DOMContentLoaded', function () {
             selectMirror: true,
             editable: true,
             themeSystem: 'slate',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
             views: {
-                mes: {
-                    type: 'dayGridMonth',
+                dayGridMonth: {
                     buttonText: 'Mês',
+                },
+                timeGridWeek: {
+                    buttonText: 'Semana',
+                },
+                timeGridDay: {
+                    buttonText: 'Dia',
                 },
             },
             hiddenDays: [0],
-            initialView: 'mes',
+            initialView: 'dayGridMonth',
+            slotMinTime: '08:00:00',
+            slotMaxTime: '18:00:00',
             dateClick: function (info) {
                 currentEventDate = new Date(info.date);
                 if (modal) {
@@ -82,12 +98,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 if (eventStartInput) {
                     var startDate = new Date(currentEventDate);
-                    startDate.setDate(startDate.getDate());
                     eventStartInput.value = formatDate(startDate);
                 }
                 if (eventEndInput) {
                     var endDate = new Date(currentEventDate);
-                    endDate.setDate(endDate.getDate());
                     eventEndInput.value = formatDate(endDate);
                 }
                 if (startTimeInput) {
@@ -95,6 +109,29 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 if (endTimeInput) {
                     endTimeInput.value = '18:00';
+                }
+                hideAllInputs();
+                submitReserveButton.classList.add('hidden');
+            },
+            select: function (info) {
+                currentEventDate = new Date(info.start);
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+                if (eventStartInput) {
+                    var startDate = new Date(info.start);
+                    eventStartInput.value = formatDate(startDate);
+                }
+                if (eventEndInput) {
+                    var endDate = new Date(info.end);
+                    eventEndInput.value = formatDate(endDate);
+                }
+                if (startTimeInput) {
+                    startTimeInput.value = formatTime(info.start);
+                }
+                if (endTimeInput) {
+                    endTimeInput.value = formatTime(info.end);
                 }
                 hideAllInputs();
                 submitReserveButton.classList.add('hidden');

@@ -58,21 +58,15 @@ class ReserveController extends Controller
 
         $existingReserve = Reserve::where('rental_item_id', $request->rental_item_id)
             ->where(function($query) use ($FormatStartDate, $FormatEndDate) {
-                $query->whereBetween('start_date', [$FormatStartDate, $FormatEndDate])
-                    ->orWhereBetween('end_date', [$FormatStartDate, $FormatEndDate])
-                    ->orWhere(function($query) use ($FormatStartDate, $FormatEndDate) {
-                        $query->where('start_date', '<=', $FormatStartDate)
-                            ->where('end_date', '>=', $FormatEndDate);
-                    });
+                $query->where(function($query) use ($FormatStartDate, $FormatEndDate) {
+                    $query->where('start_date', '<=', $FormatEndDate)
+                        ->where('end_date', '>=', $FormatStartDate);
+                });
             })
-            ->first();
+            ->exists();
 
         if ($existingReserve) {
-            $conflictMessage = 'Já existe uma reserva no mesmo período: ' . $existingReserve->rentalItem
-                . ' de ' . Carbon::parse($existingReserve->start_date)->format('d/m/Y H:i')
-                . ' até ' . Carbon::parse($existingReserve->end_date)->format('d/m/Y H:i') . '.';
-
-            return back()->withErrors(['conflict' => $conflictMessage])->withInput();
+            return back()->withErrors(['conflict' => 'Já existe uma reserva no mesmo período para este item de locação.'])->withInput();
         }
 
         $user = User::where('cpf_cnpj', $request->cpf_cnpj)->first();
@@ -102,7 +96,6 @@ class ReserveController extends Controller
             'reserve_notes'  => $request->reserve_notes,
             'title'          => $request->title,
             'reserve_status' => $request->reserve_status,
-
         ]);
 
         return back()->with('success', 'Reserva Solicitada!');
@@ -162,7 +155,6 @@ class ReserveController extends Controller
         try {
             $FormatStartDate = Carbon::createFromFormat('d/m/Y H:i', $startDateTime)->format('Y-m-d H:i:s');
             $FormatEndDate   = Carbon::createFromFormat('d/m/Y H:i', $endDateTime)->format('Y-m-d H:i:s');
-            \Log::info('Datas formatadas:', ['start' => $FormatStartDate, 'end' => $FormatEndDate]);
         } catch (\Exception $e) {
             return back()->withErrors(['date_format' => 'O formato da data ou hora está incorreto.'])->withInput();
         }
@@ -170,17 +162,15 @@ class ReserveController extends Controller
         $existingReserve = Reserve::where('rental_item_id', $request->rental_item_id)
             ->where('id', '!=', $reserve->id)
             ->where(function($query) use ($FormatStartDate, $FormatEndDate) {
-                $query->whereBetween('start_date', [$FormatStartDate, $FormatEndDate])
-                    ->orWhereBetween('end_date', [$FormatStartDate, $FormatEndDate])
-                    ->orWhere(function($query) use ($FormatStartDate, $FormatEndDate) {
-                        $query->where('start_date', '<=', $FormatStartDate)
-                            ->where('end_date', '>=', $FormatEndDate);
-                    });
+                $query->where(function($query) use ($FormatStartDate, $FormatEndDate) {
+                    $query->where('start_date', '<=', $FormatEndDate)
+                        ->where('end_date', '>=', $FormatStartDate);
+                });
             })
             ->exists();
 
         if ($existingReserve) {
-            return back()->withErrors(['conflict' => 'Já existe uma reserva no mesmo período.']);
+            return back()->withErrors(['conflict' => 'Já existe uma reserva no mesmo período para este item de locação.'])->withInput();
         }
 
         $reserve->update([
@@ -189,7 +179,7 @@ class ReserveController extends Controller
             'rental_item_id' => $request->rental_item_id,
             'reserve_notes'  => $request->reserve_notes,
             'title'          => $request->title,
-            'reserve_status' => $request->reserve_status, // Adiciona o status da reserva
+            'reserve_status' => $request->reserve_status,
         ]);
 
         return back()->with('success', 'Reserva atualizada com sucesso.');
