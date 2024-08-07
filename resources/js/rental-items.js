@@ -44,6 +44,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    function updateImagePreviews(uploads) {
+        const imagePreviewsContainer = document.getElementById('edit-image-previews');
+        imagePreviewsContainer.innerHTML = '';
+
+        uploads.forEach(upload => {
+            const imgElement = document.createElement('img');
+            imgElement.src = `/storage/${upload.file_path}`;
+            imgElement.classList.add('w-full', 'h-auto', 'rounded-lg');
+            imgElement.setAttribute('data-id', upload.id);
+            imagePreviewsContainer.appendChild(imgElement);
+        });
+    }
+
     document.querySelectorAll('.edit-item-btn').forEach(button => {
         button.addEventListener('click', async () => {
             const rentalItem = button.getAttribute('data-id');
@@ -66,23 +79,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('edit_status').value = data.status;
                 document.getElementById('edit_rental_item_notes').value = data.rental_item_notes;
 
-                const imagePreviewsContainer = document.getElementById('edit-image-previews');
-                imagePreviewsContainer.innerHTML = '';
-
-                console.log('Uploads:', data.uploads);
-                if (data.uploads) {
-                    data.uploads.forEach(upload => {
-                        const imgElement = document.createElement('img');
-                        imgElement.src = `/storage/${upload.file_path}`;
-                        imgElement.classList.add('w-full', 'h-auto', 'rounded-lg');
-                        imagePreviewsContainer.appendChild(imgElement);
-                    });
-                }
+                updateImagePreviews(data.uploads);
 
                 const deleteBtn = document.querySelector('.delete-button');
                 deleteBtn.addEventListener('click', async () => {
                     const rentalItem = deleteBtn.getAttribute('data-rentalItem-id');
-                    await axios.delete(`/api/delete-image/${rentalItem}`).then((r) => r);
+                    await axios.delete(`/api/delete-image/${rentalItem}`).then((r) => {
+                        updateImagePreviews(r.data.uploads);  // Atualiza a visualização após a remoção
+                    });
                 });
 
                 const priceFieldsUpdate = [
