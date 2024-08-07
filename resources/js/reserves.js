@@ -175,4 +175,110 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
+
+
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const reserveForm = document.getElementById('reserve-form');
+
+    const fields = {
+        user_id: {
+            element: document.getElementById('user_id'),
+            errorElement: document.createElement('p'),
+            message: 'Responsável é obrigatório.'
+        },
+        rental_item_id: {
+            element: document.getElementById('rental_item_id'),
+            errorElement: document.createElement('p'),
+            message: 'Espaço é obrigatório.'
+        },
+        start_date: {
+            element: document.getElementById('start_date'),
+            errorElement: document.createElement('p'),
+            message: 'Data de Início é obrigatória.'
+        },
+        end_date: {
+            element: document.getElementById('end_date'),
+            errorElement: document.createElement('p'),
+            message: 'Data de Término é obrigatória.'
+        },
+        start_time: {
+            element: document.getElementById('start_time'),
+            errorElement: document.createElement('p'),
+            message: 'Hora de Início é obrigatória.'
+        },
+        end_time: {
+            element: document.getElementById('end_time'),
+            errorElement: document.createElement('p'),
+            message: 'Hora de Término é obrigatória.'
+        },
+        title: {
+            element: document.getElementById('title'),
+            errorElement: document.createElement('p'),
+            message: 'Título da Reserva deve ter pelo menos 5 caracteres.'
+        },
+        reserve_status: {
+            element: document.getElementById('reserve_status'),
+            errorElement: document.createElement('p'),
+            message: 'Status da Reserva é obrigatório.'
+        },
+        reserve_notes: {
+            element: document.getElementById('reserve_notes'),
+            errorElement: document.createElement('p'),
+            message: 'Observações devem ter pelo menos 5 caracteres.'
+        }
+    };
+
+    Object.values(fields).forEach(field => {
+        field.errorElement.classList.add('text-red-500', 'text-xs', 'mt-1');
+        field.errorElement.style.display = 'none';
+        field.element.parentNode.appendChild(field.errorElement);
+
+        field.element.addEventListener('blur', () => validateField(field));
+        field.element.addEventListener('input', () => validateField(field));
+    });
+
+    function validateField(field) {
+        let isValid = true;
+
+        if (field.element.id === 'title' || field.element.id === 'reserve_notes') {
+            if (field.element.value.trim().length < 5) {
+                field.errorElement.textContent = field.message;
+                field.errorElement.style.display = 'block';
+                field.element.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                field.errorElement.textContent = '';
+                field.errorElement.style.display = 'none';
+                field.element.classList.remove('border-red-500');
+                isValid = true;
+            }
+        } else {
+            if (!field.element.value.trim()) {
+                field.errorElement.textContent = field.message;
+                field.errorElement.style.display = 'block';
+                field.element.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                field.errorElement.textContent = '';
+                field.errorElement.style.display = 'none';
+                field.element.classList.remove('border-red-500');
+                isValid = true;
+            }
+        }
+
+        return isValid;
+    }
+
+    reserveForm.addEventListener('submit', (e) => {
+        let valid = true;
+        Object.values(fields).forEach(field => {
+            if (!validateField(field)) {
+                valid = false;
+            }
+        });
+        if (!valid) {
+            e.preventDefault();
+        }
+    });
 });

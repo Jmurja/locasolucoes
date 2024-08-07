@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 deleteBtn.addEventListener('click', async () => {
                     const rentalItem = deleteBtn.getAttribute('data-rentalItem-id');
                     await axios.delete(`/api/delete-image/${rentalItem}`).then((r) => {
-                        updateImagePreviews(r.data.uploads);  // Atualiza a visualização após a remoção
+                        updateImagePreviews(r.data.uploads);
                     });
                 });
 

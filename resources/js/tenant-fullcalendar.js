@@ -39,10 +39,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 semana: {
                     type: 'timeGridWeek',
                     buttonText: 'Semana',
+                    slotDuration: '01:00:00', // Exibir intervalos de uma hora
+                    slotLabelInterval: '01:00:00', // Etiquetas de uma em uma hora
                 },
                 dia: {
                     type: 'timeGridDay',
                     buttonText: 'Dia',
+                    slotDuration: '01:00:00', // Exibir intervalos de uma hora
+                    slotLabelInterval: '01:00:00', // Etiquetas de uma em uma hora
                 }
             },
             headerToolbar: {
@@ -53,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
             initialView: 'mes',
             hiddenDays: [0],
             slotMinTime: '08:00:00',
-            slotMaxTime: '17:00:00',
+            slotMaxTime: '19:00:00', // Ajustar para exibir até as 19h
             dateClick: function (info) {
                 if (modal) {
                     eventStartInput.value = formatDate(info.dateStr);

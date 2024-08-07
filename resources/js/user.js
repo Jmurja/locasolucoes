@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('edit-cidade').value = userCidade;
         document.getElementById('edit-role').value = userRole;
         const form = document.getElementById('edit-user-form');
-        form.action = `/api/usuarios/{user}`;
+        form.action = `usuarios/${userId}`;
 
         editModal.classList.remove('hidden');
         editModal.setAttribute('aria-hidden', 'false');

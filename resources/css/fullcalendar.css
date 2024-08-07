@@ -7,7 +7,6 @@
     transition: all 0.3s ease;
     height: 630px;
     overflow: hidden;
-
 }
 
 .fullcalendar-container {
@@ -176,6 +175,7 @@
 
 .fc-timegrid-slot {
     border-top: 1px solid #475569;
+    height: 60px; /* Ajusta a altura mínima dos slots para torná-los maiores */
 }
 
 .fc-timegrid-slot:hover {
@@ -307,4 +307,27 @@
     .fc-event .fc-event-time {
         font-size: 8px;
     }
+}
+
+.fc-view-harness.fc-view-harness-active {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.fc-view.fc-timeGridWeek-view,
+.fc-view.fc-timeGridDay-view {
+    flex-grow: 1;
+}
+
+.fc-timegrid {
+    height: 100% !important;
+}
+
+.fc-timegrid-slots {
+    height: calc(100% - 60px) !important;
+}
+
+.fc-timegrid-slot-label-cushion {
+    height: 40px;
 }

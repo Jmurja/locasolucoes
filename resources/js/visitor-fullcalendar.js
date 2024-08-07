@@ -81,15 +81,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 timeGridWeek: {
                     buttonText: 'Semana',
+                    slotDuration: '01:00:00', // Exibir intervalos de uma hora
+                    slotLabelInterval: '01:00:00', // Etiquetas de uma em uma hora
                 },
                 timeGridDay: {
                     buttonText: 'Dia',
-                },
+                    slotDuration: '01:00:00', // Exibir intervalos de uma hora
+                    slotLabelInterval: '01:00:00', // Etiquetas de uma em uma hora
+                }
             },
             hiddenDays: [0],
             initialView: 'dayGridMonth',
             slotMinTime: '08:00:00',
-            slotMaxTime: '18:00:00',
+            slotMaxTime: '19:00:00', // Ajustar para exibir até as 19h
             dateClick: function (info) {
                 currentEventDate = new Date(info.date);
                 if (modal) {
