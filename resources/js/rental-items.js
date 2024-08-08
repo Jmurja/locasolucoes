@@ -59,15 +59,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.edit-item-btn').forEach(button => {
         button.addEventListener('click', async () => {
-            const rentalItem = button.getAttribute('data-id');
             try {
+                const rentalItem = button.getAttribute('data-id');
                 const response = await fetch(`/api/itens-locacao/${rentalItem}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
                 const data = await response.json();
-                console.log('data', data);
 
                 document.getElementById('edit-form').action = `/itens-locacao/${rentalItem}`;
                 document.getElementById('edit_user_id').value = data.user_id;
@@ -82,8 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 updateImagePreviews(data.uploads);
 
                 const deleteBtn = document.querySelector('.delete-button');
-                deleteBtn.addEventListener('click', async () => {
-                    const rentalItem = deleteBtn.getAttribute('data-rentalItem-id');
+                deleteBtn.addEventListener('click', async (e) => {
                     await axios.delete(`/api/delete-image/${rentalItem}`).then((r) => {
                         updateImagePreviews(r.data.uploads);
                     });

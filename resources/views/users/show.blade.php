@@ -14,7 +14,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
-                <dl class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 text-gray-900 dark:text-white">
+                <dl class="grid grid-cols-2 gap-x-6 gap-y-8 text-gray-900 dark:text-white">
                     <div class="flex flex-col">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Nome</dt>
                         <dd class="text-lg font-semibold">{{ $user->name }}</dd>
@@ -28,12 +28,12 @@
                         <dd class="text-lg font-semibold">{{ $user->formatted_phone }}</dd>
                     </div>
                     <div class="flex flex-col">
-                        <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">CPF/CPNJ</dt>
+                        <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">CPF/CNPJ</dt>
                         <dd class="text-lg font-semibold">{{ $user->formatted_cpf_cnpj }}</dd>
                     </div>
                     <div class="flex flex-col">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">CEP</dt>
-                        <dd class="text-lg font-semibold">{{ $user->formatted_cep}}</dd>
+                        <dd class="text-lg font-semibold">{{ $user->formatted_cep }}</dd>
                     </div>
                     <div class="flex flex-col">
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Rua</dt>

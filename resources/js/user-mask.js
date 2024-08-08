@@ -49,20 +49,11 @@ document.addEventListener('DOMContentLoaded', function () {
         applyMasksToEditModal();
     });
 
-    function limpa_formulário_cep() {
-        document.getElementById('rua').value = "";
-        document.getElementById('bairro').value = "";
-        document.getElementById('cidade').value = "";
-    }
-
     window.meu_callback = function (conteudo) {
         if (!("erro" in conteudo)) {
-            document.getElementById('rua').value = conteudo.logradouro;
-            document.getElementById('bairro').value = conteudo.bairro;
-            document.getElementById('cidade').value = conteudo.localidade;
-        } else {
-            limpa_formulário_cep();
-            alert("CEP não encontrado.");
+            if (!document.getElementById('rua').value) document.getElementById('rua').value = conteudo.logradouro;
+            if (!document.getElementById('bairro').value) document.getElementById('bairro').value = conteudo.bairro;
+            if (!document.getElementById('cidade').value) document.getElementById('cidade').value = conteudo.localidade;
         }
     }
 
@@ -73,52 +64,29 @@ document.addEventListener('DOMContentLoaded', function () {
             var validacep = /^[0-9]{8}$/;
 
             if (validacep.test(cep)) {
-                document.getElementById('rua').value = "...";
-                document.getElementById('bairro').value = "...";
-                document.getElementById('cidade').value = "...";
-
                 fetch(`https://viacep.com.br/ws/${cep}/json/`)
                     .then(response => response.json())
                     .then(data => meu_callback(data))
                     .catch(error => {
-                        limpa_formulário_cep();
-                        alert("CEP não encontrado.");
                     });
-            } else {
-                limpa_formulário_cep();
-                alert("Formato de CEP inválido.");
             }
-        } else {
-            limpa_formulário_cep();
         }
     };
 
-    function limpa_formulário_cnpj() {
-        document.getElementById('company').value = "";
-        document.getElementById('rua').value = "";
-        document.getElementById('bairro').value = "";
-        document.getElementById('cidade').value = "";
-        document.getElementById('cep').value = "";
-        document.getElementById('name').value = "";
-    }
-
     window.meu_callback_cnpj = function (conteudo) {
         if (!("errors" in conteudo)) {
-            document.getElementById('company').value = conteudo.razao_social;
-            document.getElementById('rua').value = conteudo.logradouro;
-            document.getElementById('bairro').value = conteudo.bairro;
-            document.getElementById('cidade').value = conteudo.municipio;
-            document.getElementById('cep').value = conteudo.cep.replace(/\D/g, '');
+            if (!document.getElementById('company').value) document.getElementById('company').value = conteudo.razao_social;
+            if (!document.getElementById('rua').value) document.getElementById('rua').value = conteudo.logradouro;
+            if (!document.getElementById('bairro').value) document.getElementById('bairro').value = conteudo.bairro;
+            if (!document.getElementById('cidade').value) document.getElementById('cidade').value = conteudo.municipio;
+            if (!document.getElementById('cep').value) document.getElementById('cep').value = conteudo.cep.replace(/\D/g, '');
 
             let socioAdministrador = "";
             if (conteudo.qsa && conteudo.qsa.length > 0) {
                 const socio = conteudo.qsa.find(p => p.qual === "Sócio-Administrador");
                 socioAdministrador = socio ? socio.nome : "";
             }
-            document.getElementById('name').value = socioAdministrador;
-        } else {
-            limpa_formulário_cnpj();
-            alert("CNPJ não encontrado.");
+            if (!document.getElementById('name').value) document.getElementById('name').value = socioAdministrador;
         }
     }
 
@@ -129,26 +97,12 @@ document.addEventListener('DOMContentLoaded', function () {
             var validacnpj = /^[0-9]{14}$/;
 
             if (validacnpj.test(cnpj)) {
-                document.getElementById('company').value = "...";
-                document.getElementById('rua').value = "...";
-                document.getElementById('bairro').value = "...";
-                document.getElementById('cidade').value = "...";
-                document.getElementById('cep').value = "...";
-                document.getElementById('name').value = "...";
-
                 fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`)
                     .then(response => response.json())
                     .then(data => meu_callback_cnpj(data))
                     .catch(error => {
-                        limpa_formulário_cnpj();
-                        alert("CNPJ não encontrado.");
                     });
-            } else {
-                limpa_formulário_cnpj();
-                alert("Formato de CNPJ inválido.");
             }
-        } else {
-            limpa_formulário_cnpj();
         }
     };
 

@@ -19,33 +19,27 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Calendário') }}
         </h2>
-    </x-slot>
-    <div class="flex flex-col items-center justify-center">
-        <h1 class="mb-4 mt-6 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-3xl dark:text-white ">
-            Seja bem-vindo, Você está logado como
-            @if (auth()->user()->role == 'tenant')
-                <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Locatário</span>
-            @elseif (auth()->user()->role == 'admin')
-                <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Administrador</span>
-            @else
-                <span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">Proprietário</span>
-            @endif
-        </h1>
         <button id="toggleDrawer" class="px-4 py-2 text-white bg-blue-600 rounded-lg justify-self-end">Mostrar
             Catálogo
         </button>
-    </div>
+    </x-slot>
 
-    <div id="overlay" class="fixed inset-0 bg-black opacity-50 z-30 hidden"></div>
+
     @if ($errors->any())
-        <div
-            class="max-w-lg mx-auto mt-4 p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-            role="alert">
+        <div id="error-messages"
+             class="max-w-lg mx-auto mt-4 p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+             role="alert">
             @foreach ($errors->all() as $error)
                 <p>{{ $error }}</p>
             @endforeach
         </div>
+        <script>
+            setTimeout(function () {
+                document.getElementById('error-messages').style.display = 'none';
+            }, 4000);
+        </script>
     @endif
+
     <div id="drawer-bottom-example"
          class="fixed bottom-0 left-0 right-0 z-40 w-full p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 translate-y-full"
          tabindex="-1" aria-labelledby="drawer-bottom-label">

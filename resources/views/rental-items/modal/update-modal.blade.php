@@ -117,9 +117,10 @@
                         id="multiple_files" name="rental_item_images[]" type="file" multiple>
                     <div id="edit-image-previews"
                          class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-                    <button data-rentalItem-id="{{$rentalItem->id ?? ''}}"
-                            class="delete-button block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
-                            data-modal-target="delete-modal" type="button">
+
+                    <button
+                        class="delete-button block text-red-500 rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-blue-800"
+                        data-modal-target="delete-modal" type="button">
                         <x-icons.trash/>
                     </button>
                 </div>

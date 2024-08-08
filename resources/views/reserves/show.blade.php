@@ -14,7 +14,7 @@
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-8">
-                <dl class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-900 dark:text-white">
+                <dl class="grid grid-cols-2 gap-6 text-gray-900 dark:text-white">
                     <div class="flex flex-col">
                         <dt class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Responsável</dt>
                         <dd class="text-lg font-semibold break-words">{{ $reserve->user->name }}</dd>
@@ -43,7 +43,7 @@
                         <dt class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Hora do Fim</dt>
                         <dd class="text-lg font-semibold break-words">{{ Carbon\Carbon::parse($reserve->end_date)->format('H:i') }}</dd>
                     </div>
-                    <div class="flex flex-col md:col-span-2">
+                    <div class="flex flex-col col-span-2">
                         <dt class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Observações</dt>
                         <dd class="text-lg font-semibold break-words">{{ $reserve->reserve_notes }}</dd>
                     </div>
