@@ -71,6 +71,9 @@
                     ID
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Avatar
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Nome
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -92,6 +95,10 @@
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ $user->id }}
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        <img class="w-10 h-10 rounded-full" src="${{ $user->avatar }}"
+                             alt="Rounded avatar">
                     </th>
                     <td class="px-6 py-4">
                         {{ $user->name }}

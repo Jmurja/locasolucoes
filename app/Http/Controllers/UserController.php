@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Upload;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -11,8 +12,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         Gate::authorize('simple-user');
-
-        $query = User::query();
+        $uploads = Upload::all();
+        $query   = User::query();
 
         if ($request->filled('search')) {
             $search = $request->input('search');

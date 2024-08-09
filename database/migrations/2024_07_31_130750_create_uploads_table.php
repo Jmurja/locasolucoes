@@ -12,7 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('uploads', function(Blueprint $table) {
             $table->id();
-            $table->foreignId('rental_item_id')->constrained();
+            $table->morphs('uploadable');
             $table->string('file_name');
             $table->string('file_path');
             $table->timestamps();

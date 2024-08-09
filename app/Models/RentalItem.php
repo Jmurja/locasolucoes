@@ -6,7 +6,7 @@ use App\Enum\RentalItemStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RentalItem extends Model
@@ -48,9 +48,9 @@ class RentalItem extends Model
         return $this->belongsTo(Reserve::class);
     }
 
-    public function uploads(): HasMany
+    public function uploads(): morphMany
     {
-        return $this->hasMany(Upload::class);
+        return $this->morphMany(Upload::class, 'uploadable');
     }
 
     public function getPricePerHourFormattedAttribute(): string

@@ -9,6 +9,7 @@ class Upload extends Model
 {
     protected $fillable = [
         'rental_item_id',
+        'user_id',
         'file_name',
         'file_path',
     ];
@@ -16,5 +17,10 @@ class Upload extends Model
     public function rentalItem(): BelongsTo
     {
         return $this->belongsTo(RentalItem::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

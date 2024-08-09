@@ -15,19 +15,4 @@ document.addEventListener('DOMContentLoaded', function () {
         drawer.classList.remove('transform-none');
         overlay.classList.add('hidden');
     });
-
-    window.onload = function () {
-        const overlay = document.getElementById('overlay'); // ou querySelector
-        const drawer = document.getElementById('drawer'); // ou querySelector
-
-        if (overlay && drawer) {
-            overlay.addEventListener('click', function () {
-                drawer.classList.add('translate-y-full');
-                drawer.classList.remove('transform-none');
-                overlay.classList.add('hidden');
-            });
-        } else {
-            console.error('Overlay ou Drawer não encontrado!');
-        }
-    };
 });
