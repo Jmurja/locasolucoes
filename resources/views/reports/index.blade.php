@@ -6,15 +6,15 @@
     <title>Digiplace</title>
 </head>
 
-<body>
-<x-app-layout>
+<body class="min-h-screen flex flex-col">
+<x-app-layout class="flex flex-col flex-1">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Relatórios') }}
         </h2>
     </x-slot>
 
-    <div class="p-4 max-w-4xl mx-auto mt-10 bg-slate-800 rounded-2xl shadow-lg">
+    <div class="p-4 max-w-4xl mx-auto mt-10 bg-slate-800 rounded-2xl shadow-lg flex-1">
         <form action="{{ route('reports.index') }}" method="get" class="space-y-6">
             @csrf
 

@@ -2,9 +2,20 @@
     background-color: #1e293b;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 1500px;
     margin: 20px auto;
     transition: all 0.3s ease;
     height: 630px;
+    overflow: hidden;
+}
+
+.fullcalendar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f1f5f9;
+    padding: 20px;
 }
 
 .fc-toolbar .fc-button {
@@ -17,17 +28,29 @@
     cursor: pointer;
 }
 
+.fc-toolbar .fc-button:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+}
+
 .fc-toolbar h2 {
-    font-size: 20px;
+    font-size: 24px;
     color: #fff;
+    margin: 0;
+    padding-left: 15px;
 }
 
 .fc-day-header {
     background-color: #334155;
     color: #fff;
+    padding: 10px 0;
     border: 1px solid #475569;
     text-align: center;
     height: auto;
+}
+
+.fc-col-header-cell-cushion {
+    color: #ffffff;
 }
 
 .fc-daygrid-day {
@@ -35,6 +58,7 @@
     background-color: #1e293b;
     transition: background-color 0.3s ease;
     cursor: pointer;
+    height: calc((630px - 100px) / 6);
     box-sizing: border-box;
 }
 
@@ -44,10 +68,16 @@
 
 .fc-daygrid-day-number {
     color: #3b82f6;
+    font-weight: bold;
 }
 
 .fc-day-today .fc-daygrid-day-number,
 .fc .fc-timegrid-col.fc-day-today .fc-daygrid-day-number {
+    color: #0369a1;
+}
+
+.fc-day-today {
+    background-color: rgba(3, 105, 161, 0.3);
     color: #0369a1;
 }
 
@@ -114,7 +144,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
-    height: 730px;
+    height: 630px;
     overflow: hidden;
 }
 
@@ -145,7 +175,7 @@
 
 .fc-timegrid-slot {
     border-top: 1px solid #475569;
-    height: 180px; /* Ajusta a altura mínima dos slots para torná-los maiores */
+    height: 60px; /* Ajusta a altura mínima dos slots para torná-los maiores */
 }
 
 .fc-timegrid-slot:hover {
@@ -176,6 +206,9 @@
     font-size: 12px;
 }
 
+.fc-now-indicator {
+    background-color: #3b82f6;
+}
 
 .fc .fc-timegrid-col.fc-day-today {
     background-color: rgba(59, 130, 246, 0.36);

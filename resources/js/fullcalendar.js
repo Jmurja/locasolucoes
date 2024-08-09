@@ -37,17 +37,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     calendar.render();
 
-    eventForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (eventTitleInput.value) {
-            calendar.addEvent({
-                title: eventTitleInput.value,
-                start: currentEventDate,
-                allDay: true
+    document.addEventListener('DOMContentLoaded', function () {
+        const eventForm = document.getElementById('eventForm'); // ou querySelector
+        if (eventForm) {
+            eventForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (eventTitleInput.value) {
+                    calendar.addEvent({
+                        title: eventTitleInput.value,
+                        start: currentEventDate,
+                        allDay: true
+                    });
+                    eventTitleInput.value = '';
+                    eventStartInput.value = '';
+                    document.querySelector('[data-modal-toggle="tenant-reserve"]').click();
+                }
             });
-            eventTitleInput.value = '';
-            eventStartInput.value = '';
-            document.querySelector('[data-modal-toggle="tenant-reserve"]').click();
         }
     });
 });
