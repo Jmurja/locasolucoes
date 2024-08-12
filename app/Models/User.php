@@ -33,6 +33,7 @@ class User extends Authenticatable
         'bairro',
         'number',
         'company',
+        'user_image',
     ];
 
     protected $hidden = [

@@ -14,6 +14,7 @@ class RentalItemController extends Controller
 {
     public function index(Request $request)
     {
+        ds('teste');
         Gate::authorize('simple-user');
 
         $query = RentalItem::query();
@@ -62,11 +63,9 @@ class RentalItemController extends Controller
             $uploadedFile = $request->file('rental_item_image');
             $path         = $uploadedFile->store('uploads');
 
-            Upload::query()->create([
-                'file_name'       => $uploadedFile->getClientOriginalName(),
-                'file_path'       => $path,
-                'uploadable_id'   => $rentalItem->id,
-                'uploadable_type' => RentalItem::class,
+            $rentalItem->uploads()->create([
+                'file_name' => $uploadedFile->getClientOriginalName(),
+                'file_path' => $path,
             ]);
         }
 

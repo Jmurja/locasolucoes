@@ -62,7 +62,6 @@
         </div>
     </form>
 
-
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 sm:p-8">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -97,9 +96,15 @@
                         {{ $user->id }}
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        <img class="w-10 h-10 rounded-full" src="${{ $user->avatar }}"
-                             alt="Rounded avatar">
+                        @if ($user->uploads->isNotEmpty())
+                            <img class="w-10 h-10 rounded-full"
+                                 src="{{ Storage::url($user->uploads->first()->file_path) }}" alt="Rounded avatar">
+                        @else
+                            <img class="w-10 h-10 rounded-full" src="{{ asset('path/to/default-avatar.png') }}"
+                                 alt="Default avatar">
+                        @endif
                     </th>
+
                     <td class="px-6 py-4">
                         {{ $user->name }}
                     </td>
@@ -108,7 +113,6 @@
                     </td>
                     <td class="px-6 py-4 hidden lg:table-cell">
                         {{ $user->formatted_cpf_cnpj }}
-
                     </td>
                     <td class="px-6 py-4 hidden md:table-cell">
                         {{ $user->created_at }}

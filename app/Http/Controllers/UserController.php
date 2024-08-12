@@ -52,6 +52,16 @@ class UserController extends Controller
             'number'   => $input['number'],
         ]);
 
+        if ($request->hasFile('user_image')) {
+            $uploadedFile = $request->file('user_image');
+            $path         = $uploadedFile->store('uploads');
+
+            $user->uploads()->create([
+                'file_name' => $uploadedFile->getClientOriginalName(),
+                'file_path' => $path,
+            ]);
+        }
+
         return back();
     }
 

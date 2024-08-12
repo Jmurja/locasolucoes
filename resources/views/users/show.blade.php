@@ -59,6 +59,18 @@
                         <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Atualizado em</dt>
                         <dd class="text-lg font-semibold">{{ $user->updated_at }}</dd>
                     </div>
+                    <div class="flex flex-col">
+                        <dt class="mb-1 text-gray-500 md:text-lg dark:text-gray-400">Avatar</dt>
+                        <dd class="text-lg font-semibold">
+                            @if ($user->uploads->isNotEmpty())
+                                <img class="w-24 h-24 rounded-full"
+                                     src="{{ Storage::url($user->uploads->first()->file_path) }}" alt="User Avatar">
+                            @else
+                                <img class="w-24 h-24 rounded-full" src="{{ asset('path/to/default-avatar.png') }}"
+                                     alt="Default Avatar">
+                            @endif
+                        </dd>
+                    </div>
                 </dl>
             </div>
         </div>

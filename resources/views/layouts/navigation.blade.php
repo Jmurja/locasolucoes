@@ -65,10 +65,6 @@
                                       stroke-width="2"
                                       d="M5 19V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v13H7a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h12M9 3v14m7 0v4"/>
                             </svg>
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 7 2 2 4-4m-5-9v4h4V3h-4Z"/>
-
                             {{ __('Relatórios') }}
                         </x-nav-link>
                     @endcan
@@ -80,6 +76,14 @@
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            @if (Auth::user()->uploads->isNotEmpty())
+                                <img class="w-10 h-10 rounded-full me-2"
+                                     src="{{ Storage::url(Auth::user()->uploads->first()->file_path) }}"
+                                     alt="Rounded avatar">
+                            @else
+                                <img class="w-10 h-10 rounded-full me-2" src="{{ asset('path/to/default-avatar.png') }}"
+                                     alt="Default avatar">
+                            @endif
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
