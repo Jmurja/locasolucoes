@@ -266,7 +266,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return isValid;
     }
 
-
     function applyMasksAndValidations() {
         const fieldsToValidate = [
             'name', 'email', 'phone', 'company', 'cpf_cnpj',
@@ -312,6 +311,32 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    // Adiciona funcionalidade de remoção de imagem
+    const removeImageButtons = document.querySelectorAll('.remove-image-button');
+
+    removeImageButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const fileId = this.getAttribute('data-file-id');
+            if (confirm('Tem certeza de que deseja remover esta imagem?')) {
+                fetch(`/uploads/${fileId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        this.closest('figure').remove();
+                    } else {
+                        alert('Falha ao remover a imagem.');
+                    }
+                }).catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao remover a imagem.');
+                });
+            }
+        });
+    });
 
     document.querySelectorAll('[data-modal-toggle="edit-modal"]').forEach(button => {
         button.addEventListener('click', function () {

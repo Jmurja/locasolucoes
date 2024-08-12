@@ -103,11 +103,31 @@
                                placeholder="Digite o bairro" required>
                         <div class="error-message text-red-500"></div>
                     </div>
-                </div>
-                <button type="submit"
-                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Salvar
-                </button>
+                    <div class="mb-4">
+                        <div class="mb-4">
+                            <label for="edit-user_image"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagem do
+                                Usuário</label>
+                            <input type="file" name="user_image" id="edit-user_image"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
+                                @foreach ($user->uploads as $upload)
+                                    <figure class="flex flex-col items-center">
+                                        <img class="h-auto max-w-full rounded-lg"
+                                             src="{{ Storage::url($upload->file_path) }}" alt="image description">
+                                        <figcaption
+                                            class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">{{ $upload->file_name }}</figcaption>
+                                        <button type="button" class="remove-image-button text-red-500 text-sm mt-2"
+                                                data-file-id="{{ $upload->id }}">Remover
+                                        </button>
+                                    </figure>
+                                @endforeach
+                            </div>
+                        </div>
+                        <button type="submit"
+                                class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Salvar
+                        </button>
             </form>
         </div>
     </div>

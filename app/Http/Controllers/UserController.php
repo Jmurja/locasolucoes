@@ -6,6 +6,7 @@ use App\Models\Upload;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -78,6 +79,12 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        // Remover uploads associados
+        foreach ($user->uploads as $upload) {
+            Storage::delete($upload->file_path);
+            $upload->delete();
+        }
+
         $user->delete();
 
         return back();
@@ -102,8 +109,36 @@ class UserController extends Controller
         $input['cpf_cnpj'] = preg_replace('/\D/', '', $input['cpf_cnpj']);
         $input['cep']      = preg_replace('/\D/', '', $input['cep']);
 
+        // Atualiza os dados do usuário
         $user->update($input);
 
+        // Lidar com a nova imagem
+        if ($request->hasFile('user_image')) {
+            // Remove a imagem antiga, se necessário
+            foreach ($user->uploads as $upload) {
+                Storage::delete($upload->file_path);
+                $upload->delete();
+            }
+
+            // Upload da nova imagem
+            $uploadedFile = $request->file('user_image');
+            $path         = $uploadedFile->store('uploads');
+
+            $user->uploads()->create([
+                'file_name' => $uploadedFile->getClientOriginalName(),
+                'file_path' => $path,
+            ]);
+        }
+
         return redirect()->route('users.index')->with('success', 'Usuário atualizado com sucesso.');
+    }
+
+    public function removeImage($id)
+    {
+        $upload = Upload::findOrFail($id);
+        Storage::delete($upload->file_path);
+        $upload->delete();
+
+        return response()->json(['success' => true]);
     }
 }
