@@ -15,6 +15,7 @@ return new class () extends Migration {
             $table->morphs('uploadable');
             $table->string('file_name');
             $table->string('file_path');
+            $table->index(['uploadable_id', 'uploadable_type']);
             $table->timestamps();
         });
     }

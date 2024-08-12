@@ -12,6 +12,8 @@ class Upload extends Model
         'user_id',
         'file_name',
         'file_path',
+        'uploadable_id',
+        'uploadable_type',
     ];
 
     public function rentalItem(): BelongsTo

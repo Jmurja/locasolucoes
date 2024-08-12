@@ -39,7 +39,6 @@ class RentalItemController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $rentalItem = RentalItem::query()->create([
             'user_id'        => $request->user_id,
             'name'           => $request->name,
@@ -64,9 +63,10 @@ class RentalItemController extends Controller
             $path         = $uploadedFile->store('uploads');
 
             Upload::query()->create([
-                'rental_item_id' => $rentalItem->id,
-                'file_name'      => $uploadedFile->getClientOriginalName(),
-                'file_path'      => $path,
+                'file_name'       => $uploadedFile->getClientOriginalName(),
+                'file_path'       => $path,
+                'uploadable_id'   => $rentalItem->id,
+                'uploadable_type' => RentalItem::class,
             ]);
         }
 
