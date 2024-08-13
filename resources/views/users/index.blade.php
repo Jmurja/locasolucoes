@@ -1,17 +1,17 @@
+<!---Navbar--->
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-4 sm:mb-0">
                 {{ __('Itens de Locação') }}
             </h2>
-            <!-- Cadastrar modal -->
             <button data-modal-target="create-user" data-modal-toggle="create-user"
                     class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     type="button">Criar Novo Usuário
             </button>
         </div>
     </x-slot>
-
+    <!----Tela de Erro--->
     @error('errors')
     <div id="toast-danger"
          class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
@@ -28,7 +28,7 @@
     </div>
     @enderror
 
-    <!-- Search Form -->
+    <!--------Barra de Pesquisa---------->
     <form class="max-w-lg mx-auto mt-10" method="GET" action="{{ route('users.index') }}">
         <div class="relative w-full">
             <label for="search"
@@ -61,7 +61,10 @@
             </div>
         </div>
     </form>
+    <!--------Fim da Barra de Pesquisa---------->
 
+
+    <!--------Tabela de Usários--------->
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-4 sm:p-8">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -119,7 +122,7 @@
                         {{ $user->created_at }}
                     </td>
                     <td class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 px-6 py-4">
-                        <!-- View Button -->
+                        <!-- Botao de View -->
                         <a href="{{ route('users.show', $user->id) }}" class="cursor-pointer view-user-button">
                             <x-icons.eye/>
                         </a>
@@ -131,7 +134,7 @@
                             <x-icons.trash/>
                         </button>
 
-                        <!-- Edit Modal -->
+                        <!-- Modal Edicao -->
                         <button data-modal-target="edit-modal" data-modal-toggle="edit-modal"
                                 data-user-id="{{ $user->id }}" data-user-name="{{ $user->name }}"
                                 data-user-email="{{ $user->email }}" data-user-phone="{{ $user->phone }}"
@@ -148,15 +151,17 @@
 
             </tbody>
         </table>
-
         <div class="my-4">
             {{$users->links()}}
         </div>
-
-        @vite('resources/js/user.js')
-        @vite('resources/js/user-mask.js')
-        @include('users/modal/create-user')
-        @include('users/modal/delete-modal')
-        @include('users/modal/update-modal')
     </div>
+
+    <!----Fim da tabela de Usuario --->
+
+    <!---links-->
+    @vite('resources/js/user.js')
+    @vite('resources/js/user-mask.js')
+    @include('users/modal/create-user')
+    @include('users/modal/delete-modal')
+    @include('users/modal/update-modal')
 </x-app-layout>

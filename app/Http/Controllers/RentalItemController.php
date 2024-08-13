@@ -14,7 +14,6 @@ class RentalItemController extends Controller
 {
     public function index(Request $request)
     {
-        ds('teste');
         Gate::authorize('simple-user');
 
         $query = RentalItem::query();

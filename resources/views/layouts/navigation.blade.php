@@ -88,7 +88,7 @@
 
                             </div>
                             @if (Auth::user()->uploads->isNotEmpty())
-                                <img class="w-10 h-10 rounded-full me-2"
+                                <img class="w-10 h-10 rounded-full me-2 object-cover"
                                      src="{{ Storage::url(Auth::user()->uploads->first()->file_path) }}"
                                      alt="Rounded avatar">
                             @else
