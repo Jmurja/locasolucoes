@@ -1,69 +1,64 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex flex-col sm:flex-row justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div class="flex justify-between items-center">
+            <h2 class="font-bold text-2xl text-white leading-tight">
                 {{ __('Detalhes da Sala') }}
             </h2>
             <a href="{{ route('rental-items.index') }}"
-               class="mt-4 sm:mt-0 block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+               class="block text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Voltar
             </a>
         </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
-                <dl class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-gray-900 dark:text-white">
-                    <div class="flex flex-col">
-                        <dt class="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">Nome</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $rentalItem->name }}</dd>
+    <div class="py-12 bg-gray-100 dark:bg-gray-900">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+            @if ($rentalItem->uploads->isNotEmpty())
+                <div class="relative overflow-hidden rounded-lg shadow-lg">
+                    <img class="w-full h-96 object-cover"
+                         src="{{ Storage::url($rentalItem->uploads->first()->file_path) }}"
+                         alt="{{ $rentalItem->name }}">
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                        <h1 class="text-4xl font-bold text-white">{{ $rentalItem->name }}</h1>
                     </div>
-                    <div class="flex flex-col">
-                        <dt class="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">Status</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $rentalItem->status }}</dd>
+                </div>
+            @else
+                <div class="relative overflow-hidden rounded-lg shadow-lg">
+                    <div class="w-full h-96 bg-gray-400 flex items-center justify-center">
+                        <img class="w-full h-96 object-cover"
+                             src="{{asset('default_rentalitem.png')}}"
+                             alt="{{ $rentalItem->name }}">
                     </div>
-                    <div class="flex flex-col">
-                        <dt class="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">Preço por hora</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $rentalItem->price_per_hour }}</dd>
-                    </div>
-                    <div class="flex flex-col">
-                        <dt class="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">Preço por dia</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $rentalItem->price_per_day }}</dd>
-                    </div>
-                    <div class="flex flex-col">
-                        <dt class="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">Preço por mês</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $rentalItem->price_per_month }}</dd>
-                    </div>
-                    <div class="flex flex-col col-span-2 lg:col-span-1">
-                        <dt class="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">Descrição</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $rentalItem->description }}</dd>
-                    </div>
-                    <div class="flex flex-col col-span-2 lg:col-span-2">
-                        <dt class="mb-1 text-sm font-medium text-gray-500 dark:text-gray-400">Observações</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $rentalItem->rental_item_notes }}</dd>
-                    </div>
+                </div>
+            @endif
 
-                    @if ($rentalItem->uploads->isNotEmpty())
-                        <div class="col-span-2 lg:col-span-3">
-                            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                                @foreach ($rentalItem->uploads as $upload)
-                                    <figure class="flex flex-col items-center">
-                                        <img class="h-auto max-w-full rounded-lg"
-                                             src="{{ Storage::url($upload->file_path) }}"
-                                             alt="image description">
-                                        <figcaption class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">
-                                            {{ $upload->file_name }}
-                                        </figcaption>
-                                    </figure>
-                                @endforeach
-                            </div>
-                        </div>
-                    @else
-                        <p class="text-lg font-semibold text-gray-500 dark:text-gray-400 col-span-2 lg:col-span-3">
-                            Nenhuma imagem disponível</p>
-                    @endif
-                </dl>
+            <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg mt-8 p-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-gray-900 dark:text-white">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Status</h3>
+                        <p class="text-lg font-medium">{{ $rentalItem->status }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Preço por Hora</h3>
+                        <p class="text-lg font-medium">{{ $rentalItem->price_per_hour }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Preço por Dia</h3>
+                        <p class="text-lg font-medium">{{ $rentalItem->price_per_day }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-2">Preço por Mês</h3>
+                        <p class="text-lg font-medium">{{ $rentalItem->price_per_month }}</p>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <h3 class="text-xl font-semibold mb-2">Descrição</h3>
+                        <p class="text-lg font-medium">{{ $rentalItem->description }}</p>
+                    </div>
+                    <div class="lg:col-span-3">
+                        <h3 class="text-xl font-semibold mb-2">Observações</h3>
+                        <p class="text-lg font-medium">{{ $rentalItem->rental_item_notes }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

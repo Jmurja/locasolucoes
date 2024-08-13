@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-bold text-2xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Detalhes da Reserva') }}
             </h2>
             <a href="{{ route('reserves.index') }}"
@@ -14,40 +14,58 @@
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-8">
-                <dl class="grid grid-cols-2 gap-6 text-gray-900 dark:text-white">
-                    <div class="flex flex-col">
-                        <dt class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Responsável</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $reserve->user->name }}</dd>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-900 dark:text-white">
+
+                    @if($reserve->rentalitem->uploads->isNotEmpty())
+                        <div class="md:col-span-2 flex justify-center mb-6">
+                            <img src="{{ Storage::url($reserve->rentalitem->uploads->first()->file_path) }}"
+                                 alt="Imagem da Sala"
+                                 class="w-full h-64 object-cover rounded-lg shadow-md">
+                        </div>
+                    @else
+                        <div class="md:col-span-2 flex justify-center mb-6">
+                            <img src="{{ asset('default_rentalitem.png') }}"
+                                 alt="Imagem da Sala" class="w-full h-64 object-cover rounded-lg shadow-md">
+                        </div>
+                    @endif
+
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Responsável</h3>
+                        <p class="text-xl font-medium">{{ $reserve->user->name }}</p>
                     </div>
-                    <div class="flex flex-col">
-                        <dt class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Espaço</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $reserve->rentalitem->name }}</dd>
+
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Empresa</h3>
+                        <p class="text-xl font-medium">{{ $reserve->user->company }}</p>
                     </div>
-                    <div class="flex flex-col">
-                        <dt class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Empresa</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $reserve->user->company }}</dd>
+
+                    <div class="md:col-span-2">
+                        <h3 class="text-lg font-semibold mb-2">Espaço</h3>
+                        <p class="text-xl font-medium">{{ $reserve->rentalitem->name }}</p>
                     </div>
-                    <div class="flex flex-col">
-                        <dt class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Data de Início</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $reserve->start_date }}</dd>
+
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Data de Início</h3>
+                        <p class="text-xl font-medium">{{ $reserve->start_date }}</p>
                     </div>
-                    <div class="flex flex-col">
-                        <dt class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Data de Fim</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $reserve->end_date }}</dd>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Hora de Início</h3>
+                        <p class="text-xl font-medium">{{ Carbon\Carbon::parse($reserve->start_date)->format('H:i') }}</p>
                     </div>
-                    <div class="flex flex-col">
-                        <dt class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Hora de Início</dt>
-                        <dd class="text-lg font-semibold break-words">{{ Carbon\Carbon::parse($reserve->start_date)->format('H:i') }}</dd>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Data de Fim</h3>
+                        <p class="text-xl font-medium">{{ $reserve->end_date }}</p>
                     </div>
-                    <div class="flex flex-col">
-                        <dt class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Hora do Fim</dt>
-                        <dd class="text-lg font-semibold break-words">{{ Carbon\Carbon::parse($reserve->end_date)->format('H:i') }}</dd>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Hora do Fim</h3>
+                        <p class="text-xl font-medium">{{ Carbon\Carbon::parse($reserve->end_date)->format('H:i') }}</p>
                     </div>
-                    <div class="flex flex-col col-span-2">
-                        <dt class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">Observações</dt>
-                        <dd class="text-lg font-semibold break-words">{{ $reserve->reserve_notes }}</dd>
+
+                    <div class="md:col-span-2">
+                        <h3 class="text-lg font-semibold mb-2">Observações</h3>
+                        <p class="text-xl font-medium">{{ $reserve->reserve_notes }}</p>
                     </div>
-                </dl>
+                </div>
             </div>
         </div>
     </div>

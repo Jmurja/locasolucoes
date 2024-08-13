@@ -3,54 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatórios</title>
+    <title>Relatórios de Reservas</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #fff;
-            color: #333;
+            background-color: #ffffff;
+            color: #333333;
         }
 
         h1 {
             text-align: center;
-            color: #2c3e50;
-            font-size: 28px;
-            margin-bottom: 30px;
+            color: #34495e;
+            font-size: 32px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
         }
 
         th, td {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
+            padding: 8px 12px;
+            border: 1px solid #dddddd;
             text-align: left;
+            font-size: 14px;
         }
 
         th {
-            background-color: #2c3e50;
-            color: #fff;
+            background-color: #34495e;
+            color: #ffffff;
             font-weight: bold;
             text-transform: uppercase;
         }
 
         tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color: #f2f2f2;
         }
 
         tr:hover {
-            background-color: #e9e9e9;
+            background-color: #e0e0e0;
+        }
+
+        tfoot td {
+            font-weight: bold;
+            text-align: right;
+            border: none;
+        }
+
+        .footer {
+            margin-top: 10px; /* Ajuste na margem superior */
+            text-align: center;
+            font-size: 12px;
+            color: #666666;
         }
 
         @media print {
             body {
-                background-color: #fff;
+                background-color: #ffffff;
             }
 
             @page {
@@ -80,6 +93,15 @@
         </tr>
     @endforeach
     </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4">Total de Reservas: {{ $reserves->count() }}</td>
+    </tr>
+    </tfoot>
 </table>
+
+<div class="footer">
+    Relatório gerado em {{ \Carbon\Carbon::now()->format('d/m/Y, H:i') }}.
+</div>
 </body>
 </html>

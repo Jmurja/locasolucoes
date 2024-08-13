@@ -130,7 +130,7 @@ class ReserveController extends Controller
 
     public function show($id)
     {
-        $reserve = Reserve::with(['user', 'rentalitem'])->findOrFail($id);
+        $reserve = Reserve::with(['user', 'rentalitem.uploads'])->findOrFail($id);
 
         return view('reserves.show', compact('reserve'));
     }

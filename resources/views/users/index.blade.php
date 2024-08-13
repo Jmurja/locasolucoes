@@ -97,10 +97,11 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         @if ($user->uploads->isNotEmpty())
-                            <img class="w-10 h-10 rounded-full"
+                            <img class="w-10 h-10 rounded-full object-cover"
                                  src="{{ Storage::url($user->uploads->first()->file_path) }}" alt="Rounded avatar">
                         @else
-                            <img class="w-10 h-10 rounded-full" src="{{ asset('path/to/default-avatar.png') }}"
+                            <img class="w-10 h-10 rounded-full shadow-lg object-cover"
+                                 src="{{ asset('default_image.png') }}"
                                  alt="Default avatar">
                         @endif
                     </th>
