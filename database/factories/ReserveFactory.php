@@ -21,8 +21,8 @@ class ReserveFactory extends Factory
         return [
             'user_id'        => User::factory(),
             'rental_item_id' => RentalItem::factory(),
-            'start_date'     => $this->faker->date(),
-            'end_date'       => $this->faker->date(),
+            'start_date'     => $this->faker->dateTimeThisYear(),
+            'end_date'       => $this->faker->dateTimeThisYear(),
             'title'          => $this->faker->sentence,
             'reserve_notes'  => $this->faker->sentence,
             'reserve_status' => $this->faker->randomElement(['ocupado', 'reservado', 'disponivel']),
