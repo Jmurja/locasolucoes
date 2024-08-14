@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Enum\RentalItemStatus;
 use App\Models\RentalItem;
-use App\Models\Upload;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -84,6 +83,7 @@ class RentalItemController extends Controller
             'rental_item_notes'
         ]);
 
+        // Formatando os preços para salvar no banco de dados
         $updatedData['price_per_hour'] = preg_replace(
             '/[^\d]/',
             '',
@@ -100,23 +100,18 @@ class RentalItemController extends Controller
             str_replace(['.', ','], '', $updatedData['price_per_month'])
         ) / 100;
 
+        // Atualizando os dados do item de locação
         $rentalItem->update($updatedData);
 
+        // Lidando com os uploads de imagens, se houver
         if ($request->hasFile('rental_item_images')) {
-            $existingUploads = Upload::query()->where('rental_item_id', $rentalItem->id)->get();
-
-            foreach ($existingUploads as $existingUpload) {
-                Storage::delete($existingUpload->file_path);
-                $existingUpload->delete();
-            }
-
             foreach ($request->file('rental_item_images') as $uploadedFile) {
                 $path = $uploadedFile->store('uploads');
 
-                Upload::query()->create([
-                    'rental_item_id' => $rentalItem->id,
-                    'file_name'      => $uploadedFile->getClientOriginalName(),
-                    'file_path'      => $path,
+                // Cria uma nova instância de Upload associada ao item de locação
+                $rentalItem->uploads()->create([
+                    'file_name' => $uploadedFile->getClientOriginalName(),
+                    'file_path' => $path,
                 ]);
             }
         }

@@ -1,4 +1,3 @@
-<!-- Main modal -->
 <div id="edit-modal" tabindex="-1" aria-hidden="true"
      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative p-4 w-full max-w-2xl max-h-full">
@@ -21,7 +20,7 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form id="edit-user-form" method="post" class="p-4 md:p-5 space-y-6">
+            <form id="edit-user-form" method="post" class="p-4 md:p-5 space-y-6" enctype="multipart/form-data">
                 @csrf
                 @method('patch')
 
@@ -103,31 +102,28 @@
                                placeholder="Digite o bairro" required>
                         <div class="error-message text-red-500"></div>
                     </div>
-                    <div class="mb-4">
-                        <div class="mb-4">
-                            <label for="edit-user_image"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Imagem do
-                                Usuário</label>
-                            <input type="file" name="user_image" id="edit-user_image"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
-                                @foreach ($user->uploads as $upload)
-                                    <figure class="flex flex-col items-center">
-                                        <img class="h-auto max-w-full rounded-lg"
-                                             src="{{ Storage::url($upload->file_path) }}" alt="image description">
-                                        <figcaption
-                                            class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">{{ $upload->file_name }}</figcaption>
-                                        <button type="button" class="remove-image-button text-red-500 text-sm mt-2"
-                                                data-file-id="{{ $upload->id }}">Remover
-                                        </button>
-                                    </figure>
-                                @endforeach
-                            </div>
-                        </div>
-                        <button type="submit"
-                                class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Salvar
-                        </button>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="edit-user_image">Upload
+                        da Imagem do Usuário</label>
+                    <input
+                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        id="edit-user_image" name="user_image" type="file" accept="image/*">
+                </div>
+
+                <!-- Pré-visualização da imagem -->
+                <div id="image-preview" class="mt-4">
+                    <img id="preview-image"
+                         src="{{ $user->uploads->first() ? Storage::url($user->uploads->first()->file_path) : '' }}"
+                         alt="Preview Image"
+                         class="h-auto max-w-full rounded-lg object-cover {{ $user->uploads->first() ? '' : 'hidden' }}">
+                </div>
+
+                <button type="submit"
+                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Salvar
+                </button>
             </form>
         </div>
     </div>

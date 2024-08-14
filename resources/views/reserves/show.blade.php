@@ -12,7 +12,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-8xl mx-auto sm:px-6 lg:px-8 flex justify-center">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
 
                 {{-- Seção de Detalhes da Reserva --}}
@@ -28,7 +28,7 @@
                     @else
                         <div class="flex justify-center mb-6">
                             <img src="{{ asset('default_rentalitem.png') }}"
-                                 alt="Imagem da Sala" class="w-full h-64 object-cover rounded-lg shadow-md">
+                                 alt="Imagem da Sala" class="w-full h-96 object-cover rounded-lg shadow-md">
                         </div>
                     @endif
 
@@ -69,7 +69,8 @@
                 </div>
 
                 {{-- Seção de Detalhes do Usuário --}}
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-8">
+                <div
+                    class="max-w-xl dark:bg-gray-800 overflow-hidden max-h-[calc(100vh-16rem)] shadow-xl sm:rounded-lg p-8">
                     <div class="flex flex-col items-center mb-6">
                         <div class="flex-shrink-0">
                             @if ($reserve->user->uploads->isNotEmpty())

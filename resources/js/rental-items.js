@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 editModal.classList.remove('hidden');
                 editModal.setAttribute('aria-hidden', 'false');
                 editModal.setAttribute('role', 'dialog');
+                document.getElementById('edit_name').focus(); // Foco automático
             } catch (error) {
                 console.error('Erro ao buscar dados do item de locação:', error);
             }
@@ -109,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('multiple_files').addEventListener('change', function (event) {
         const files = event.target.files;
-        const imagePreviewsContainer = document.getElementById('image-previews');
+        const imagePreviewsContainer = document.getElementById('edit-image-previews');
         imagePreviewsContainer.innerHTML = '';
 
         Array.from(files).forEach(file => {

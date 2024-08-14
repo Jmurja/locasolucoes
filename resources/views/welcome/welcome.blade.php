@@ -156,7 +156,6 @@
 @vite('resources/js/drawer.js')
 @vite('resources/js/welcome.js')
 @include('welcome.modal.visitor-reserve-modal')
-@include('welcome.modal.payment-reserve-modal')
 
 @vite('resources/css/visitorfc.css')
 

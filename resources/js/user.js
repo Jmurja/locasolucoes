@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const viewModal = document.getElementById('view-modal');
     const deleteForm = document.getElementById('delete-form');
     const deleteModal = document.getElementById('delete-modal');
+    const imageInput = document.getElementById('edit-user_image');
+    const previewImage = document.getElementById('preview-image');
 
     function populateEditForm(button) {
         const userId = button.getAttribute('data-user-id');
@@ -117,6 +119,19 @@ document.addEventListener('DOMContentLoaded', function () {
             deleteModal.classList.add('hidden');
             deleteModal.setAttribute('aria-hidden', 'true');
             deleteModal.removeAttribute('role');
+        }
+    });
+
+    // Função para pré-visualizar a imagem
+    imageInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.classList.remove('hidden');
+            }
+            reader.readAsDataURL(file);
         }
     });
 

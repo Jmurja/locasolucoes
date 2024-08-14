@@ -16,12 +16,12 @@
 <body class="font-sans antialiased dark:bg-gray-900 dark:text-white/50">
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Calendário') }}
-        </h2>
-        <button id="toggleDrawer" class="px-4 py-2 text-white bg-blue-600 rounded-lg justify-self-end">Mostrar
-            Catálogo
-        </button>
+        <div class="flex justify-between items-center">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Calendário') }}
+            </h2>
+            <button id="toggleDrawer" class="px-4 py-2 text-white bg-blue-600 rounded-lg">Mostrar Catálogo</button>
+        </div>
     </x-slot>
 
 
@@ -94,32 +94,58 @@
 
         <div id="tooltip" class="hidden absolute bg-white text-black p-2 border rounded shadow-lg"></div>
 
+        @php
+            function traduzirMes($mesIngles) {
+                $meses = [
+                    'Jan' => 'Jan', 'Feb' => 'Fev', 'Mar' => 'Mar', 'Apr' => 'Abr', 'May' => 'Mai',
+                    'Jun' => 'Jun', 'Jul' => 'Jul', 'Aug' => 'Ago', 'Sep' => 'Set', 'Oct' => 'Out',
+                    'Nov' => 'Nov', 'Dec' => 'Dez'
+                ];
+
+                return $meses[$mesIngles] ?? $mesIngles;
+            }
+        @endphp
+
         <div class="container">
             <div
-                class=" w-full max-w-md p-4 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center space-x-2">
-                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                class="w-full max-w-md p-6 border border-gray-300 rounded-lg shadow-lg sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center space-x-3">
+                        <svg class="w-7 h-7 text-gray-800 dark:text-white" aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg"
+                             fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                         </svg>
-
-                        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Observações</h5>
+                        <h5 class="text-2xl font-semibold leading-none text-gray-900 dark:text-white">Observações</h5>
                     </div>
                 </div>
-                <div class="text-xl leading-none text-gray-900 dark:text-white">
-                    <h2 class="mb-2 p-2">Reservas dos Próximos 7 Dias</h2>
-                    @foreach($upcomingReserves as $reserve)
-                        <div class="p-3 mb-4 radius-2xl bg-gray-900 rounded-2xl z-20">
-                            <h3>{{ $reserve->title }}</h3>
-                            <h3>{{ $reserve->start_date }}</h3>
-                        </div>
-                    @endforeach
+
+                <div class="text-lg leading-tight text-gray-800 dark:text-gray-300">
+                    <h2 class="mb-4 p-2 text-xl font-semibold text-gray-700 dark:text-gray-200">Reservas dos Próximos 7
+                        Dias</h2>
+                    @if(count($upcomingReserves) > 0)
+                        @foreach($upcomingReserves as $reserve)
+                            @php
+                                $date = \Carbon\Carbon::parse($reserve->start_date);
+                                $mes = traduzirMes($date->format('M'));
+                            @endphp
+                            <div
+                                class="p-4 mb-4 bg-gray-100 border border-gray-300 rounded-xl shadow-lg dark:bg-gray-700 dark:border-gray-600">
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ $reserve->title }}</h3>
+                                <p class="text-gray-600 dark:text-gray-300">{{ $date->format('d') }} {{ $mes }}
+                                    , {{ $date->format('Y H:i') }}</p>
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="text-gray-500 dark:text-gray-400">Não há reservas nos próximos 7 dias.</p>
+                    @endif
                 </div>
             </div>
-            <div id="calendar"></div>
+            <div id="calendar" class="mt-6"></div>
         </div>
+
+
     </div>
     @include('dashboard.modal.tenant-reserve-modal')
     @vite('resources/css/dashboard.css')
